@@ -1,0 +1,139 @@
+.show{
+    display: block;
+}
+.hide{
+    display: none;
+}
+.flex{
+    display: flex;
+}
+header{
+    display: flex;
+    margin: 10px 30px;
+    justify-content: space-between;
+    
+}
+.cover {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 2;
+    background-color: #4d4d4d71;
+    backdrop-filter: blur(20px);
+}
+.container_menu,.container_menu_login{
+    display: flex;
+    background-color: #ffffff51;
+    border-radius: 24px;
+    padding: 16px;
+    gap: 20px;
+    border: 1px solid #4d4d4d;
+    backdrop-filter: blur(10px);
+}
+
+.menu_button a {
+    font-size: 18px;
+    color: #000;
+    transition: all 400ms ease;
+}
+.menu_button a:hover{
+    color: #0D47A1;
+}
+.menu_button{
+    padding: 0 5px;
+    border-radius: 4px;
+}
+#menu_for_moblie{
+    display: none;
+    z-index: 3;
+}
+#menu_for_moblie svg{
+    width: 20px;
+    height: 20px;
+}
+.container_menu_for_mobile{
+    position: relative;
+    flex-direction: column;
+    gap: 20px;
+    flex-wrap: wrap;
+    z-index: 3;
+    background-color: #ffffffb6;
+    width: 60%;
+    border-radius: 20px;
+    margin: 0 10px;
+    padding: 10px ;
+    animation: move_menu ease 600ms  ;
+    
+}
+.menu_button_mobile {
+    width: 100%;
+    z-index: 2;
+    
+}
+.menu_button_mobile a{
+    transition: all 300ms ease ;
+}
+.menu_button_mobile a:hover{
+    color: #0D47A1;
+}
+
+.login_button{
+    position: relative;
+}
+.login_button:first-child::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -10px;
+    width: 1px;
+    background-color: #000;
+}
+
+
+@media screen and (max-width:800px) {
+    .container_menu{
+        gap: 5px;
+    }
+}
+@media screen and (max-width:650px) {
+    #menu_for_moblie{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .container_menu{
+        display: none;
+    }
+}
+
+@keyframes move_menu {
+    
+    from{
+        opacity: 0%;
+        right: -400px;
+    }
+    to{
+        opacity: 100%;
+        right: 0;
+    }
+}
+/* START footer */
+
+footer{
+    border-radius: 24px 24px 0 0 ;
+    margin-top: 40px;
+    background-color: var(--dark-blue);
+    color: white;
+    padding: 40px;
+}
+.footer_main_title{
+    font-size: 38px;
+}
+.footer_head{
+    border-bottom: 2px solid var(--light_blue);
+}
+
+/* END footer */

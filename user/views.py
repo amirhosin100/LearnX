@@ -6,7 +6,7 @@ from .forms import *
 # Create your views here.
 
 def index(request):
-    return HttpResponse("index")
+    return render(request,"pages/main_page.html")
 
 def register(request):
     if request.method == "POST":

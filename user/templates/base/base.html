@@ -1,0 +1,55 @@
+{% extends "base/full_base.html" %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static "css/header_and_footer.css" %}">
+{% endblock %}
+{% block script %}
+    <script src="{% static "js/header.js" %}"></script>
+{% endblock %}
+{% block content %}
+    <header>
+        <ul class="container_menu">
+            <li class="menu_button"><a href="#">صفحه اصلی</a></li>
+            <li class="menu_button"><a href="#">آموزش ها </a></li>
+            <li class="menu_button"><a href="#">مقالات</a></li>
+            <li class="menu_button"><a href="#">درباره ما</a></li>
+        </ul>
+        <button type="button" id="menu_for_moblie" class="container_menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                <path fill-rule="evenodd"
+                      d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z"
+                      clip-rule="evenodd"/>
+            </svg>
+        </button>
+
+        <ul class="container_menu_login">
+            {% if user.is_authenticated %}
+                {{ user.username }}
+            {% else %}
+                <li class="login_button"><a href="{% url 'user:login' %}">ورود</a></li>
+                <li class="login_button"><a href="{% url 'user:register' %}">ثبت نام</a></li>
+            {% endif %}
+
+        </ul>
+    </header>
+    <!-- for mobile -->
+    <div class="cover hide"></div>
+    <ul class="container_menu_for_mobile hide">
+        <li class="menu_button_mobile"><a href="#">صفحه اصلی</a></li>
+        <li class="menu_button_mobile"><a href="#">آموزش ها </a></li>
+        <li class="menu_button_mobile"><a href="#">مقالات</a></li>
+        <li class="menu_button_mobile"><a href="#">درباره ما</a></li>
+    </ul>
+    {% block sub_content %}{% endblock %}
+    <footer>
+        <div class="footer_head">
+            <h3 class="footer_main_title">LearnX</h3>
+            <p>آموزش برنامه نویسی از صفر </p>
+        </div>
+        <div class="footer_content">
+            <p>در این سایت قصد داریم تا شما را وارد بازار کار برنامه نویسی کنیم.</p>
+            <p>این سایت کاملا تستی است.</p>
+        </div>
+    </footer>
+
+{% endblock %}

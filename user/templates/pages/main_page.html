@@ -1,0 +1,112 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/main_page.css' %}">
+{% endblock %}
+{% block sub_content %}
+    <img src="{% static "images/back.png" %}" alt="" class="image_background">
+    <main class="main_content">
+        <div class="main_container">
+            <div class="info">
+                <div class="info__right">
+                    <h1>LearnX</h1>
+                    <p>به LearnX , وبسایت آموزش برنامه نویسی خوش آمدید.</p>
+                </div>
+                <div class="info__left">
+                    <div class="container_main_image">
+                        <img src="{% static "images/main_page.svg" %}" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="learns">
+                <div class="learns__header">
+                    <h3>جدید ترین آموزش های ما:</h3>
+                    <a href="#">مشاهده همه</a>
+                </div>
+                <div class="learns__content">
+                    <div class="learn">
+                        <div class="container_image_learn">
+                            <img src="../images/image.png" alt="" class="image_learn">
+                        </div>
+                        <a href="../course_page/index.html">
+
+                            <h2 class="learn_title">زبان برنامه نویسی پایتون</h2>
+                            <p class="leran_detail">پایتون یک زبان برنامه نویسی محبوب است این زبان یک زبان شی گرا است.</p>
+                        </a>
+
+                        <span class="learn_more">
+                            <span class="learn_price">رایگان!</span>
+                            <span class="learn_score"><span>5</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" />
+                                </svg>
+                            </span>
+                        </span>
+
+                    </div>
+                    <div class="learn">
+                        <div class="container_image_learn">
+                            <img src="../images/cc.png" alt="" class="image_learn">
+                        </div>
+                        <a href="#">
+                            <h2 class="learn_title">زبان برنامه نویسی #c</h2>
+                            <p class="leran_detail">زبان سی شارپ ساخته شده توسط مایکروسافت.</p>
+                        </a>
+                        <span class="learn_more">
+                            <span class="learn_price">
+                                <span class="prices">
+                                    <span class="price_main">1,500,000</span>
+                                    <span class="price_off">1,000,000 تومان</span>
+                                </span>
+
+                                <span class="number">33%</span>
+                            </span>
+                            <span class="learn_score"><span class="free">5</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" />
+                                </svg>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <article>
+                <div class="article_header">
+                    <h3>مقالات ما</h3>
+                    <a href="#">مشاهد همه</a>
+                </div>
+                <div class="article_content">
+                    <div class="article">
+                        <div class="container_image_article">
+                            <img src="../images/what-is-github.png" alt="" class="image_article">
+                        </div>
+                        <a href="#">
+                            <h2 class="article_title">گیت هاب چیست؟</h2>
+                            <p class="article_detail">زبان سی شارپ ساخته شده توسط مایکروسافت.</p>
+                        </a>
+                        <div class="article_more">
+                            <h4>امیرحسین میرجمالی</h4>
+                            <span>1404/4/20</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <h4 class="best_teachers">بهترین مدرسین ما از نگاه شما</h4>
+            <div class="teachers">
+
+                <div class="teacher">
+                    <img src="../images/user1.png" alt="" class="teacher_image">
+                    <h5 class="name_teaher">امیرحسین میرجمالی</h5>
+                    <span class="teacher_bio">برنامه نویس پایتون و توسعه دهنده back-end</span>
+                    <div class="teacher_score">
+                        <p class="teacher_label">امتیاز</p>
+                        <span class="teacher_number">8/10</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+{% endblock %}
