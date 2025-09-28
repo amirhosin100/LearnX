@@ -6,5 +6,5 @@ from .models import *
 @admin.register(User)
 class UserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
-        ("موارد اضافه", {"fields": ("user_type","bio","image")}),
+        ("موارد اضافه", {"fields": ("bio","image")}),
     )
