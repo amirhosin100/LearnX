@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'user.apps.UserConfig',
+    'learn.apps.LearnConfig',
     'django_jalali',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -76,12 +77,17 @@ WSGI_APPLICATION = 'LearnX.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': "Learn",
+    #     "USER": "amir",
+    #     "PASSWORD" :"amir$%^hosin",
+    #     "PORT":"5432",
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "Learn",
-        "USER": "amir",
-        "PASSWORD" :"amir$%^hosin",
-        "PORT":"5432",
+        'ENGINE': 'django.db.backends.sqlite3',
+        "NAME": BASE_DIR / 'db.sqlite3',
+
     }
 }
 

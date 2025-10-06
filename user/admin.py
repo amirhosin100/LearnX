@@ -8,3 +8,15 @@ class UserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
         ("موارد اضافه", {"fields": ("bio","image")}),
     )
+
+# @admin.register(Teacher)
+# class TeacherAdmin(admin.ModelAdmin):
+#     list_display = ["user","phone_number","address"]
+#     search_fields = ["city","phone_number"]
+#     ordering = ["-join"]
+#
+# @admin.register(Bloger)
+# class BlogerAdmin(admin.ModelAdmin):
+#     list_display = ["user","phone_number","address"]
+#     search_fields = ["city","phone_number"]
+#     ordering = ["-join"]
