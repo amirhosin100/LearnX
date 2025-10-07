@@ -12,3 +12,7 @@ class HeadlineAdmin(admin.ModelAdmin):
 @admin.register(LearnFilms)
 class LearnFilmsAdmin(admin.ModelAdmin):
     list_display = ["headline","title","film"]
+
+@admin.register(FilmScores)
+class FilmScoresAdmin(admin.ModelAdmin):
+    list_display = ["user_from","film_to","score"]

@@ -9,6 +9,7 @@ class User(AbstractUser):
     bio = models.TextField(verbose_name="بیوگرافی",blank=True,max_length=500)
     job = models.CharField("شغل",max_length=50,blank=True)
     image = ResizedImageField(verbose_name="تصویر",upload_to="users/images/",blank=True,size=[500,500],crop=["middle","center"],quality=100)
+    gived_score_to_films = models.ManyToManyField("learn.LearnFilms",through="learn.FilmScores")
 
 
 class Teacher(models.Model):

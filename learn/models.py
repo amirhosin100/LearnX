@@ -63,7 +63,7 @@ class LearnFilms(models.Model):
     film = models.FileField(upload_to=create_url_for_film)
 
     create = jmodels.jDateTimeField(auto_now_add=True)
-
+    scores = models.ManyToManyField(User,through="FilmScores")
     class Meta:
         ordering = ['-create']
         indexes = [
@@ -76,4 +76,19 @@ class LearnFilms(models.Model):
         return reverse('learn:film_detail', args=[self.headline.learn.slug, self.id])
 
     def __str__(self):
-        return f"{self.headline.title} : {self.title}"
+        return f"{self.headline.learn.title} : {self.headline.title} : {self.title}"
+
+class FilmScores(models.Model):
+    film_to = models.ForeignKey(LearnFilms,models.CASCADE,"rel_to_set")
+    user_from = models.ForeignKey(User,models.CASCADE,"rel_from_set")
+    SCORES = (
+        ("1",1),
+        ("2",2),
+        ("3",3),
+        ("4",4),
+        ("5",5),
+    )
+    score = models.CharField("امتیاز",choices=SCORES,max_length=1,default=1)
+
+    def __str__(self):
+        return f"{self.user_from.username} : {self.score}"
