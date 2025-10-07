@@ -1,0 +1,147 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load price %}
+{% block title %}
+    {{ learn.title }}
+{% endblock %}
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "css/learn_detail.css" %}">
+{% endblock %}
+
+{% block sub_content %}
+    <img src="{% static 'images/back3.jpg' %}" alt="" class="back_image_1">
+
+    <main>
+        <div class="wrap" role="main">
+            <!-- HERO -->
+            <section class="hero glass_morphism" aria-labelledby="course-title">
+                <div class="main-image" aria-hidden="true">
+                    <!-- منبع تصویر: Unsplash (نمونه) -->
+                    <img src="{{ learn.image.url }}" alt="عکس اصلی دوره — {{ learn.title }}">
+                </div>
+
+                <div class="meta">
+                    <div class="tags" aria-hidden="true">
+                        <span class="tag">دوره پایتون</span>
+                        <span class="tag">سطح مبتدی تا پیشرفته</span>
+                        <span class="tag">تماشای ویدئو + تکالیف</span>
+                    </div>
+
+                    <h1 id="course-title" class="title">{{ learn.title }}</h1>
+                    <div class="sub">{{ learn.summery_description }}</div>
+
+                    <div class="stats" aria-hidden="true">
+                        <div class="flex"><strong>⭐ 4.8</strong><span class="small"> (4,523 رأی)</span></div>
+                        <div class="small">⏱️ {{ learn.learn_time }} ساعت ویدئو</div>
+                        <div class="small">👥 21,345 دانشجو</div>
+                        {% if learn.discount_price == 0 %}
+                            <div class="price-badge" aria-label="قیمت دوره">رایگان</div>
+                        {% else %}
+                            <div class="price-badge" aria-label="قیمت دوره">
+                                {{ learn.discount_price|point }} تومان
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- TEACHER (30%) and COURSE DESCRIPTION (70%) -->
+            <section class="details" aria-label="اطلاعات مدرس و توضیحات دوره">
+                <!-- teacher -->
+                <aside class="teacher glass_morphism_2" aria-labelledby="teacher-name">
+                    <div class="profile">
+                        <img src="{% if learn.teacher.user.image %}{{ learn.teacher.user.image.url }}{% else %}{% static "images/user.svg" %}{% endif %}" alt="تصویر مدرس">
+                        <div>
+                            <h3 id="teacher-name">{{ learn.teacher.user.get_full_name }}</h3>
+                            <div class="role">{{ learn.teacher.user.job }}</div>
+                        </div>
+                    </div>
+
+                    <div class="meta-row" style="margin-top:12px">
+                        <div class="rating">4.8 ★</div>
+                        <div class="small">12 سال تجربه</div>
+                        <div class="small">دوره‌های قبلی: 8 دوره</div>
+                    </div>
+
+                    <div class="bio" aria-label="بیوگرافی مدرس">{{ learn.teacher.user.bio }}</div>
+                </aside>
+
+                <!-- course description -->
+                <article class="course-desc glass_morphism" aria-labelledby="course-desc-title">
+                    <div class="lead" id="course-desc-title">توضیحات کامل دوره</div>
+
+                    <div class="long">
+                        {{ learn.description }}
+                    </div>
+                </article>
+            </section>
+            <!-- SYLLABUS -->
+            <h3 class="headline">سر فصل‌ها</h3>
+            <section aria-label="سر فصل‌ها و جلسات" class="container_list">
+                <img src="{% static 'images/back4.jpg' %}" alt="" class="back_image_2">
+                <div class="syllabus" role="list">
+                    {% for headline in learn.headlines.all %}
+                    	<div class="chapter glass_morphism_2" role="listitem" aria-labelledby="ch1">
+                        <h4 id="ch1">{{ forloop.counter }} — {{ headline.title }}</h4>
+                        <div class="small">۵ قسمت</div>
+                        <ul class="lesson-list">
+                            {% for film in headline.films.all %}
+                            	<li>{{ film.title }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+
+
+                </div>
+            </section>
+
+
+            <!-- REVIEWS -->
+            <section aria-label="نظرات کاربران">
+                <h2 style="margin:0 0 12px 0;color:var(--dark-gray)">نظرات</h2>
+
+                <div class="reviews" role="list">
+                    <div class="review" role="listitem">
+                        <img src="https://images.unsplash.com/photo-1545996124-1b7e4b7f27d1?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=b8a1a2c3d4e5f67890123456789abcd0"
+                             alt="عکس کاربر">
+                        <div class="rmeta">
+                            <div class="rname">سارا محمدی</div>
+                            <div class="small muted">دانشجو — ۱۴ شهریور ۱۴۰۳</div>
+                            <div class="rtext">دوره بسیار کاربردی و پروژه‌محور بود. مثال‌ها شفاف و تمرین‌ها واقعاً مفید
+                                بودند. پشتیبانی مدرس هم سریع پاسخ می‌دهد.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review" role="listitem">
+                        <img src="https://images.unsplash.com/photo-1544005313-1ac7b3c6d9b2?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=abcdef1234567890abcdef1234567890"
+                             alt="عکس کاربر">
+                        <div class="rmeta">
+                            <div class="rname">مهدی عباسی</div>
+                            <div class="small muted">دانشجو — ۲۲ آبان ۱۴۰۳</div>
+                            <div class="rtext">از سطح صفر تا پروژه همه چیز پوشش داده شد. مخصوصاً بخش وب و دیتابیس برای
+                                من مفید بود.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review" role="listitem">
+                        <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=123456abcdef7890abcd1234567890ef"
+                             alt="عکس کاربر">
+                        <div class="rmeta">
+                            <div class="rname">علی کریمی</div>
+                            <div class="small muted">دانشجو — ۳۰ آذر ۱۴۰۳</div>
+                            <div class="rtext">تمرین‌ها و پروژه‌ها باعث شد مفاهیم بهتر در ذهنم بنشیند. ارزش خرید داشت.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+{% endblock %}

@@ -46,25 +46,20 @@
         <main class="main">
 
             <div class="video-container">
-                <video controls poster="thumbnail.jpg">
-                    <source src="sample.mp4" type="video/mp4">
+                <video controls poster="{{ learn.image.url }}">
+                    <source src="{{ film.film.url }}" type="video/mp4">
                     مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
                 </video>
             </div>
 
             <div class="section">
                 <h3>توضیحات جلسه</h3>
-                <p>
-                    در این جلسه با مفاهیم اولیه زبان پایتون آشنا می‌شویم.
-                    یاد می‌گیریم چطور محیط توسعه را آماده کنیم، اولین برنامه را بنویسیم و کد را اجرا کنیم.
-                    همچنین نکات مهم در مورد خطاها و نحوه دیباگ کردن را بررسی می‌کنیم.
-                </p>
+                <p>{{ film.description }}</p>
             </div>
 
             <div class="section">
                 <h3>امتیاز به این جلسه</h3>
                 <div class="rating">
-                    <span>امتیاز شما:</span>
                     <div class="stars">
                         <input type="radio" id="star5" name="rating" value="5"/><label for="star5">★</label>
                         <input type="radio" id="star4" name="rating" value="4"/><label for="star4">★</label>

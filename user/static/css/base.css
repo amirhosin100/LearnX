@@ -42,3 +42,6 @@ ul,ol{
     border: 2px solid var(--border);
     backdrop-filter: blur(10px);
 }
+img::selection{
+    background-color: transparent;
+}

@@ -87,6 +87,7 @@ video {
     width: 100%;
     height: 450px;
     display: block;
+    object-fit: cover;
 }
 
 .section {
@@ -134,7 +135,8 @@ video {
 }
 
 .rating-text {
-    display: inline-block;
+
+    display: none;
     margin-left: 1rem;
     vertical-align: middle;
     color: var(--gray);
