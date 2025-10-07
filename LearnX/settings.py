@@ -77,18 +77,14 @@ WSGI_APPLICATION = 'LearnX.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': "Learn",
-    #     "USER": "amir",
-    #     "PASSWORD" :"amir$%^hosin",
-    #     "PORT":"5432",
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        "NAME": BASE_DIR / 'db.sqlite3',
-
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': "Learn",
+        "USER": "amir",
+        "PASSWORD" :"amir$%^hosin",
+        "PORT":"5432",
     }
+
 }
 
 

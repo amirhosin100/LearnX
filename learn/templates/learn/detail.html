@@ -1,0 +1,100 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "css/detail.css" %}">
+{% endblock %}
+{% block title %}{% endblock %}
+{% block sub_content %}
+    <div class="container_flow">
+        <img src="{% static "images/back_header.jpg" %}" alt="">
+    </div>
+    <div class="main_container">
+        <!-- سایدبار -->
+        <aside class="sidebar">
+            <h2>سرفصل‌های دوره</h2>
+
+            <div class="chapter">
+                <div class="chapter-title">فصل ۱: مبانی پایتون</div>
+                <ul class="video-list">
+                    <li>جلسه ۱: معرفی دوره</li>
+                    <li>جلسه ۲: نصب پایتون</li>
+                    <li>جلسه ۳: اولین کد</li>
+                </ul>
+            </div>
+
+            <div class="chapter">
+                <div class="chapter-title">فصل ۲: ساختار داده‌ها</div>
+                <ul class="video-list">
+                    <li>جلسه ۱: لیست‌ها و تاپل‌ها</li>
+                    <li>جلسه ۲: دیکشنری‌ها</li>
+                    <li>جلسه ۳: مجموعه‌ها</li>
+                </ul>
+            </div>
+
+            <div class="chapter">
+                <div class="chapter-title">فصل ۳: پروژه نهایی</div>
+                <ul class="video-list">
+                    <li>جلسه ۱: طراحی پروژه</li>
+                    <li>جلسه ۲: پیاده‌سازی</li>
+                    <li>جلسه ۳: رفع باگ</li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- محتوای اصلی -->
+        <main class="main">
+
+            <div class="video-container">
+                <video controls poster="thumbnail.jpg">
+                    <source src="sample.mp4" type="video/mp4">
+                    مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+                </video>
+            </div>
+
+            <div class="section">
+                <h3>توضیحات جلسه</h3>
+                <p>
+                    در این جلسه با مفاهیم اولیه زبان پایتون آشنا می‌شویم.
+                    یاد می‌گیریم چطور محیط توسعه را آماده کنیم، اولین برنامه را بنویسیم و کد را اجرا کنیم.
+                    همچنین نکات مهم در مورد خطاها و نحوه دیباگ کردن را بررسی می‌کنیم.
+                </p>
+            </div>
+
+            <div class="section">
+                <h3>امتیاز به این جلسه</h3>
+                <div class="rating">
+                    <span>امتیاز شما:</span>
+                    <div class="stars">
+                        <input type="radio" id="star5" name="rating" value="5"/><label for="star5">★</label>
+                        <input type="radio" id="star4" name="rating" value="4"/><label for="star4">★</label>
+                        <input type="radio" id="star3" name="rating" value="3"/><label for="star3">★</label>
+                        <input type="radio" id="star2" name="rating" value="2"/><label for="star2">★</label>
+                        <input type="radio" id="star1" name="rating" value="1"/><label for="star1">★</label>
+                    </div>
+                    <span class="rating-text" id="ratingValue">–</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>پرسش از مدرس</h3>
+                <textarea placeholder="سؤال خود را اینجا بنویسید..."></textarea>
+                <button>ارسال پرسش</button>
+            </div>
+
+        </main>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        const stars = document.querySelectorAll('.stars input');
+        const ratingText = document.getElementById('ratingValue');
+        stars.forEach(star => {
+            star.addEventListener('change', () => {
+                ratingText.textContent = star.value + " از 5";
+                console.log("امتیاز انتخاب شده:", star.value);
+                // اینجا می‌تونی درخواست AJAX بزنی به بک‌اند تا امتیاز ذخیره بشه
+            });
+        });
+    </script>
+{% endblock %}

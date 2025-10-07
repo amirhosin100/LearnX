@@ -1,9 +1,63 @@
 {% extends "base/full_base.html" %}
-
+{% load static %}
+{% block title %}
+    ثبت نام
+{% endblock %}
+{% block head %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/register.css" %}">
+{% endblock %}
 {% block content %}
-	<form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">تایید</button>
-    </form>
+    <main>
+        <div class="container_right">
+            <img src="" alt="">
+        </div>
+        <div class="container">
+            <h1>به LearnX خوش آمدید!</h1>
+            <form method="post" class="register_form">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="container_label c_user">
+                        <label for="username">نام کاربری:</label>
+                        <input type="text" id="username" name="username">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="container_label">
+                        <label for="first_name">نام:</label>
+                        <input type="text" id="first_name" name="first_name">
+                    </div>
+                    <div class="container_label">
+                        <label for="last_name">نام خانوادگی:</label>
+                        <input type="text" id="last_name" name="last_name">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container_label">
+                        <label for="email">ایمیل:</label>
+                        <input type="email" name="email" id="email">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="container_label">
+                        <label for="password">رمز عبور:</label>
+                        <input type="password" name="password" id="password">
+                    </div>
+                    <div class="container_label">
+                        <label for="password_2">تکرار رمز عبور:</label>
+                        <input type="password" name="password2" id="password_2">
+                    </div>
+                </div>
+
+
+                <button type="submit">ثبت نام</button>
+            </form>
+            <p class="more">قبلا ثبت نام کرده اید؟ <a href="{% url "user:login" %}">ورود</a></p>
+        </div>
+        <div class="container_left">
+            <img src="../images/back.png" alt="">
+        </div>
+
+    </main>
 {% endblock %}

@@ -1,9 +1,33 @@
 {% extends "base/full_base.html" %}
-
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+{% block title %}
+    ورود
+{% endblock %}
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">تایید</button>
-    </form>
+    <main>
+        <div class="background">
+            <div class="part part1"></div>
+            <div class="part part2"></div>
+            <div class="part part3"></div>
+            <div class="part part4"></div>
+        </div>
+        <div class="container">
+            <h1>خوش آمدید</h1>
+            <form method="post" class="login_form">
+                {% csrf_token %}
+                <label for="username">نام کاربری</label>
+                <input type="text" id="username" name="username">
+                <label for="password">رمز عبور</label>
+                <input type="password" id="password" name="password">
+                <button type="submit">ورود</button>
+            </form>
+            <div class="other">
+                <p>ثبت نام نکرده اید؟ <a href="#" class="register">ثبت نام</a></p>
+                <a href="#">رمز عبور خود را فراموش کرده اید؟</a>
+            </div>
+        </div>
+    </main>
 {% endblock %}
