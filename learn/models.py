@@ -11,6 +11,9 @@ class Learn(models.Model):
     score = models.FloatField(verbose_name="امتیاز")
     learn_time = models.PositiveIntegerField(verbose_name="مدت زمان آموزش")
 
+    price = models.PositiveIntegerField("قیمت")
+    precent_off = models.PositiveIntegerField("درصد تخفیف")
+    discount_price = models.PositiveIntegerField("قیمت نهایی")
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
 
@@ -41,11 +44,14 @@ class Headline(models.Model):
     def __str__(self):
         return self.title
 
+def create_url_for_film(instance,filename):
+    return f'learns/films/{instance.headline.learn.title}/{instance.headline.title}/{filename}'
+
 class LearnFilms(models.Model):
     headline = models.ForeignKey(Headline,models.CASCADE,"films")
     title = models.CharField(max_length=255,verbose_name="عنوان")
     description = models.TextField(max_length=1200,verbose_name="توضیحات")
-    film = models.FileField(upload_to="learns/films/%Y/%m/%d")
+    film = models.FileField(upload_to=create_url_for_film)
 
     score = models.FloatField(default=0,verbose_name="امتیاز")
     create = models.DateTimeField(auto_now_add=True)
