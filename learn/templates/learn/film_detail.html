@@ -51,25 +51,83 @@
                     مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
                 </video>
             </div>
-
-            <div class="section">
-                <h3>توضیحات جلسه</h3>
-                <p>{{ film.description }}</p>
-            </div>
-
-            <div class="section">
-                <h3>امتیاز به این جلسه</h3>
-                <div class="rating">
-                    <div class="stars">
-                        <input type="radio" id="star5" name="rating" value="5"/><label for="star5">★</label>
-                        <input type="radio" id="star4" name="rating" value="4"/><label for="star4">★</label>
-                        <input type="radio" id="star3" name="rating" value="3"/><label for="star3">★</label>
-                        <input type="radio" id="star2" name="rating" value="2"/><label for="star2">★</label>
-                        <input type="radio" id="star1" name="rating" value="1"/><label for="star1">★</label>
+            <div class="author_and_description">
+                <div class="section description">
+                    <h3>توضیحات جلسه</h3>
+                    <p>{{ film.description }}</p>
+                </div>
+                <div class="section author">
+                    <div class="container_image_author">
+                        <img src="{{ learn.teacher.user.image.url }}" alt="تصویر مدرس">
                     </div>
-                    <span class="rating-text" id="ratingValue">–</span>
+                    <h3>{{ learn.teacher.user.get_full_name }}</h3>
+                    <p>{{ learn.teacher.user.job }}</p>
+                    <p>{{ learn.teacher.user.bio }}</p>
                 </div>
             </div>
+
+            <div class="score">
+                <div class="section user_score">
+                    <h3>امتیاز به این جلسه</h3>
+
+                    <div class="rating">
+                        <div class="stars">
+                            <input type="radio" id="star5" name="rating" value="5"/><label for="star5">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 class="size-6">
+                                <path fill-rule="evenodd"
+                                      d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                        </label>
+                            <input type="radio" id="star4" name="rating" value="4"/><label for="star4">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 class="size-6">
+                                <path fill-rule="evenodd"
+                                      d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                        </label>
+                            <input type="radio" id="star3" name="rating" value="3"/><label for="star3">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 class="size-6">
+                                <path fill-rule="evenodd"
+                                      d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                        </label>
+                            <input type="radio" id="star2" name="rating" value="2"/><label for="star2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 class="size-6">
+                                <path fill-rule="evenodd"
+                                      d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                        </label>
+                            <input type="radio" id="star1" name="rating" value="1"/><label for="star1">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 class="size-6">
+                                <path fill-rule="evenodd"
+                                      d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                        </label>
+                        </div>
+                        <span class="rating-text" id="ratingValue"></span>
+                    </div>
+                    <i class="score">{% if film in request.user.gived_score_to_films.all %}نظر داده اید{% endif %}</i>
+                </div>
+                <div class="section all_score">
+                    <h3>امتیاز کل</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                        <path fill-rule="evenodd"
+                              d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                              clip-rule="evenodd"/>
+                    </svg>
+                    <span id="score_film">{{ film.number_score }}</span>
+                </div>
+            </div>
+
 
             <div class="section">
                 <h3>پرسش از مدرس</h3>
@@ -81,6 +139,15 @@
     </div>
 {% endblock %}
 {% block script %}
+    {% if film in request.user.gived_score_to_films.all %}
+        <script>
+            const num = {{ number_score }};
+            const radio = document.getElementById(`star${num}`);
+            radio.checked = true;
+        </script>
+    {% endif %}
+
+    <script src="{% static "js/jquery.min.js" %}"></script>
     <script>
         const stars = document.querySelectorAll('.stars input');
         const ratingText = document.getElementById('ratingValue');
@@ -88,8 +155,17 @@
             star.addEventListener('change', () => {
                 ratingText.textContent = star.value + " از 5";
                 console.log("امتیاز انتخاب شده:", star.value);
-                // اینجا می‌تونی درخواست AJAX بزنی به بک‌اند تا امتیاز ذخیره بشه
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'learn:send_score' %}",
+                    data: {"film_id": {{ film.id }}, "score": star.value, "csrfmiddlewaretoken": "{{ csrf_token }}"},
+                    success: function (data) {
+                        $("#score_film").text(data.score);
+                    }
+                });
             });
         });
+
     </script>
+
 {% endblock %}
