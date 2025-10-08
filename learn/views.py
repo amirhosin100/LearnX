@@ -1,5 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
+from django.db.models import Prefetch
 
 from .models import *
 # Create your views here.
@@ -7,7 +8,16 @@ def learn_list(request):
     return HttpResponse("Learn List")
 
 def learn_detail(request,slug_learn):
-    learn = get_object_or_404(Learn,slug=slug_learn)
+    learn = get_object_or_404(
+        Learn.objects.select_related(
+            "teacher__user"
+        ).prefetch_related(
+            Prefetch(
+                'headlines',
+                queryset=Headline.objects.prefetch_related('films')
+            )
+        ),slug=slug_learn
+    )
     context = {
         "learn": learn,
     }

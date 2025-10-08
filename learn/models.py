@@ -91,7 +91,7 @@ class FilmScores(models.Model):
         (4,4),
         (5,5),
     )
-    score = models.PositiveIntegerField("امتیاز",choices=SCORES,max_length=1,default=1)
+    score = models.PositiveIntegerField("امتیاز",choices=SCORES,default=1)
 
     def __str__(self):
         return f"{self.user_from.username} : {self.score}"

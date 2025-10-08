@@ -7,7 +7,7 @@ from learn.models import *
 # Create your views here.
 
 def index(request):
-    courses = Learn.objects.all()[:4]
+    courses = Learn.objects.all().select_related("teacher__user")
     context = {
         "courses": courses,
     }
