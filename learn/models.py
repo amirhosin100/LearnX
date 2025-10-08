@@ -3,6 +3,7 @@ from django_resized import ResizedImageField
 from user.models import Teacher,User
 from django.urls import reverse
 from django_jalali.db import models as jmodels
+from django.db.models import Count,Avg
 
 
 # Create your models here.
@@ -57,13 +58,15 @@ def create_url_for_film(instance,filename):
     return f'learns/films/{instance.headline.learn.title}/{instance.headline.title}/{filename}'
 
 class LearnFilms(models.Model):
-    headline = models.ForeignKey(Headline,models.CASCADE,"films")
+    headline = models.ForeignKey(Headline,models.CASCADE,"films",verbose_name="سرفصل")
     title = models.CharField(max_length=255,verbose_name="عنوان")
     description = models.TextField(max_length=1200,verbose_name="توضیحات")
-    film = models.FileField(upload_to=create_url_for_film)
+    film = models.FileField("فیلم",upload_to=create_url_for_film)
 
     create = jmodels.jDateTimeField(auto_now_add=True)
     scores = models.ManyToManyField(User,through="FilmScores")
+    number_score = models.FloatField("امتیاز",default=0)
+
     class Meta:
         ordering = ['-create']
         indexes = [
@@ -82,13 +85,26 @@ class FilmScores(models.Model):
     film_to = models.ForeignKey(LearnFilms,models.CASCADE,"rel_to_set")
     user_from = models.ForeignKey(User,models.CASCADE,"rel_from_set")
     SCORES = (
-        ("1",1),
-        ("2",2),
-        ("3",3),
-        ("4",4),
-        ("5",5),
+        (1,1),
+        (2,2),
+        (3,3),
+        (4,4),
+        (5,5),
     )
-    score = models.CharField("امتیاز",choices=SCORES,max_length=1,default=1)
+    score = models.PositiveIntegerField("امتیاز",choices=SCORES,max_length=1,default=1)
 
     def __str__(self):
         return f"{self.user_from.username} : {self.score}"
+
+    class Meta:
+        verbose_name = "امتیاز"
+        verbose_name_plural = "امتیازات"
+
+    def save(self,*args,**kwargs):
+        super().save(*args, **kwargs)
+        film = self.film_to
+        scores = FilmScores.objects.filter(film_to=film)
+        number = scores.aggregate(Avg("score"))
+        film.number_score = number["score__avg"]
+        film.save()
+
