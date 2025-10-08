@@ -13,33 +13,18 @@
         <!-- سایدبار -->
         <aside class="sidebar">
             <h2>سرفصل‌های دوره</h2>
+            {% for headline in learn.headlines.all %}
+            	<div class="chapter">
+                <div class="chapter-title">فصل {{forloop.counter}}: {{ headline.title }}</div>
 
-            <div class="chapter">
-                <div class="chapter-title">فصل ۱: مبانی پایتون</div>
                 <ul class="video-list">
-                    <li>جلسه ۱: معرفی دوره</li>
-                    <li>جلسه ۲: نصب پایتون</li>
-                    <li>جلسه ۳: اولین کد</li>
+                    {% for film in headline.films.all %}
+                        <li><a href="{{ film.get_absolute_url }}">جلسه {{forloop.counter}}: {{ film.title }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
+            {% endfor %}
 
-            <div class="chapter">
-                <div class="chapter-title">فصل ۲: ساختار داده‌ها</div>
-                <ul class="video-list">
-                    <li>جلسه ۱: لیست‌ها و تاپل‌ها</li>
-                    <li>جلسه ۲: دیکشنری‌ها</li>
-                    <li>جلسه ۳: مجموعه‌ها</li>
-                </ul>
-            </div>
-
-            <div class="chapter">
-                <div class="chapter-title">فصل ۳: پروژه نهایی</div>
-                <ul class="video-list">
-                    <li>جلسه ۱: طراحی پروژه</li>
-                    <li>جلسه ۲: پیاده‌سازی</li>
-                    <li>جلسه ۳: رفع باگ</li>
-                </ul>
-            </div>
         </aside>
 
         <!-- محتوای اصلی -->
@@ -58,7 +43,7 @@
                 </div>
                 <div class="section author">
                     <div class="container_image_author">
-                        <img src="{{ learn.teacher.user.image.url }}" alt="تصویر مدرس">
+                        <img src="{% if learn.teacher.user.image %}{{ learn.teacher.user.image.url }}{% else %}{% static "images/user.svg" %}{% endif %}" alt="تصویر مدرس">
                     </div>
                     <h3>{{ learn.teacher.user.get_full_name }}</h3>
                     <p>{{ learn.teacher.user.job }}</p>

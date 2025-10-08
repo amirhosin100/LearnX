@@ -44,9 +44,9 @@ class Headline(models.Model):
     create = jmodels.jDateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-create']
+        ordering = ['create']
         indexes = [
-            models.Index(fields=['-create'])
+            models.Index(fields=['create'])
         ]
         verbose_name = "سرفصل"
         verbose_name_plural = "سرفصل ها"
@@ -68,9 +68,9 @@ class LearnFilms(models.Model):
     number_score = models.FloatField("امتیاز",default=0)
 
     class Meta:
-        ordering = ['-create']
+        ordering = ['create']
         indexes = [
-            models.Index(fields=['-create'])
+            models.Index(fields=['create'])
         ]
         verbose_name = "فیلم"
         verbose_name_plural = "فیلم ها"

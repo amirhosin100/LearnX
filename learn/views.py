@@ -26,8 +26,16 @@ def learn_detail(request,slug_learn):
     return render(request,"learn/learn_detail.html",context)
 
 def film_detail(request,slug_learn,id):
-    film = get_object_or_404(LearnFilms,id=id,headline__learn__slug=slug_learn)
-    learn = get_object_or_404(Learn,slug=slug_learn)
+    film = get_object_or_404(LearnFilms.objects,id=id,headline__learn__slug=slug_learn)
+    learn = get_object_or_404(
+        Learn.objects.select_related("teacher__user").prefetch_related(
+            Prefetch(
+                "headlines",
+                queryset=Headline.objects.prefetch_related("films")
+            )
+        ),
+        slug=slug_learn)
+
     number_score = 0
     if film in request.user.gived_score_to_films.all() :
         number_score =FilmScores.objects.get(film_to=film,user_from=request.user).score
