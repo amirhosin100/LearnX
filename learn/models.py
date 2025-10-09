@@ -5,6 +5,8 @@ from django.urls import reverse
 from django_jalali.db import models as jmodels
 from django.db.models import Count,Avg
 
+def create_url_for_film(instance,filename):
+    return f'learns/films/{instance.headline.learn.title}/{instance.headline.title}/{filename}'
 
 # Create your models here.
 class Learn(models.Model):
@@ -54,9 +56,6 @@ class Headline(models.Model):
     def __str__(self):
         return f"{self.learn.title} : {self.title}"
 
-def create_url_for_film(instance,filename):
-    return f'learns/films/{instance.headline.learn.title}/{instance.headline.title}/{filename}'
-
 class LearnFilms(models.Model):
     headline = models.ForeignKey(Headline,models.CASCADE,"films",verbose_name="سرفصل")
     title = models.CharField(max_length=255,verbose_name="عنوان")
@@ -82,8 +81,8 @@ class LearnFilms(models.Model):
         return f"{self.headline.learn.title} : {self.headline.title} : {self.title}"
 
 class FilmScores(models.Model):
-    film_to = models.ForeignKey(LearnFilms,models.CASCADE,"rel_to_set")
-    user_from = models.ForeignKey(User,models.CASCADE,"rel_from_set")
+    film_to = models.ForeignKey(LearnFilms,models.CASCADE,"score_to_set")
+    user_from = models.ForeignKey(User,models.CASCADE,"film_from_set")
     SCORES = (
         (1,1),
         (2,2),

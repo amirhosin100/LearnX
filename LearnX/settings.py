@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'user.apps.UserConfig',
     'learn.apps.LearnConfig',
+    'comment.apps.CommentConfig',
     'django_jalali',
     "debug_toolbar",
     'django.contrib.admin',
