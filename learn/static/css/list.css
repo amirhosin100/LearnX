@@ -1,0 +1,139 @@
+main{
+    display: flex;
+    width: 100%;
+    gap: 50px;
+}
+.section {
+    background-color: white;
+    box-shadow: var(--shadow);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+}
+.section h3 {
+    color: var(--dark-blue);
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--light_blue);
+    display: inline-block;
+    padding-bottom: 5px;
+}
+.content_right{
+    width: 25%;
+}
+.content_left{
+    width: 75%;
+}
+
+/*for learn */
+.learns,article {
+    padding: 20px;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff74;
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--border);
+}
+.learns__header,.article_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.learns__content,.article_content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.learn,.article {
+    width: calc(33.33% - 20px);
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    border: 1px solid var(--light_blue);
+    transition: all 300ms ease;
+}
+.learn:hover,.article:hover{
+    box-shadow: var(--shadow);
+    transform: translateY(-5px);
+}
+
+.container_image_learn,.container_image_article{
+    width: 100%;
+    height: 200px;
+    margin-bottom: 10px;
+
+}
+.image_learn,.image_article {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+.learn_title {
+    color: var(--light_blue);
+}
+.leran_detail,.article_detail {
+    height: 50px;
+    overflow: hidden;
+}
+.learn_more,.article_more {
+    border-top: 1px solid var(--light_blue);
+    margin: 5px -10px 0;
+    padding: 5px 10px 0;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.learn_price {
+    display: block;
+    width: 100%;
+    color: var(--light_blue);
+}
+.learn_score {
+    display: flex;
+    gap: 4px;
+}
+.learn_score svg{
+    width: 20px;
+    height: 20px;
+    color: gold;
+}
+.price_main{
+    color: var(--gray);
+    position: relative;
+}
+.price_main::after{
+    content: "";
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 40%;
+    height: 1px;
+    background-color: var(--gray);
+}
+.prices{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+}
+.number_and_teacher{
+    display: flex;
+    justify-content: space-between;
+}
+
+.number{
+    color: white;
+    background-color: var(--light_blue);
+    border-radius: 4px;
+    display: inline-block;
+    padding: 3px;
+    margin-top: 2px;
+}
+.author,.free{
+    color: black;
+}
+/*  end learn */

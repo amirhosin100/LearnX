@@ -4,11 +4,9 @@
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static "css/detail.css" %}">
 {% endblock %}
-{% block title %}{% endblock %}
+{% block title %}{{ film.title }}{% endblock %}
 {% block sub_content %}
-    <div class="container_flow">
-        <img src="{% static "images/back_header.jpg" %}" alt="">
-    </div>
+
     <div class="main_container">
         <!-- سایدبار -->
         <aside class="sidebar">

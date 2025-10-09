@@ -7,10 +7,13 @@
     <script src="{% static "js/header.js" %}"></script>
 {% endblock %}
 {% block content %}
+    <div class="container_flow">
+        <img src="{% static "images/back_header.jpg" %}" alt="">
+    </div>
     <header>
         <ul class="container_menu">
             <li class="menu_button"><a href="{% url "user:index" %}">صفحه اصلی</a></li>
-            <li class="menu_button"><a href="#">آموزش ها </a></li>
+            <li class="menu_button"><a href="{% url 'learn:learn_list' %}">آموزش ها </a></li>
             <li class="menu_button"><a href="#">مقالات</a></li>
             <li class="menu_button"><a href="#">درباره ما</a></li>
         </ul>

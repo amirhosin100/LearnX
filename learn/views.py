@@ -1,14 +1,24 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse,JsonResponse
 from django.db.models import Prefetch
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
-
+from django.core.paginator import Paginator
 from .models import *
 from comment.models import CommentForLearn,AnswerForFilm
+
 # Create your views here.
 def learn_list(request):
-    return HttpResponse("Learn List")
+    page = request.GET.get('page',1)
+    learns = Learn.objects.select_related("teacher__user")
+    paginator = Paginator(learns, 4)
+    learns = paginator.get_page(page)
+
+    context = {
+        'learns': learns,
+    }
+    return render(request,"learn/list.html",context)
 
 def learn_detail(request,slug_learn):
     learn = get_object_or_404(

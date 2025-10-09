@@ -1,0 +1,67 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}
+    لیست دوره ها
+{% endblock %}
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "css/list.css" %}">
+{% endblock %}
+{% block sub_content %}
+    <h3>لیست دوره ها</h3>
+    <main>
+        <div class="section content_right">
+
+        </div>
+        <div class="section content_left">
+            <div class="learns__content">
+                    {% for course in learns %}
+                        <div class="learn">
+                        <div class="container_image_learn">
+                            <img src="{{course.image.url}}" alt="" class="image_learn">
+                        </div>
+                        <a href="{{ course.get_absolute_url }}">
+                            <h2 class="learn_title">{{ course.title }}</h2>
+                            <p class="leran_detail">{{ course.description }}</p>
+                        </a>
+                        <span class="learn_more">
+                            <span class="learn_price">
+                                <span class="prices">
+                                    <span class="all_price">
+                                        <span class="price_main">{{ course.price }}</span>
+                                        {% if course.discount_price != 0 %}
+                                        	<span class="price_off">{{ course.discount_price }} تومان</span>
+                                        {% endif %}
+
+                                    </span>
+                                    <span class="learn_score"><span class="free">5</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                     class="size-6">
+                                <path fill-rule="evenodd"
+                                      d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                                      clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                                </span>
+                                <span class="number_and_teacher">
+                                    {% if course.discount_price == 0 %}
+                                        <span class="number">رایگان</span>
+                                    {% else %}
+                                        <span class="number">%{{ course.precent_off }}</span>
+                                    {% endif %}
+
+                                    <span class="author">{{ course.teacher.user.get_full_name }}</span>
+                                </span>
+                            </span>
+
+                        </span>
+                    </div>
+                    {% endfor %}
+
+
+
+                </div>
+        </div>
+    </main>
+
+{% endblock %}
