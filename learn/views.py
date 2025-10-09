@@ -5,21 +5,27 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
 from .models import *
+from comment.models import CommentForLearn,AnswerForFilm
 # Create your views here.
 def learn_list(request):
     return HttpResponse("Learn List")
 
 def learn_detail(request,slug_learn):
     learn = get_object_or_404(
-        Learn.objects.select_related(
-            "teacher__user"
-        ).prefetch_related(
+        Learn.objects.select_related("teacher__user").
+        prefetch_related(
             Prefetch(
                 'headlines',
                 queryset=Headline.objects.prefetch_related('films')
             )
-        ),slug=slug_learn
+        ).
+        prefetch_related(
+            Prefetch(
+                "comments",
+                queryset= CommentForLearn.publish.prefetch_related("user")
+            )),slug=slug_learn
     )
+
     context = {
         "learn": learn,
     }
@@ -37,12 +43,19 @@ def film_detail(request,slug_learn,id):
         slug=slug_learn)
 
     number_score = 0
+    asks = request.user.get_asks(film).prefetch_related(
+        Prefetch(
+            "answers",
+            queryset=AnswerForFilm.objects.prefetch_related("user")
+        )
+    )
     if film in request.user.gived_score_to_films.all() :
         number_score =FilmScores.objects.get(film_to=film,user_from=request.user).score
     context = {
         "film": film,
         "learn": learn,
         "number_score": number_score,
+        "asks": asks,
     }
     return render(request,"learn/film_detail.html",context)
 

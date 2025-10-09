@@ -11,6 +11,11 @@ class User(AbstractUser):
     image = ResizedImageField(verbose_name="تصویر",upload_to="users/images/",blank=True,size=[500,500],crop=["middle","center"],quality=100)
     gived_score_to_films = models.ManyToManyField("learn.LearnFilms",through="learn.FilmScores")
 
+    def get_asks(self,film):
+        asks = self.film_asks.filter(film=film)
+        return asks
+
+
 
 class Teacher(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,related_name="teacher",verbose_name="کاربر")

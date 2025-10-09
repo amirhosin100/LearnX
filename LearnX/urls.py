@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('user.urls',namespace='user')),
     path("learn/",include("learn.urls",namespace="learn")),
+    path("comment/",include("comment.urls",namespace="comment")),
 
 ]
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

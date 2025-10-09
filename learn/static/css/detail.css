@@ -225,3 +225,38 @@ video {
 .main_container button:hover {
     background-color: var(--light_blue);
 }
+
+.section .comment{
+    display: flex;
+    gap: 20px;
+}
+.section .comment i {
+    color: var(--gray);
+}
+
+/* for ask */
+
+.asks{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-right: 30px;
+}
+.ask{
+    padding: 10px;
+    border: 1px solid var(--light_blue);
+    border-radius: 12px;
+
+}
+.ask .header{
+    color: var(--dark-blue);
+}
+.answer_user{
+    color: var(--dark-blue);
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--dark-blue);
+
+
+}

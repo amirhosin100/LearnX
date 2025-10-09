@@ -2,6 +2,10 @@ from django.db import models
 from django_jalali.db import models as jmodels
 # Create your models here.
 
+class CommentForLearnManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(status=True)
+
 class CommentForLearn(models.Model):
     user = models.ForeignKey("user.User", on_delete=models.CASCADE,
                              related_name='learn_comments',verbose_name="کاربر")
@@ -13,6 +17,10 @@ class CommentForLearn(models.Model):
 
     create = jmodels.jDateTimeField(auto_now_add=True)
 
+    status = models.BooleanField(default=False,verbose_name="وضعیت")
+
+    objects = jmodels.jManager()
+    publish = CommentForLearnManager()
     class Meta:
         ordering = ['-create']
         indexes = [

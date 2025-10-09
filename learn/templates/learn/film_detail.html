@@ -100,7 +100,7 @@
                         </div>
                         <span class="rating-text" id="ratingValue"></span>
                     </div>
-                    <i class="score">{% if film in request.user.gived_score_to_films.all %}نظر داده اید{% endif %}</i>
+                    <i class="score">{% if number_score %}نظر داده اید{% endif %}</i>
                 </div>
                 <div class="section all_score">
                     <h3>امتیاز کل</h3>
@@ -115,16 +115,40 @@
 
 
             <div class="section">
-                <h3>پرسش از مدرس</h3>
-                <textarea placeholder="سؤال خود را اینجا بنویسید..."></textarea>
-                <button>ارسال پرسش</button>
+                <div class="comment">
+                    <h3>پرسش از مدرس</h3>
+                    <i id="result"></i>
+                </div>
+                <textarea placeholder="سؤال خود را اینجا بنویسید..." id="message"></textarea>
+                <button type="button" id="send_ask">ارسال پرسش</button>
+            </div>
+            <div class="section">
+                <h3>سوالات شما</h3>
+                <div class="asks">
+                    {% for ask in asks.all %}
+                    <div class="ask">
+                        <p class="header">{{ ask.content|linebreaks }}</p>
+                        <h3>پاسخ ها</h3>
+                        {% for answer in ask.answers.all %}
+                            <p class="answer_user">{{ answer.user.get_full_name }}
+                            {% if answer.user == learn.teacher.user %}
+                                (مدرس)
+                            {% else %}
+                                (پشتیبان)
+                            {% endif %}
+                            </p>
+                            <p>{{ answer.content|linebreaks }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
 
         </main>
     </div>
 {% endblock %}
 {% block script %}
-    {% if film in request.user.gived_score_to_films.all %}
+    {% if number_score %}
         <script>
             const num = {{ number_score }};
             const radio = document.getElementById(`star${num}`);
@@ -151,6 +175,24 @@
             });
         });
 
+    </script>
+    <script>
+        $(document).ready(function (){
+            $("#send_ask").click(function () {
+                const textarea = document.getElementById("message");
+                const result = $("#result");
+
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'comment:send_ask_for_film' %}",
+                    data : { "film_id":{{ film.id }},"message":textarea.value,"csrfmiddlewaretoken":"{{ csrf_token }}"  } ,
+                    success:function (data) {
+                        result.text(data.message);
+                        textarea.value = "";
+                    }
+                });
+            });
+        });
     </script>
 
 {% endblock %}

@@ -4,8 +4,9 @@ from .models import *
 
 @admin.register(CommentForLearn)
 class CommentForLearnAdmin(admin.ModelAdmin):
-    list_display = ["user","learn","content"]
+    list_display = ["user","learn","content","status"]
     list_filter = ["create"]
+    list_editable = ["status"]
 
 @admin.register(AskForFilm)
 class AskForFilmAdmin(admin.ModelAdmin):

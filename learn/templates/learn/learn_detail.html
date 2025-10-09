@@ -52,7 +52,9 @@
                 <!-- teacher -->
                 <aside class="teacher glass_morphism_2" aria-labelledby="teacher-name">
                     <div class="profile">
-                        <img src="{% if learn.teacher.user.image %}{{ learn.teacher.user.image.url }}{% else %}{% static "images/user.svg" %}{% endif %}" alt="تصویر مدرس">
+                        <img src="
+                                {% if learn.teacher.user.image %}{{ learn.teacher.user.image.url }}{% else %}{% static "images/user.svg" %}{% endif %}"
+                             alt="تصویر مدرس">
                         <div>
                             <h3 id="teacher-name">{{ learn.teacher.user.get_full_name }}</h3>
                             <div class="role">{{ learn.teacher.user.job }}</div>
@@ -83,15 +85,15 @@
                 <img src="{% static 'images/back4.jpg' %}" alt="" class="back_image_2">
                 <div class="syllabus" role="list">
                     {% for headline in learn.headlines.all %}
-                    	<div class="chapter glass_morphism_2" role="listitem" aria-labelledby="ch1">
-                        <h4 id="ch1">{{ forloop.counter }} — {{ headline.title }}</h4>
-                        <div class="small">۵ قسمت</div>
-                        <ul class="lesson-list">
-                            {% for film in headline.films.all %}
-                            	<li>{{ film.title }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                        <div class="chapter glass_morphism_2" role="listitem" aria-labelledby="ch1">
+                            <h4 id="ch1">{{ forloop.counter }} — {{ headline.title }}</h4>
+                            <div class="small">{{ headline.films.count }} قسمت</div>
+                            <ul class="lesson-list">
+                                {% for film in headline.films.all %}
+                                    <li><a href="{{ film.get_absolute_url }}">{{ film.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     {% endfor %}
 
 
@@ -104,44 +106,56 @@
                 <h2 style="margin:0 0 12px 0;color:var(--dark-gray)">نظرات</h2>
 
                 <div class="reviews" role="list">
-                    <div class="review" role="listitem">
-                        <img src=""
-                             alt="عکس کاربر">
-                        <div class="rmeta">
-                            <div class="rname">سارا محمدی</div>
-                            <div class="small muted">دانشجو — ۱۴ شهریور ۱۴۰۳</div>
-                            <div class="rtext">دوره بسیار کاربردی و پروژه‌محور بود. مثال‌ها شفاف و تمرین‌ها واقعاً مفید
-                                بودند. پشتیبانی مدرس هم سریع پاسخ می‌دهد.
+                    {% for comment in learn.comments.all %}
+                        {% if not comment.super_comment %}
+                        <div class="review" role="listitem">
+                            <img src=""
+                                 alt="عکس کاربر">
+                            <div class="rmeta">
+                                <div class="rname">{{ comment.user.get_full_name }}</div>
+                                <div class="small muted"></div>
+                                <div class="rtext">{{ comment.content }}</div>
                             </div>
                         </div>
-                    </div>
+                        {% endif %}
+                    {% endfor %}
 
-                    <div class="review" role="listitem">
-                        <img src=""
-                             alt="عکس کاربر">
-                        <div class="rmeta">
-                            <div class="rname">مهدی عباسی</div>
-                            <div class="small muted">دانشجو — ۲۲ آبان ۱۴۰۳</div>
-                            <div class="rtext">از سطح صفر تا پروژه همه چیز پوشش داده شد. مخصوصاً بخش وب و دیتابیس برای
-                                من مفید بود.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="review" role="listitem">
-                        <img src=""
-                             alt="عکس کاربر">
-                        <div class="rmeta">
-                            <div class="rname">علی کریمی</div>
-                            <div class="small muted">دانشجو — ۳۰ آذر ۱۴۰۳</div>
-                            <div class="rtext">تمرین‌ها و پروژه‌ها باعث شد مفاهیم بهتر در ذهنم بنشیند. ارزش خرید داشت.
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
             </section>
 
+            <div class="section">
+                <div class="comment">
+                    <h3>نظر شما</h3>
+                    <i id="result"></i>
+                </div>
+
+                <textarea placeholder="نظر خود را بنوییسد..." id="textarea_comment"></textarea>
+                <button type="button" id="send_comment">ارسال نظر</button>
+            </div>
+
         </div>
     </main>
+{% endblock %}
+{% block script %}
+	<script src="{% static "js/jquery.min.js" %}"></script>
+    <script>
+        $(document).ready(function (){
+            $("#send_comment").click(function () {
+                const textarea = document.getElementById("textarea_comment");
+                const result = $("#result");
+                console.log(result);
+                $.ajax({
+                    type:"POST",
+                    url:"{% url 'comment:send_comment_for_learn' %}",
+                    data: {"learn_id":{{ learn.id }}, "comment":textarea.value ,"csrfmiddlewaretoken" :"{{ csrf_token }}"},
+                    success:function (data){
+                        result.text(data.status);
+                        textarea.value = "";
+
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
