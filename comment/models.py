@@ -9,7 +9,7 @@ class CommentForLearn(models.Model):
                               related_name='comments',verbose_name="آموزش")
 
     content = models.TextField(max_length=500,verbose_name="پیام")
-    sub_comment = models.ForeignKey("self", on_delete=models.CASCADE,verbose_name="super_comment",blank=True,null=True)
+    super_comment = models.ForeignKey("self", on_delete=models.CASCADE,related_name="sub_comment",blank=True,null=True)
 
     create = jmodels.jDateTimeField(auto_now_add=True)
 
