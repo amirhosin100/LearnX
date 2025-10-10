@@ -58,6 +58,12 @@ class AnswerForFilm(models.Model):
                             verbose_name="سوال",related_name="answers")
     content = models.TextField(max_length=500)
     create = jmodels.jDateTimeField(auto_now_add=True)
+
+    choices = (
+        ("TH","معلم"),
+        ("PO","پشتیبان"),
+    )
+    answer_by = models.CharField("پاسخ داده شده توسط",choices=choices,default="TH")
     class Meta:
         ordering = ['-create']
         indexes = [
@@ -65,6 +71,15 @@ class AnswerForFilm(models.Model):
         ]
         verbose_name = "پاسخ"
         verbose_name_plural = 'پاسخ ها'
+
+    def save(self,*args,**kwargs):
+        user = self.user
+        teacher = self.ask.film.headline.learn.teacher.user
+        if user != teacher:
+            self.answer_by = "PO"
+        else:
+            self.answer_by = "TH"
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.ask.content[:20]} : {self.content[:20]}"

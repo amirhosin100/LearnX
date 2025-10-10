@@ -17,14 +17,83 @@
     display: block;
     border: 1px solid var(--light_blue);
     border-radius: 12px;
+    margin-bottom: 10px;
 }
 .sidebar a h3 {
     font-weight: normal;
     font-size: 18px;
 }
-main{
+main ,.section_2,.box_with_shadow{
     width: 75%;
+    box-shadow: var(--shadow);
+    border-radius: 24px;
+    margin-top: 30px;
+}
+.box_with_shadow{
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
 }
 button{
     cursor: pointer;
+}
+.button_exit{
+    background-color: red;
+    padding: 10px;
+    color: #fff;
+    border-radius: 12px;
+    font-size: 16px;
+
+}
+.text_header{
+    text-align: center;
+    margin-top: 10px;
+    color: var(--light_blue);
+}
+.section{
+    border-radius: 24px;
+    border: 1px solid var(--light_blue);
+    padding: 20px;
+    margin: 10px;
+}
+.text_header_2,.text_header_3 {
+    color: var(--dark-blue);
+    border-bottom: 2px solid var(--light_blue);
+    display: inline-block;
+    font-size: 18px;
+}
+.text_header_3 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.container{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+.section_2{
+    padding: 10px;
+}
+.section_flex{
+    display: flex;
+    gap: 20px;
+}
+.left{
+    width: 70%;
+}
+.right{
+    width: 30%;
+}
+.right img{
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: 10px auto;
+    border: 2px solid var(--light_blue);
+    border-radius: 50%;
+}
+.empty{
+    color: var(--gray);
+    font-style: italic;
 }

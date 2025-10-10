@@ -1,0 +1,26 @@
+{% extends "profile/profile_base.html" %}
+{% block title %}
+	{{ block.super }}
+    سوالات شما
+{% endblock %}
+{% block profile_content %}
+	<h2 class="text_header">
+        سوالات شما
+    </h2>
+    <div>
+        {% for ask in user.film_asks.all %}
+        <div class="section">
+            <h3 class="text_header_3">سوال : </h3>
+            {{ ask.content|linebreaks }}
+            <div class="box_with_shadow">
+                {% for answer in ask.answers.all %}
+                    <h3 class="text_header">{{ answer.user.get_full_name }} ({% if answer.answer_by == "TH" %}مدرس{% else %}پشتیبان{% endif %})</h3>
+                    {{ answer.content|linebreaks }}
+                    {% empty %}
+                        <p class="empty">پاسخی وجود ندارد</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

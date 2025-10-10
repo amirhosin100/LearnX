@@ -3,6 +3,34 @@
 {% block title %}{{ block.super }}صفحه اصلی{% endblock %}
 
 {% block profile_content %}
-	<h2>صفحه اصلی پروفایل</h2>
-    <h3>{{ user.get_full_name }}</h3>
+    <h2 class="text_header">صفحه اصلی پروفایل</h2>
+    <div class="section section_flex">
+        <div class="section_2 left">
+            <div class="container">
+                <span class="text_header_2">نام: </span>
+                <span>{{ user.get_full_name }}</span>
+            </div>
+            <div class="container">
+                <span class="text_header_2">نام کاربری: </span>
+                <span>{{ user.username }}</span>
+            </div>
+            <div class="container">
+                <span class="text_header_2">ایمیل : </span>
+                <span>{{ user.email }}</span>
+            </div>
+            <div class="container">
+                <span class="text_header_2">شغل: </span>
+                <span>{{ user.job }}</span>
+            </div>
+            <div>
+                <span class="text_header_2">بیو گرافی شما : </span>
+                <p>{{ user.bio }}</p>
+            </div>
+        </div>
+        <div class="section_2 right">
+            <h3 class="text_header_2">تصویر شما</h3>
+            <img src="{% if user.image %}{{ user.image.url }}{% else %}{% static "images/user.svg" %}{% endif %}">
+        </div>
+
+    </div>
 {% endblock %}

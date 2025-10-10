@@ -14,9 +14,29 @@
                 </a>
             </div>
             <div class="tool">
+                <a href="{% url "user:your_asks" %}">
+                    <h3>سوالات شما</h3>
+                </a>
+            </div>
+            <div class="tool">
+                <a href="{% url "user:profile" %}">
+                    <h3>تیکت ها</h3>
+                </a>
+            </div>
+            <div class="tool">
+                <a href="{% url "user:profile" %}">
+                    <h3>ویرایش اطلاعات</h3>
+                </a>
+            </div>
+            <div class="tool">
+                <a href="{% url "user:profile" %}">
+                    <h3>دوره های شما</h3>
+                </a>
+            </div>
+            <div class="tool">
                 <form method="post" action="{% url "user:logout" %}">
                     {% csrf_token %}
-                    <button type="submit">خروج</button>
+                    <button type="submit" class="button_exit">خروج از سایت</button>
                 </form>
             </div>
 

@@ -31,3 +31,7 @@ def register(request):
 @login_required
 def profile(request):
     return render(request,"profile/main_profile_page.html")
+
+@login_required
+def your_asks(request):
+    return render(request,"profile/your_asks.html")
