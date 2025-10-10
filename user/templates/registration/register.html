@@ -1,5 +1,6 @@
 {% extends "base/full_base.html" %}
 {% load static %}
+{% load socialaccount %}
 {% block title %}
     ثبت نام
 {% endblock %}
@@ -54,6 +55,7 @@
                 <button type="submit">ثبت نام</button>
             </form>
             <p class="more">قبلا ثبت نام کرده اید؟ <a href="{% url "user:login" %}">ورود</a></p>
+            <a href="{% provider_login_url 'google' %}">ورود با گوگل</a>
         </div>
         <div class="container_left">
             <img src="../images/back.png" alt="">

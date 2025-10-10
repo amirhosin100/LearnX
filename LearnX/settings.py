@@ -34,6 +34,10 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'learn.apps.LearnConfig',
     'comment.apps.CommentConfig',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'django_jalali',
     "debug_toolbar",
     'django.contrib.admin',
@@ -53,7 +57,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # برای لاگین معمولی
+    'allauth.account.auth_backends.AuthenticationBackend',  # allauth
+]
+
 
 ROOT_URLCONF = 'LearnX.urls'
 
@@ -136,6 +147,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # useing personalise user
 
 AUTH_USER_MODEL = 'user.User'
+SOCIALACCOUNT_ADAPTER = "user.adapter.MySocialAccountAdapter"
 
 # for media
 MEDIA_ROOT = os.path.join(BASE_DIR,"media")
@@ -146,5 +158,22 @@ MEDIA_URL = '/media/'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 LOGOUT_REDIRECT_URL = '/'
+
+ACCOUNT_EMAIL_VERIFICATION = 'optional'  # یا 'mandatory' بسته به نیازت
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 INTERNAL_IPS = ["127.0.0.1"]

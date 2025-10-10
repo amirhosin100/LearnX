@@ -1,5 +1,6 @@
 {% extends "base/full_base.html" %}
 {% load static %}
+{% load socialaccount %}
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
@@ -27,6 +28,7 @@
             <div class="other">
                 <p>ثبت نام نکرده اید؟ <a href="#" class="register">ثبت نام</a></p>
                 <a href="#">رمز عبور خود را فراموش کرده اید؟</a>
+                <a href="{% provider_login_url 'google' %}">ورود با گوگل</a>
             </div>
         </div>
     </main>
