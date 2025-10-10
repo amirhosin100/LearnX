@@ -28,7 +28,13 @@
             <div class="other">
                 <p>ثبت نام نکرده اید؟ <a href="#" class="register">ثبت نام</a></p>
                 <a href="#">رمز عبور خود را فراموش کرده اید؟</a>
-                <a href="{% provider_login_url 'google' %}">ورود با گوگل</a>
+                <form method="post" action="{% provider_login_url 'google' %}">
+                    {% csrf_token %}
+                    <button type="submit" id="login_with_google" class="google_container" >
+                        <p>ورود با گوگل</p>
+                        <img src="{% static "images/google_image.png" %}" alt="عکس گوگل">
+                    </button>
+                </form>
             </div>
         </div>
     </main>

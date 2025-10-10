@@ -31,17 +31,17 @@ main{
     gap: 10px;
 
 }
-label,input{
+.register_form label,.register_form input{
     width: 100%;
 
 }
-input{
+.register_form input{
     border: 1px solid gray !important;
     border-radius: 6px;
     padding: 5px 10px;
     transition: all 300ms ease;
 }
-input:focus{
+.register_form input:focus{
     border: 1px solid var(--light_blue) !important;
 }
 
@@ -53,7 +53,7 @@ input:focus{
     text-align: center;
 }
 
-button{
+.register_form button{
     display: block;
     width: 100%;
     padding: 10px;
@@ -64,7 +64,7 @@ button{
     color: #fff;
     transition: all 300ms ease;
 }
-button:hover{
+.register_form button:hover{
     color: var(--light_blue);
     background-color: #fff;
     border: 1px solid var(--light_blue) !important;
@@ -76,4 +76,32 @@ button:hover{
 .more a{
     color: var(--light_blue);
 
+}
+
+
+/* for google login */
+.google_container{
+    display: flex;
+    padding: 10px;
+    width: calc(100% - 20px);
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--light_blue);
+    margin: 10px;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+}
+.google_container img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+#login_with_google{
+    background-color: transparent;
+    font-weight: 500;
+    font-size: 16px;
+}
+.google_container:hover{
+    color: var(--light_blue);
 }
