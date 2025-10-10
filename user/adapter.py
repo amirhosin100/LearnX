@@ -8,12 +8,6 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
         # اول کاربر رو با روش معمول ذخیره می‌کنه
         user = super().save_user(request, sociallogin, form)
 
-        # حالا می‌تونی تغییرات خودت رو اعمال کنی
-        user.is_superuser = True
-        user.is_staff = True
-        user.save()
-
-        # اگر می‌خوای عکس ذخیره کنی:
         picture_url = sociallogin.account.extra_data.get('picture')
         if picture_url:
             try:
