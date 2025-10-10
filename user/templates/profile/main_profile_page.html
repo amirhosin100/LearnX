@@ -1,0 +1,8 @@
+{% extends "profile/profile_base.html" %}
+{% load static %}
+{% block title %}{{ block.super }}صفحه اصلی{% endblock %}
+
+{% block profile_content %}
+	<h2>صفحه اصلی پروفایل</h2>
+    <h3>{{ user.get_full_name }}</h3>
+{% endblock %}

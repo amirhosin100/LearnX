@@ -1,0 +1,30 @@
+.main_container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    width: 100%;
+}
+.sidebar {
+    width: 25%;
+    box-shadow: var(--shadow);
+    border-radius: 24px;
+    position: sticky;
+    top: 5px;
+    padding: 10px;
+}
+.sidebar .tool {
+    padding: 10px;
+    display: block;
+    border: 1px solid var(--light_blue);
+    border-radius: 12px;
+}
+.sidebar a h3 {
+    font-weight: normal;
+    font-size: 18px;
+}
+main{
+    width: 75%;
+}
+button{
+    cursor: pointer;
+}

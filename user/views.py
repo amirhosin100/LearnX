@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login
 from .forms import *
 from learn.models import *
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def index(request):
@@ -28,3 +28,6 @@ def register(request):
     context = {"form":form}
     return render(request,"registration/register.html",context)
 
+@login_required
+def profile(request):
+    return render(request,"profile/main_profile_page.html")

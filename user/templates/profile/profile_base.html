@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+{% block title %}پروفایل | {% endblock %}
+{% load static %}
+{% block head %}
+    {{ block.super }}
+	<link rel="stylesheet" type="text/css" href="{% static "css/base_profile.css" %}">
+{% endblock %}
+{% block sub_content %}
+	<div class="main_container">
+        <aside class="sidebar">
+            <div class="tool">
+                <a href="{% url "user:profile" %}">
+                    <h3>صفحه اصلی</h3>
+                </a>
+            </div>
+            <div class="tool">
+                <form method="post" action="{% url "user:logout" %}">
+                    {% csrf_token %}
+                    <button type="submit">خروج</button>
+                </form>
+            </div>
+
+
+        </aside>
+        <main>
+            {% block profile_content %}{% endblock %}
+        </main>
+    </div>
+{% endblock %}

@@ -27,7 +27,7 @@
 
         <ul class="container_menu_login">
             {% if user.is_authenticated %}
-                {{ user.username }}
+                <li ><a href="{% url 'user:profile' %}">{{ user.username }}</a></li>
             {% else %}
                 <li class="login_button"><a href="{% url 'user:login' %}">ورود</a></li>
                 <li class="login_button"><a href="{% url 'user:register' %}">ثبت نام</a></li>
