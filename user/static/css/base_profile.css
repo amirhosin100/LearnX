@@ -11,14 +11,27 @@
     position: sticky;
     top: 5px;
     padding: 10px;
+    height: fit-content;
+    margin-top: 30px ;
 }
-.sidebar .tool {
-    padding: 10px;
-    display: block;
-    border: 1px solid var(--light_blue);
-    border-radius: 12px;
-    margin-bottom: 10px;
+.tool{
+    margin-bottom: 20px;
+    padding-right: 10px;
 }
+.tool {
+    border-bottom: 1px solid var(--gray);
+}
+.tool:last-child{
+    border: none;
+    text-align: center;
+}
+.tool .link{
+    transition: all 200ms ease-in;
+}
+.tool .link:hover{
+    color: var(--light_blue);
+}
+
 .sidebar a h3 {
     font-weight: normal;
     font-size: 18px;

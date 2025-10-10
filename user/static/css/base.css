@@ -7,7 +7,9 @@
     --dark-gray : #262626;
 }
 
-
+body{
+    min-height: 100%;
+}
 *{
     box-sizing: border-box;
     margin: 0;
