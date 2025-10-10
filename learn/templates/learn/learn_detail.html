@@ -23,9 +23,9 @@
 
                 <div class="meta">
                     <div class="tags" aria-hidden="true">
-                        <span class="tag">دوره پایتون</span>
-                        <span class="tag">سطح مبتدی تا پیشرفته</span>
-                        <span class="tag">تماشای ویدئو + تکالیف</span>
+                        {% for attribute in learn.attributes.all %}
+                        <span class="tag">{{ attribute.value }}</span>
+                        {% endfor %}
                     </div>
 
                     <h1 id="course-title" class="title">{{ learn.title }}</h1>

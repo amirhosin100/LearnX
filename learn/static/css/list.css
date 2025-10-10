@@ -3,6 +3,32 @@ main{
     width: 100%;
     gap: 50px;
 }
+.text_header{
+    margin: 20px auto;
+    text-align: center;
+    color: var(--dark-blue);
+    font-size: 20px;
+}
+.date {
+    display: flex;
+    flex-direction: column;
+}
+.date input {
+    display: none;
+}
+.date label {
+    padding: 5px 0;
+    margin-bottom: 5px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    transition: all 200ms ease-in;
+
+}
+.date input:checked + label,.date label:hover{
+    border: 1px solid var(--light_blue);
+    color: var(--light_blue);
+}
+
 .section {
     background-color: white;
     box-shadow: var(--shadow);

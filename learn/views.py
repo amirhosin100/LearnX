@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from .models import *
 from comment.models import CommentForLearn,AnswerForFilm
+from django.views.generic.list import ListView
 
 # Create your views here.
 def learn_list(request):
@@ -19,6 +20,25 @@ def learn_list(request):
         'learns': learns,
     }
     return render(request,"learn/list.html",context)
+
+class LearnList(ListView):
+    paginate_by = 4
+    context_object_name = "learns"
+    template_name = "learn/list.html"
+
+    def get_queryset(self):
+        query = Learn.objects.prefetch_related("teacher__user")
+        date = self.request.GET.get("date","new")
+        if date == "old" :
+            query = query.order_by("create")
+            print(True)
+        return query
+    def get_context_data(self,**kwargs):
+        date = self.request.GET.get("date","new")
+        context = super().get_context_data(**kwargs)
+
+        context["date"] = date
+        return context
 
 def learn_detail(request,slug_learn):
     learn = get_object_or_404(
@@ -33,7 +53,8 @@ def learn_detail(request,slug_learn):
             Prefetch(
                 "comments",
                 queryset= CommentForLearn.publish.prefetch_related("user")
-            )),slug=slug_learn
+            )).
+        prefetch_related("attributes"),slug=slug_learn
     )
 
     context = {
@@ -90,6 +111,3 @@ def send_score(request):
 
     except :
         return JsonResponse({"error": "Error"})
-
-
-

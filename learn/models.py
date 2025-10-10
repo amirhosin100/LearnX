@@ -26,6 +26,8 @@ class Learn(models.Model):
     create = jmodels.jDateTimeField(auto_now_add=True)
     update = jmodels.jDateTimeField(auto_now=True)
 
+    objects = jmodels.jManager()
+
     class Meta:
         ordering = ['-create']
         indexes = [
@@ -107,3 +109,13 @@ class FilmScores(models.Model):
         film.number_score = number["score__avg"]
         film.save()
 
+class attribute(models.Model):
+    learn = models.ForeignKey(Learn,models.CASCADE,"attributes",verbose_name="آموزش")
+    value = models.CharField(max_length=30,verbose_name="مقدار")
+
+    class Meta:
+        verbose_name = "ویژگی"
+        verbose_name_plural = "ویژگی ها"
+
+    def __str__(self):
+        return f"{self.learn.title} : {self.value}"

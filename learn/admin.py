@@ -1,9 +1,16 @@
 from django.contrib import admin
 from .models import *
 # Register your models here.
+
+class AttributeInline(admin.TabularInline):
+    model = attribute
+    extra = 0
+
+
 @admin.register(Learn)
 class LearnAdmin(admin.ModelAdmin):
     list_display = ["teacher","title","create"]
+    inlines = [AttributeInline]
 
 @admin.register(Headline)
 class HeadlineAdmin(admin.ModelAdmin):
