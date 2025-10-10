@@ -1,10 +1,11 @@
 {% extends "base/full_base.html" %}
 {% load static %}
+{% load socialaccount %}
 {% block title %}
     ثبت نام
 {% endblock %}
 {% block head %}
-	<link rel="stylesheet" type="text/css" href="{% static "css/register.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/register.css" %}">
 {% endblock %}
 {% block content %}
     <main>
@@ -54,6 +55,13 @@
                 <button type="submit">ثبت نام</button>
             </form>
             <p class="more">قبلا ثبت نام کرده اید؟ <a href="{% url "user:login" %}">ورود</a></p>
+            <form method="post" action="{% provider_login_url 'google' %}">
+                {% csrf_token %}
+                <button type="submit" id="login_with_google" class="google_container">
+                    <p>ورود با گوگل</p>
+                    <img src="{% static "images/google_image.png" %}" alt="عکس گوگل">
+                </button>
+            </form>
         </div>
         <div class="container_left">
             <img src="../images/back.png" alt="">
