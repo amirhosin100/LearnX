@@ -62,6 +62,7 @@ def learn_detail(request,slug_learn):
     }
     return render(request,"learn/learn_detail.html",context)
 
+@login_required
 def film_detail(request,slug_learn,id):
     film = get_object_or_404(LearnFilms.objects,id=id,headline__learn__slug=slug_learn)
     learn = get_object_or_404(
