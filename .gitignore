@@ -158,8 +158,6 @@ dmypy.json
 cython_debug/
 
 .idea/
-font/
-images/
 migrations/
 data.json
 media/
