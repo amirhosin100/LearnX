@@ -158,7 +158,6 @@ dmypy.json
 cython_debug/
 
 .idea/
-migrations/
 data.json
 media/
 test/
