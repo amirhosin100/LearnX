@@ -3,7 +3,7 @@
 */
 @font-face {
     font-family: "vazir";
-    src: url("../../font/Vazirmatn-RD-Regular.woff2");
+    src: url("../../font/Vazirmatn-Regular.woff2");
 }
 /* VARIABLE DEFINITIONS */
 html[data-theme="light"],

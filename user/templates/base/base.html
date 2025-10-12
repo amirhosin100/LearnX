@@ -27,7 +27,9 @@
 
         <ul class="container_menu_login">
             {% if user.is_authenticated %}
-                <li ><a href="{% url 'user:profile' %}">{{ user.first_name|default:user.last_name|default:user.username }}</a></li>
+                <li>
+                    <a href="{% url 'user:profile' %}">{{ user.first_name|default:user.last_name|default:user.username }}</a>
+                </li>
             {% else %}
                 <li class="login_button"><a href="{% url 'user:login' %}">ورود</a></li>
                 <li class="login_button"><a href="{% url 'user:register' %}">ثبت نام</a></li>
@@ -44,15 +46,41 @@
         <li class="menu_button_mobile"><a href="#">درباره ما</a></li>
     </ul>
     {% block sub_content %}{% endblock %}
+    {#   START footer #}
     <footer>
         <div class="footer_head">
             <h3 class="footer_main_title">LearnX</h3>
-            <p>آموزش برنامه نویسی از صفر </p>
         </div>
-        <div class="footer_content">
+        <div class="footer_content_1">
+            <p>آموزش برنامه نویسی از صفر </p>
             <p>در این سایت قصد داریم تا شما را وارد بازار کار برنامه نویسی کنیم.</p>
             <p>این سایت کاملا تستی است.</p>
         </div>
+        <div class="footer_content_2">
+            <div class="footer_part">
+                <h3>آموزش های ما</h3>
+                <a href="#">پایتون</a>
+                <a href="#">html</a>
+                <a href="#">flex box</a>
+            </div>
+            <div class="footer_part">
+                <h3>بخش های سایت</h3>
+                <a href="{% url 'learn:learn_list' %}">آموزش ها</a>
+                <a href="#">بلاگ ما</a>
+                <a href="#">تیکت ها</a>
+                <a href="#">درباره ما</a>
+            </div>
+            <div class="footer_part">
+                <h3>ارتباط با ما</h3>
+                <p>آدرس : یزد بلوار نواب صفوی </p>
+                <p>شماره تماس : 09131313133</p>
+
+            </div>
+            <div class="footer_part">
+                <h3>شبکه اجتماعی</h3>
+            </div>
+        </div>
     </footer>
+    {#   END footer #}
 
 {% endblock %}
