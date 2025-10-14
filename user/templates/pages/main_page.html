@@ -1,8 +1,13 @@
 {% extends "base/base.html" %}
 {% load static %}
+{% load tags %}
+{% load price %}
 {% block head %}
     {{ block.super }}
     <link rel="stylesheet" href="{% static 'css/main_page.css' %}">
+{% endblock %}
+{% block title %}
+    سایت آموزش برنامه نویسی
 {% endblock %}
 {% block sub_content %}
     <img src="{% static "images/back.png" %}" alt="" class="image_background">
@@ -38,9 +43,9 @@
                             <span class="learn_price">
                                 <span class="prices">
                                     <span class="all_price">
-                                        <span class="price_main">{{ course.price }}</span>
+                                        <span class="price_main">{{ course.price|point|fa }}</span>
                                         {% if course.discount_price != 0 %}
-                                        	<span class="price_off">{{ course.discount_price }} تومان</span>
+                                        	<span class="price_off">{{ course.discount_price|point|fa }} تومان</span>
                                         {% endif %}
 
                                     </span>
@@ -57,7 +62,7 @@
                                     {% if course.discount_price == 0 %}
                                         <span class="number">رایگان</span>
                                     {% else %}
-                                        <span class="number">%{{ course.precent_off }}</span>
+                                        <span class="number">%{{ course.precent_off|fa }}</span>
                                     {% endif %}
 
                                     <span class="author">{{ course.teacher.user.get_full_name }}</span>

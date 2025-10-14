@@ -9,6 +9,7 @@ from .models import *
 from comment.models import CommentForLearn,AnswerForFilm
 from django.views.generic.list import ListView
 from django.contrib import messages
+from .templatetags import tags
 # Create your views here.
 
 # decorator for checking (register in learn) or not
@@ -123,7 +124,8 @@ def send_score(request):
             item.score = score
             item.save()
         film = LearnFilms.objects.get(id=id_film)
-        return JsonResponse({"score": film.number_score})
+        num = tags.to_persian_numbers(film.number_score)
+        return JsonResponse({"score": num})
 
     except :
         return JsonResponse({"error": "Error"})

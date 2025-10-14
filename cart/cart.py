@@ -45,6 +45,13 @@ class Cart:
     def ids(self):
         return [int(item) for item in list(self.cart.keys())]
 
+    def reget(self):
+        learn_ids = self.ids()
+        learns = Learn.objects.filter(id__in=learn_ids)
+        self.clear()
+        for learn in learns :
+            self.add_to_cart(learn)
+
     def __iter__(self):
         learn_ids = self.cart.keys()
         learns = Learn.objects.filter(id__in=learn_ids)

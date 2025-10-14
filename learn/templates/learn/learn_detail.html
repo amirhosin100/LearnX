@@ -1,6 +1,7 @@
 {% extends "base/base.html" %}
 {% load static %}
 {% load price %}
+{% load tags %}
 {% block title %}
     {{ learn.title }}
 {% endblock %}
@@ -36,7 +37,7 @@
 
                     <div class="stats" aria-hidden="true">
                         <div class="flex"><strong>⭐ 4.8</strong><span class="small"> (4,523 رأی)</span></div>
-                        <div class="small">⏱️ {{ learn.learn_time }} ساعت ویدئو</div>
+                        <div class="small">⏱️ {{ learn.learn_time|fa }} ساعت ویدئو</div>
                         <div class="small">👥 21,345 دانشجو</div>
                         {% if learn.discount_price == 0 %}
                             <div class="price-badge" aria-label="قیمت دوره">رایگان</div>
@@ -47,7 +48,9 @@
                         {% endif %}
 
                     </div>
-                    {% if learn.id in cart.ids  %}
+                    {% if  learn in user.learns.all %}
+                        <p class="added">شما دانشجوی این دوره هستید</p>
+                    {% elif learn.id in cart.ids %}
                         <p class="added">به سبد خرید اضافه شده است</p>
                     {% else %}
                         <button id="join">شرکت در دوره</button>
@@ -95,8 +98,8 @@
                 <div class="syllabus" role="list">
                     {% for headline in learn.headlines.all %}
                         <div class="chapter glass_morphism_2" role="listitem" aria-labelledby="ch1">
-                            <h4 id="ch1">{{ forloop.counter }} — {{ headline.title }}</h4>
-                            <div class="small">{{ headline.films.count }} قسمت</div>
+                            <h4 id="ch1">{{ forloop.counter|fa }} — {{ headline.title }}</h4>
+                            <div class="small">{{ headline.films.count|fa }} قسمت</div>
                             <ul class="lesson-list">
                                 {% for film in headline.films.all %}
                                     <li><a href="{{ film.get_absolute_url }}">{{ film.title }}</a></li>
