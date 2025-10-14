@@ -23,3 +23,8 @@ class LearnFilmsAdmin(admin.ModelAdmin):
 @admin.register(FilmScores)
 class FilmScoresAdmin(admin.ModelAdmin):
     list_display = ["user_from","film_to","score"]
+
+@admin.register(RegisterLearn)
+class RegisterLearnAdmin(admin.ModelAdmin):
+    list_display = ["user_from","learn_to","date_of_register"]
+    

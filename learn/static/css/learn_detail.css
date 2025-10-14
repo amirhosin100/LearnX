@@ -411,3 +411,20 @@ main {
     background: linear-gradient(180deg, var(--light_blue), var(--dark-blue));
     border-radius: 999px;
 }
+.empty_comment{
+    padding: 20px;
+    margin: 10px;
+    border: 2px dashed var(--light_blue);
+    border-radius: 12px;
+    color: var(--gray);
+    font-style: italic;
+    text-align: center;
+    font-size: 18px;
+}
+.error{
+    display: block;
+    text-align: center;
+    font-weight: 600;
+    color: red;
+
+}

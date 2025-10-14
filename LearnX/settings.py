@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'learn.apps.LearnConfig',
     'comment.apps.CommentConfig',
+    'cart.apps.CartConfig',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
     'rest_framework',
+
 ]
 
 MIDDLEWARE = [

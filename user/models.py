@@ -11,6 +11,7 @@ class User(AbstractUser):
     image = ResizedImageField(verbose_name="تصویر",upload_to="users/images/",blank=True,size=[500,500],crop=["middle","center"],quality=100)
     gived_score_to_films = models.ManyToManyField("learn.LearnFilms",through="learn.FilmScores")
 
+    learns_register =  models.ManyToManyField("learn.Learn","users",through="learn.RegisterLearn")
     def get_asks(self,film):
         asks = self.film_asks.filter(film=film)
         return asks

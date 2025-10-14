@@ -15,6 +15,9 @@
     <main>
         <div class="wrap" role="main">
             <!-- HERO -->
+            {% for message in messages %}
+                <span class="error">{{ message }}</span>
+            {% endfor %}
             <section class="hero glass_morphism" aria-labelledby="course-title">
                 <div class="main-image" aria-hidden="true">
                     <!-- منبع تصویر: Unsplash (نمونه) -->
@@ -24,7 +27,7 @@
                 <div class="meta">
                     <div class="tags" aria-hidden="true">
                         {% for attribute in learn.attributes.all %}
-                        <span class="tag">{{ attribute.value }}</span>
+                            <span class="tag">{{ attribute.value }}</span>
                         {% endfor %}
                     </div>
 
@@ -53,6 +56,7 @@
                 <aside class="teacher glass_morphism_2" aria-labelledby="teacher-name">
                     <div class="profile">
                         <img src="
+
                                 {% if learn.teacher.user.image %}{{ learn.teacher.user.image.url }}{% else %}{% static "images/user.svg" %}{% endif %}"
                              alt="تصویر مدرس">
                         <div>
@@ -108,16 +112,18 @@
                 <div class="reviews" role="list">
                     {% for comment in learn.comments.all %}
                         {% if not comment.super_comment %}
-                        <div class="review" role="listitem">
-                            <img src=""
-                                 alt="عکس کاربر">
-                            <div class="rmeta">
-                                <div class="rname">{{ comment.user.get_full_name }}</div>
-                                <div class="small muted"></div>
-                                <div class="rtext">{{ comment.content }}</div>
+                            <div class="review" role="listitem">
+                                <img src=""
+                                     alt="عکس کاربر">
+                                <div class="rmeta">
+                                    <div class="rname">{{ comment.user.get_full_name }}</div>
+                                    <div class="small muted"></div>
+                                    <div class="rtext">{{ comment.content }}</div>
+                                </div>
                             </div>
-                        </div>
                         {% endif %}
+                    {% empty %}
+                        <div class="empty_comment">نظری برای این آموزش وجود ندارد!</div>
                     {% endfor %}
 
                 </div>
@@ -138,18 +144,22 @@
     </main>
 {% endblock %}
 {% block script %}
-	<script src="{% static "js/jquery.min.js" %}"></script>
+    <script src="{% static "js/jquery.min.js" %}"></script>
     <script>
-        $(document).ready(function (){
+        $(document).ready(function () {
             $("#send_comment").click(function () {
                 const textarea = document.getElementById("textarea_comment");
                 const result = $("#result");
                 console.log(result);
                 $.ajax({
-                    type:"POST",
-                    url:"{% url 'comment:send_comment_for_learn' %}",
-                    data: {"learn_id":{{ learn.id }}, "comment":textarea.value ,"csrfmiddlewaretoken" :"{{ csrf_token }}"},
-                    success:function (data){
+                    type: "POST",
+                    url: "{% url 'comment:send_comment_for_learn' %}",
+                    data: {
+                        "learn_id": {{ learn.id }},
+                        "comment": textarea.value,
+                        "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    success: function (data) {
                         result.text(data.status);
                         textarea.value = "";
 

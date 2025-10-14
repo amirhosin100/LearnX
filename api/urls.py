@@ -1,9 +1,12 @@
-from django.urls import path
+from django.urls import path,include
 from . import views
+from rest_framework import routers
+router = routers.DefaultRouter()
+router.register(r"user",views.UserViewSet)
+router.register(r"teacher",views.TeacherViewSet)
 
 app_name = "api"
 
 urlpatterns = [
-    path("learn-list/",views.LearnListAPIView.as_view(),name="learn_list"),
-    path("learn-detail/<int:pk>",views.LearnDetailAPIView.as_view(),name="detail_list"),
+    path("",include(router.urls))
 ]

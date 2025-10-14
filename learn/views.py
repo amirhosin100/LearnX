@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse,JsonResponse
 from django.db.models import Prefetch
 from django.views.decorators.http import require_POST
@@ -8,8 +8,22 @@ from django.core.paginator import Paginator
 from .models import *
 from comment.models import CommentForLearn,AnswerForFilm
 from django.views.generic.list import ListView
-
+from django.contrib import messages
 # Create your views here.
+
+# decorator for checking (register in learn) or not
+def checking_register_learn(func):
+    def wrapper(*args,**kwargs):
+        request = args[0]
+        slug_learn = kwargs["slug_learn"]
+        learn = Learn.objects.get(slug=slug_learn)
+        if learn in request.user.learns.all() :
+            return func(*args,**kwargs)
+        else:
+            messages.error(request, "لطفا در دوره شرکت کنید!")
+            return redirect("learn:learn_detail",slug_learn=slug_learn)
+    return wrapper
+
 def learn_list(request):
     page = request.GET.get('page',1)
     learns = Learn.objects.select_related("teacher__user")
@@ -63,6 +77,7 @@ def learn_detail(request,slug_learn):
     return render(request,"learn/learn_detail.html",context)
 
 @login_required
+@checking_register_learn
 def film_detail(request,slug_learn,id):
     film = get_object_or_404(LearnFilms.objects,id=id,headline__learn__slug=slug_learn)
     learn = get_object_or_404(
@@ -112,3 +127,4 @@ def send_score(request):
 
     except :
         return JsonResponse({"error": "Error"})
+

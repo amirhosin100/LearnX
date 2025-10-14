@@ -1,12 +1,12 @@
-# for apis
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
+from user.models import User
 from .serializers import *
-from learn.models import Learn
-from rest_framework import generics
 
-class LearnListAPIView(generics.ListAPIView):
-    queryset = Learn.objects.all()
-    serializer_class = LearnSerializer
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-class LearnDetailAPIView(generics.RetrieveAPIView):
-    queryset = Learn.objects.all()
-    serializer_class = LearnSerializer
+class TeacherViewSet(ModelViewSet):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer

@@ -23,6 +23,11 @@ class Learn(models.Model):
     price = models.PositiveIntegerField("قیمت")
     precent_off = models.PositiveIntegerField("درصد تخفیف")
     discount_price = models.PositiveIntegerField("قیمت نهایی")
+
+    #many to many
+
+    users_register = models.ManyToManyField("user.User","learns",through="RegisterLearn")
+
     create = jmodels.jDateTimeField(auto_now_add=True)
     update = jmodels.jDateTimeField(auto_now=True)
 
@@ -119,3 +124,12 @@ class attribute(models.Model):
 
     def __str__(self):
         return f"{self.learn.title} : {self.value}"
+
+# ایجاد یک مدل واسط برای کاربری که در دوره ها شرکت کرده است و برعکس(دوره ای که چند کاربر دارد)
+
+class RegisterLearn(models.Model):
+    user_from = models.ForeignKey(User,models.CASCADE,related_name="register_from_set")
+    learn_to = models.ForeignKey(Learn,models.CASCADE,related_name="register_to_set")
+    date_of_register = jmodels.jDateTimeField(auto_now_add=True)
+    objects = jmodels.jManager()
+

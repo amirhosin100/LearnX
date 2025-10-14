@@ -35,3 +35,18 @@ def profile(request):
 @login_required
 def your_asks(request):
     return render(request,"profile/your_asks.html")
+
+@login_required
+def edit_personal_info(request):
+    if request.method == "POST":
+        form = EditUserForm(request.POST,request.FILES,instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect("user:profile")
+    else:
+        form = EditUserForm(instance=request.user)
+
+    context = {
+        "form" :form
+    }
+    return render(request,"profile/edit_personal_info_user.html",context)
