@@ -1,0 +1,26 @@
+from django.shortcuts import render,get_object_or_404
+from django.http import JsonResponse
+from .cart import Cart
+from learn.models import Learn
+from django.views.decorators.http import require_POST
+# Create your views here.
+def index(request):
+    return render(request,"cart.html")
+
+@require_POST
+def add_remove_learn_to_cart(request):
+    learn_id = request.POST.get("learn_id")
+    operation = request.POST.get("operation","add")
+    try :
+        cart = Cart(request)
+        if operation == "add" :
+            learn = get_object_or_404(Learn, id=learn_id)
+            print("a")
+            cart.add_to_cart(learn)
+            print("a")
+        else:
+            cart.remove_from_cart(learn_id)
+
+        return JsonResponse({"success":"Success"})
+    except :
+        return JsonResponse({"Error":"error"})

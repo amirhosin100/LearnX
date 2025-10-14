@@ -28,6 +28,7 @@ urlpatterns = [
     path("comment/",include("comment.urls",namespace="comment")),
     path('accounts/', include('allauth.urls')),
     path("api/",include("api.urls")),
+    path("cart/",include("cart.urls",namespace="cart"))
 
 ]
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

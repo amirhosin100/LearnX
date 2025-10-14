@@ -1,0 +1,102 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load price %}
+{% block title %}
+    سبد خرید
+{% endblock %}
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "css/cart.css" %}">
+{% endblock %}
+{% block sub_content %}
+    {% if cart.cart %}
+        <div class="cart-container">
+            <div class="items">
+                <h2>آموزش‌های انتخاب شده</h2>
+                {% for item in cart %}
+                    <div class="item-card" data-id="{{ item.learn.id }}">
+                        <img src="{{ item.learn.image.url }}" alt="آموزش ۱"/>
+                        <div class="item-info">
+                            <a href="{{ item.learn.get_absolute_url }}">
+                                <h4>{{ item.learn.title }}</h4>
+                                <div class="price-info">
+                                    <span class="original">{{ item.price|point }}</span>
+                                    <span class="discount">{{ item.off }}٪ تخفیف — {{ item.discount_price }} تومان</span>
+                                </div>
+                                <p>{{ item.learn.description }}</p>
+                            </a>
+                            <button id="remove">حذف از لیست</button>
+
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="discount-code">
+                    <label for="coupon">کد تخفیف:</label><br/>
+                    <div class="discount-code_buttons">
+                        <input type="text" id="coupon" placeholder="مثلاً ABC123"/>
+                        <button>اعمال</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="summary">
+                <h3>صورت حساب</h3>
+                {% for item in cart %}
+                    <div class="line">
+                        <span>{{ item.learn.title }}</span>
+                        <span>{{ item.discount_price|point }} تومان</span>
+                    </div>
+                {% endfor %}
+
+                <div class="line">
+                    <span>جمع</span>
+                    <span>{{ cart.get_total_price }} تومان</span>
+                </div>
+                <div class="line">
+                    <span>مالیات ({{ cart.get_percent_tax }}٪)</span>
+                    <span>{{ cart.get_tax }} تومان</span>
+                </div>
+                <div class="line total">
+                    <span>مبلغ قابل پرداخت</span>
+                    {% if cart.get_final_price  == 0 %}
+                        <span>رایگان!</span>
+                    {% else %}
+                        <span>{{ cart.get_final_price }} تومان</span>
+                    {% endif %}
+
+                </div>
+
+                <a href="#" class="checkout-btn">پرداخت</a>
+            </div>
+
+        </div>
+    {% else %}
+        <div class="empty_page">
+            <div class="empty_page__child">
+                <h3>سبد خرید شما خالی می باشد</h3>
+                <a href="{% url "learn:learn_list" %}">رفتن به لیست آموزش ها</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block script %}
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#remove").click(function () {
+                const parent = $(this).closest(".item-card");
+                const learn_id = parent.data("id");
+                $.ajax({
+                    type: "POST",
+                    url: "{% url "cart:add_or_remove" %}",
+                    data: {"learn_id": learn_id, "operation": "remove", "csrfmiddlewaretoken": "{{ csrf_token }}"},
+                    success: function (data) {
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

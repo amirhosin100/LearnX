@@ -127,7 +127,7 @@ main {
     flex-wrap: wrap;
 }
 
-.price-badge {
+.price-badge,#join {
     margin-left: auto;
     align-self: flex-start;
     background-color: var(--dark-blue);
@@ -137,6 +137,18 @@ main {
     font-weight: 700;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
+#join{
+    cursor: pointer;
+}
+.added{
+    margin-left: auto;
+    align-self: flex-start;
+    padding: 10px 16px;
+    background-color: var(--light_blue);
+    color: white;
+    border-radius: 12px;
+}
+
 
 /* teacher + course description (side by side) */
 .details {

@@ -24,7 +24,7 @@
                     <img src="{{ learn.image.url }}" alt="عکس اصلی دوره — {{ learn.title }}">
                 </div>
 
-                <div class="meta">
+                <div class="meta" id="meta_id">
                     <div class="tags" aria-hidden="true">
                         {% for attribute in learn.attributes.all %}
                             <span class="tag">{{ attribute.value }}</span>
@@ -47,6 +47,11 @@
                         {% endif %}
 
                     </div>
+                    {% if learn.id in cart.ids  %}
+                        <p class="added">به سبد خرید اضافه شده است</p>
+                    {% else %}
+                        <button id="join">شرکت در دوره</button>
+                    {% endif %}
                 </div>
             </section>
 
@@ -137,6 +142,7 @@
                 </div>
 
                 <textarea placeholder="نظر خود را بنوییسد..." id="textarea_comment"></textarea>
+
                 <button type="button" id="send_comment">ارسال نظر</button>
             </div>
 
@@ -163,6 +169,27 @@
                         result.text(data.status);
                         textarea.value = "";
 
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function (){
+            $("#join").click(function (){
+                const learn_id = {{ learn.id }};
+                const meta = document.getElementById("meta_id");
+                const button = document.getElementById("join");
+                const new_tag = document.createElement("p");
+                new_tag.classList.add("added");
+                new_tag.textContent = "به سبد خرید اضافه شده است";
+                $.ajax({
+                    type: "POST",
+                    url : "{% url "cart:add_or_remove" %}",
+                    data: { "learn_id" :learn_id,"csrfmiddlewaretoken" : "{{ csrf_token }}" },
+                    success : function (data){
+                        button.remove();
+                        meta.appendChild(new_tag);
                     }
                 });
             });
