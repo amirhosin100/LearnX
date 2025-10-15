@@ -7,5 +7,5 @@ class LearnInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ["user","description","create"]
+    list_display = ["user","description","create","paid"]
     inlines = [LearnInline]

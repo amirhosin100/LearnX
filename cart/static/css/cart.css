@@ -138,6 +138,7 @@
 
 .summary .checkout-btn {
     display: block;
+    width: 100%;
     margin-top: 20px;
     padding: 12px;
     background: var(--light_blue);
@@ -146,6 +147,7 @@
     text-decoration: none;
     border-radius: 4px;
     font-size: 1.2rem;
+    cursor: pointer;
 }
 #remove{
     padding: 5px 10px;

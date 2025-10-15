@@ -3,6 +3,9 @@ from django.http import JsonResponse
 from .cart import Cart
 from learn.models import Learn,RegisterLearn
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from .models import Order,LearnOrder
+import random
 # Create your views here.
 def index(request):
     cart = Cart(request)
@@ -27,15 +30,26 @@ def add_remove_learn_to_cart(request):
     except :
         return JsonResponse({"Error":"error"})
 
+@login_required
 @require_POST
 def buy(request):
     cart = Cart(request)
-
     user = request.user
     final_price = cart.get_final_price()
-    if final_price == 0 :
-        for item in cart :
-            RegisterLearn.objects.create(user_from=user,learn_to=item["learn"])
-        return redirect("user:profile")
+    for item in cart :
+        RegisterLearn.objects.create(user_from=user,learn_to=item["learn"])
+
+    order = Order.objects.create(user=user, price=0)
+    order.save()
+    if len(cart.cart.keys()) == 1 :
+        description = "خرید دوره ی "
     else:
-        return redirect("cart:index")
+        description = "خرید دوره های "
+    for item in cart :
+        description += " | " + item["learn"].title
+        LearnOrder.objects.create(learn=item["learn"],order=order)
+    order.description = description
+    order.save()
+
+    cart.clear()
+    return redirect("user:profile")

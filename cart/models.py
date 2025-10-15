@@ -6,6 +6,7 @@ class Order(models.Model):
     price = models.PositiveIntegerField("مبلغ")
     create = jmodels.jDateTimeField(auto_now_add=True,verbose_name="تاریخ")
     description = models.TextField(max_length=500,verbose_name="توضیحات")
+    paid = models.BooleanField(verbose_name="وضعیت پرداخت",default=True)
 
     class Meta:
         ordering = [
