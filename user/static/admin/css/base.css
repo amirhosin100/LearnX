@@ -5,6 +5,15 @@
     font-family: "vazir";
     src: url("../../font/Vazirmatn-Regular.woff2");
 }
+/*  custom style*/
+
+.ck-content ,.ck-content h3 ,.ck-content h4,.ck-content h2 {
+    color: black !important;
+    font-weight: bold !important;
+}
+.ck-content ul{
+    margin-right: 10px !important;
+}
 /* VARIABLE DEFINITIONS */
 html[data-theme="light"],
 :root {

@@ -1,0 +1,12 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/post_detail.css' %}" type="text/css">
+{% endblock %}
+{% block sub_content %}
+    <main>
+        {{ post.body|safe }}
+    </main>
+
+{% endblock %}

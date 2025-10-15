@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    "django_ckeditor_5",
 
 ]
 
@@ -192,3 +193,36 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS" : "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE" : 2 ,
 }
+
+#CKeditor
+
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': [
+                'heading', '|', 'bold', 'italic', 'underline', 'blockQuote',"|",
+                'link','bulletedList', 'numberedList',
+                'imageUpload', 'insertTable',"alignment",
+                'undo', 'redo'],
+
+        "language" :"fa",
+        'height': '400px',   # ارتفاع ادیتور
+        'width': 'auto',
+        'image': {
+            'toolbar': [
+                'imageTextAlternative', 'toggleImageCaption', '|',
+                'imageStyle:inline', 'imageStyle:block', 'imageStyle:side'
+            ],
+            'styles': [
+                'inline', 'block', 'side'
+            ],
+        },
+        'table': {
+            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells'],
+        },
+        'mediaEmbed': {
+            'previewsInData': True,
+        },
+        'removePlugins': ['ExportPdf', 'ExportWord'],
+    },
+}
+CKEDITOR_5_UPLOAD_PATH = "/blog/images"
