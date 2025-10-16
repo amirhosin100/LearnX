@@ -2,14 +2,18 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth import login
 from .forms import *
-from learn.models import *
+from learn.models import Learn
+from blog.models import Post
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def index(request):
-    courses = Learn.objects.all().select_related("teacher__user")
+    #فقط چهار مورد
+    courses = Learn.objects.all().select_related("teacher__user")[:4]
+    posts =  Post.objects.all()[:4]
     context = {
         "courses": courses,
+        "posts" :posts,
     }
     return render(request,"pages/main_page.html",context)
 

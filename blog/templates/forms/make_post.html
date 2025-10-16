@@ -7,7 +7,7 @@
 
 {% block sub_content %}
 	<h2>ساخت مقاله</h2>
-    <form method="post">
+    <form method="post" style="width: 700px;margin: 0 auto;">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">تایید</button>

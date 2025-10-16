@@ -23,3 +23,10 @@ main ul {
     flex-direction: column;
     gap: 5px;
 }
+main table{
+    border-collapse: collapse;
+    width: 100%;
+}
+main table td{
+    border: 1px solid black;
+}

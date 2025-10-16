@@ -217,7 +217,7 @@ CKEDITOR_5_CONFIGS = {
             ],
         },
         'table': {
-            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells'],
+            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells',"tableStyle:block"],
         },
         'mediaEmbed': {
             'previewsInData': True,
