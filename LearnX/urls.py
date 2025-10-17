@@ -28,7 +28,9 @@ urlpatterns = [
     path("comment/",include("comment.urls",namespace="comment")),
     path('accounts/', include('allauth.urls')),
     path("api/",include("api.urls")),
-    path("cart/",include("cart.urls",namespace="cart"))
+    path("cart/",include("cart.urls",namespace="cart")),
+    path("blog/",include("blog.urls",namespace="blog")),
+    path("ckeditor5/", include("django_ckeditor_5.urls")),
 
 ]
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

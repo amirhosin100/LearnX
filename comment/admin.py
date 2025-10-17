@@ -8,6 +8,12 @@ class CommentForLearnAdmin(admin.ModelAdmin):
     list_filter = ["create"]
     list_editable = ["status"]
 
+@admin.register(CommentForPost)
+class PostForLearnAdmin(admin.ModelAdmin):
+    list_display = ["user","post","content","status"]
+    list_filter = ["create"]
+    list_editable = ["status"]
+
 @admin.register(AskForFilm)
 class AskForFilmAdmin(admin.ModelAdmin):
     list_display = ["user","film","content"]

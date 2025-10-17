@@ -2,7 +2,7 @@ from django.db import models
 from django_jalali.db import models as jmodels
 # Create your models here.
 
-class CommentForLearnManager(models.Manager):
+class CommentManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(status=True)
 
@@ -15,12 +15,12 @@ class CommentForLearn(models.Model):
     content = models.TextField(max_length=500,verbose_name="پیام")
     super_comment = models.ForeignKey("self", on_delete=models.CASCADE,related_name="sub_comment",blank=True,null=True)
 
-    create = jmodels.jDateTimeField(auto_now_add=True)
+    create = jmodels.jDateTimeField(auto_now_add=True,verbose_name="تاریخ ایجاد")
 
     status = models.BooleanField(default=False,verbose_name="وضعیت")
 
     objects = jmodels.jManager()
-    publish = CommentForLearnManager()
+    publish = CommentManager()
     class Meta:
         ordering = ['-create']
         indexes = [
@@ -31,6 +31,37 @@ class CommentForLearn(models.Model):
 
     def __str__(self):
         return f"{self.user.get_full_name()} : {self.content[:20]}"
+
+class CommentForPost(models.Model):
+
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE,
+                             related_name='post_comments', verbose_name="کاربر")
+
+    post = models.ForeignKey("blog.Post", on_delete=models.CASCADE,
+                              related_name='comments', verbose_name="آموزش")
+
+    content = models.TextField(max_length=500, verbose_name="پیام")
+    super_comment = models.ForeignKey("self", on_delete=models.CASCADE, related_name="sub_comment", blank=True,
+                                      null=True)
+
+    create = jmodels.jDateTimeField(auto_now_add=True,verbose_name="تاریخ ایجاد")
+
+    status = models.BooleanField(default=False, verbose_name="وضعیت")
+
+    objects = jmodels.jManager()
+    publish = CommentManager()
+
+    class Meta:
+        ordering = ['-create']
+        indexes = [
+            models.Index(fields=['-create']),
+        ]
+        verbose_name = "نظر برای مقاله"
+        verbose_name_plural = "نظرات برای مقاله"
+
+    def __str__(self):
+        return f"{self.user.get_full_name()} : {self.content[:20]}"
+
 
 class AskForFilm(models.Model):
     user = models.ForeignKey("user.User", on_delete=models.CASCADE,

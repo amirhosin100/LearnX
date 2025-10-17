@@ -1,0 +1,66 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/post_detail.css' %}" type="text/css">
+{% endblock %}
+{% block sub_content %}
+    <main>
+        {{ post.body|safe }}
+        <hr/>
+        <button id="like">{% if user in post.likes.all %}unlike{% else %}like{% endif %}</button>
+        <hr/>
+
+        <div>
+            <h3>نظر خود را وارد کنید</h3>
+            <p id="status"></p>
+            <label for="content">نظر شما</label>
+            <input type="text" name="content" id="content">
+            <button type="button" id="send_comment">ارسال</button>
+        </div>
+    </main>
+
+{% endblock %}
+{% block script %}
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#like").click(function () {
+                const button = $(this);
+                $.ajax({
+                    type: "POST",
+                    url: "{% url "blog:like_post" %}",
+                    data: {"post_id": {{ post.id }}, "csrfmiddlewaretoken": "{{ csrf_token }}"},
+                    success: function (data) {
+                        if (data.like) {
+                            button.text("unlike");
+                        } else {
+                            button.text("like");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#send_comment").click(function () {
+                const text = document.getElementById("status");
+                const content = document.getElementById("content");
+                console.log(content);
+                if (content) {
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'blog:send_comment' %}",
+                        data: { "post_id" : {{ post.id }},"content" : content.value , "csrfmiddlewaretoken" : "{{ csrf_token }}" },
+                        success : function (data){
+                            text.innerText = data.status ;
+                            content.value = "";
+                        }
+                    });
+                }
+
+            });
+        });
+    </script>
+{% endblock %}

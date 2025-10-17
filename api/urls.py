@@ -2,11 +2,12 @@ from django.urls import path,include
 from . import views
 from rest_framework import routers
 router = routers.DefaultRouter()
-router.register(r"user",views.UserViewSet)
-router.register(r"teacher",views.TeacherViewSet)
+router.register(r"users",views.UserViewSet)
+router.register(r"teachers",views.TeacherViewSet)
+router.register(r"posts",views.PostViewSet)
 
-app_name = "api"
 
 urlpatterns = [
-    path("",include(router.urls))
+    path("",include(router.urls)),
+    path("send-ticket/",views.TicketView.as_view())
 ]

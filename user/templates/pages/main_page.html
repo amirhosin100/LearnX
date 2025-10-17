@@ -2,6 +2,7 @@
 {% load static %}
 {% load tags %}
 {% load price %}
+{% load jformat %}
 {% block head %}
     {{ block.super }}
     <link rel="stylesheet" href="{% static 'css/main_page.css' %}">
@@ -27,7 +28,7 @@
             <div class="learns">
                 <div class="learns__header">
                     <h3>جدید ترین آموزش های ما:</h3>
-                    <a href="#">مشاهده همه</a>
+                    <a href="{% url "learn:learn_list" %}">مشاهده همه</a>
                 </div>
                 <div class="learns__content">
                     {% for course in courses %}
@@ -83,19 +84,21 @@
                     <a href="#">مشاهد همه</a>
                 </div>
                 <div class="article_content">
+                    {% for post in posts %}
                     <div class="article">
                         <div class="container_image_article">
-                            <img src="../images/what-is-github.png" alt="" class="image_article">
+                            <img src="{{ post.main_image.url }}" alt="{{ post.title }}" class="image_article">
                         </div>
-                        <a href="#">
-                            <h2 class="article_title">گیت هاب چیست؟</h2>
-                            <p class="article_detail">زبان سی شارپ ساخته شده توسط مایکروسافت.</p>
+                        <a href="{{ post.get_absolute_url }}">
+                            <h2 class="article_title">{{ post.title }}</h2>
+                            <p class="article_detail">{{ post.summery_description }}</p>
                         </a>
                         <div class="article_more">
-                            <h4>امیرحسین میرجمالی</h4>
-                            <span>1404/4/20</span>
+                            <h4>{{ post.bloger.user.get_full_name }}</h4>
+                            <span>{{ post.create|jformat:"%Y/%m/%d"|fa }}</span>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </article>
             <h4 class="best_teachers">بهترین مدرسین ما از نگاه شما</h4>
