@@ -8,4 +8,5 @@ urlpatterns = [
     path("make-post/",views.make_post,name="make_post"),
     path("like-post/",views.like_post,name="like_post"),
     path("send-comment/",views.send_comment,name="send_comment"),
+    path("my-posts/",views.my_posts,name="my_posts"),
 ]

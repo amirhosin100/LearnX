@@ -1,0 +1,20 @@
+{% extends "base/base.html" %}
+{% load jformat %}
+{% block sub_content %}
+	<table>
+        <thead>
+            <tr>
+                <td colspan="3">مقالات شما</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in user.bloger.posts.all %}
+                <tr>
+                    <td><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></td>
+                    <td>{{ post.create|jformat:"%Y/%d/%m" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+{% endblock %}

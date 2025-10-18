@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from .models import *
 from .forms import *
 from comment.models import CommentForPost
+from decorators.blogers import Is_bloger
 # Create your views here.
 
 def detail(request,slug):
@@ -14,6 +15,8 @@ def detail(request,slug):
     }
     return render(request,"pages/post_detail.html",context)
 
+@login_required
+@Is_bloger
 def make_post(request):
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -66,3 +69,8 @@ def send_comment(request):
             return JsonResponse({"error":"error"})
     else:
         return JsonResponse({"status": "ابتدا در سایت لاگین کنید!"})
+
+@login_required
+@Is_bloger
+def my_posts(request):
+    return render(request,"pages/my_posts.html")
