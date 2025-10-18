@@ -37,7 +37,7 @@ def profile(request):
     return render(request,"profile/main_profile_page.html")
 
 @login_required
-def your_asks(request):
+def my_asks(request):
     return render(request,"profile/your_asks.html")
 
 @login_required
@@ -54,3 +54,12 @@ def edit_personal_info(request):
         "form" :form
     }
     return render(request,"profile/edit_personal_info_user.html",context)
+
+@login_required
+def register_courses(request):
+    courses = request.user.learns_register.all()
+    context = {
+        "courses" :courses,
+    }
+    return render(request,"profile/register_courses.html",context)
+

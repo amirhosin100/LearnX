@@ -47,19 +47,22 @@ def like_post(request):
     except :
         return JsonResponse({"Error":"error"})
 
-@login_required
+
 @require_POST
 def send_comment(request):
-    post_id = request.POST.get("post_id")
-    user = request.user
-    post = get_object_or_404(Post,id=post_id)
-    content = request.POST.get("content")
-    if content :
-        try :
-            CommentForPost.objects.create(user=user,post=post,content=content)
-            print(True)
-            return JsonResponse({"status":"نظر شما با موفقیت ارسال شد و پس از تایید نمایش داده می شود"})
-        except:
-            return JsonResponse({"error": "error"})
+    if request.user.is_authenticated:
+        post_id = request.POST.get("post_id")
+        user = request.user
+        post = get_object_or_404(Post,id=post_id)
+        content = request.POST.get("content")
+        if content :
+            try :
+                CommentForPost.objects.create(user=user,post=post,content=content)
+                print(True)
+                return JsonResponse({"status":"نظر شما با موفقیت ارسال شد و پس از تایید نمایش داده می شود"})
+            except:
+                return JsonResponse({"error": "error"})
+        else:
+            return JsonResponse({"error":"error"})
     else:
-        return JsonResponse({"error":"error"})
+        return JsonResponse({"status": "ابتدا در سایت لاگین کنید!"})

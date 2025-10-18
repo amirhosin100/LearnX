@@ -8,22 +8,10 @@ from django.core.paginator import Paginator
 from .models import *
 from comment.models import CommentForLearn,AnswerForFilm
 from django.views.generic.list import ListView
-from django.contrib import messages
 from .templatetags import tags
 # Create your views here.
-
-# decorator for checking (register in learn) or not
-def checking_register_learn(func):
-    def wrapper(*args,**kwargs):
-        request = args[0]
-        slug_learn = kwargs["slug_learn"]
-        learn = Learn.objects.get(slug=slug_learn)
-        if learn in request.user.learns.all() :
-            return func(*args,**kwargs)
-        else:
-            messages.error(request, "لطفا در دوره شرکت کنید!")
-            return redirect("learn:learn_detail",slug_learn=slug_learn)
-    return wrapper
+from decorators.users import checking_register_learn
+from decorators.teachers import Is_tacher
 
 def learn_list(request):
     page = request.GET.get('page',1)
@@ -130,3 +118,12 @@ def send_score(request):
     except :
         return JsonResponse({"error": "Error"})
 
+@login_required
+@Is_tacher
+def make_learn(request):
+    return render(request,"create/make_learn.html")
+
+@login_required
+@Is_tacher
+def my_learns(request):
+    return render(request,"create/make_learn.html")
