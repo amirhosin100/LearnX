@@ -1,0 +1,79 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block head %}
+	{{ block.super }}
+    <link rel="stylesheet" href="{% static "css/make-learn.css" %}">
+    {{ form.media }}
+{% endblock %}
+{% block sub_content %}
+    <main>
+        <div class="form-wrapper">
+            <form class="course-form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h1>ساخت آموزش جدید</h1>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="title">عنوان آموزش</label>
+                        {{ form.title.errors }}
+                        <input type="text" id="title" name="title" value="{{ form.title.value|default:"" }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="slug">اسلاگ</label>
+                        {{ form.slug.errors }}
+                        <input type="text" id="slug" name="slug" required value="{{ form.slug.value|default:"" }}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.image.errors }}
+                    <label for="image">تصویر اصلی</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                    <div class="image-preview" id="imagePreview">
+                        <img src="" alt="پیش‌نمایش تصویر" class="preview-img" style="display:none;">
+                        <button type="button" id="removeImage" style="display:none;">حذف تصویر</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    {{ form.summery_description.errors }}
+                    <label for="summary">خلاصه توضیحات</label>
+                    <textarea id="summary" name="summery_description" rows="3" required >{{ form.summery_description.value|default:"" }}</textarea>
+                </div>
+
+                <div>
+                    {{ form.description.errors }}
+                    <label >توضیحات اصلی</label>
+                    {{ form.description }}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        {{ form.learn_time.errors }}
+                        <label for="duration">زمان آموزش (ساعت)</label>
+                        <input type="number" id="duration" name="learn_time" min="1" required value="{{ form.learn_time.value|default:"" }}">
+                    </div>
+                    <div class="form-group">
+                        {{ form.price.errors }}
+                        <label for="price">قیمت (تومان)</label>
+                        <input type="number" id="price" name="price" min="0" required value="{{ form.price.value|default:"" }}">
+                    </div>
+                    <div class="form-group">
+                        {{ form.precent_off.errors }}
+                        <label for="discount">درصد تخفیف</label>
+                        <input type="number" id="discount" name="precent_off" min="0" max="100" required value="{{ form.precent_off.value|default:"" }}">
+                    </div>
+                </div>
+
+                <button type="submit">ایجاد آموزش</button>
+            </form>
+        </div>
+    </main>
+
+{% endblock %}
+{% block script %}
+    <script src="{% static "js/make-learn.js" %}"></script>
+{% endblock %}

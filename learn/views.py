@@ -12,6 +12,7 @@ from .templatetags import tags
 # Create your views here.
 from decorators.users import checking_register_learn
 from decorators.teachers import Is_tacher
+from .forms import LearnForm
 
 def learn_list(request):
     page = request.GET.get('page',1)
@@ -121,9 +122,24 @@ def send_score(request):
 @login_required
 @Is_tacher
 def make_learn(request):
-    return render(request,"create/make_learn.html")
+    if request.method == "POST" :
+        form = LearnForm(request.POST,files=request.FILES)
+        if form.is_valid() :
+            print(True)
+            learn = form.save(commit=False)
+            print(True)
+            learn.teacher = request.user.teacher
+            print(True)
+            learn.save()
+            return redirect("user:profile")
+    else:
+        form = LearnForm()
+    context = {
+        "form":form
+    }
+    return render(request,"forms/make_learn.html",context)
 
 @login_required
 @Is_tacher
 def my_learns(request):
-    return render(request,"create/make_learn.html")
+    return render(request,"forms/make_learn.html")

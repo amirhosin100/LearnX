@@ -147,6 +147,7 @@ main{
 
 }
 .number_and_teacher{
+    align-items: center;
     display: flex;
     justify-content: space-between;
 }
@@ -161,5 +162,7 @@ main{
 }
 .author,.free{
     color: black;
+    display: block;
+    margin-right: auto;
 }
 /*  end learn */

@@ -156,6 +156,7 @@
 .number_and_teacher{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .number{
@@ -168,6 +169,8 @@
 }
 .author,.free{
     color: black;
+    display: block;
+    margin-right: auto;
 }
 /* just article */
 

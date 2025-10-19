@@ -4,6 +4,9 @@ from django_jalali.db import models as jmodels
 from django_resized import ResizedImageField
 from django.urls import reverse
 
+def blog_upload_to(instance, filename):
+    return os.path.join('blog/images', filename)
+
 # Create your models here.
 class Post(models.Model):
     bloger = models.ForeignKey("user.Bloger",models.PROTECT,"posts",verbose_name="بلاگر")
@@ -27,6 +30,7 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("blog:detail",args=[self.slug])
+
 
     class Meta:
         ordering = [

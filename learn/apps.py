@@ -5,6 +5,3 @@ class LearnConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'learn'
     verbose_name = "آموزش"
-
-    def ready(self):
-        import learn.signals

@@ -9,5 +9,6 @@ router.register(r"posts",views.PostViewSet)
 
 urlpatterns = [
     path("",include(router.urls)),
-    path("send-ticket/",views.TicketView.as_view())
+    path("send-ticket/",views.TicketView.as_view()),
+    path("my-posts/",views.PostListView.as_view()),
 ]

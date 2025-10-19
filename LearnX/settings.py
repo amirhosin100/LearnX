@@ -9,12 +9,11 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-import os.path
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -26,7 +25,6 @@ SECRET_KEY = 'django-insecure-=5d82&cl5dj$(s6+k5wc%h_9+8chzvjbjzve*a$^6q(9y3w%#e
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -71,7 +69,6 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',  # allauth
 ]
 
-
 ROOT_URLCONF = 'LearnX.urls'
 
 TEMPLATES = [
@@ -85,14 +82,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'cart.context_processor.cart' ,
+                'cart.context_processor.cart',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'LearnX.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -102,12 +98,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "Learn",
         "USER": "amir",
-        "PASSWORD" :"amir$%^hosin",
-        "PORT":"5432",
+        "PASSWORD": "amir$%^hosin",
+        "PORT": "5432",
     }
 
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -127,7 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -139,11 +133,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -156,16 +150,16 @@ AUTH_USER_MODEL = 'user.User'
 SOCIALACCOUNT_ADAPTER = "user.adapter.MySocialAccountAdapter"
 
 # for media
-MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = '/media/'
 
-#login and logout
+# login and logout
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 LOGOUT_REDIRECT_URL = '/'
 
-ACCOUNT_EMAIL_VERIFICATION = 'optional'  # یا 'mandatory' بسته به نیازت
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
 SOCIALACCOUNT_QUERY_EMAIL = True
 
 SITE_ID = 1
@@ -187,25 +181,25 @@ INTERNAL_IPS = ["127.0.0.1"]
 # settings for rest_framework
 REST_FRAMEWORK = {
 
-    "DEFAULT_PERMISSION_CLASSES" : [
+    "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ],
-    "DEFAULT_PAGINATION_CLASS" : "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE" : 2 ,
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 2,
 }
 
-#CKeditor
+# CKeditor
 
 CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': [
-                'heading', '|', 'bold', 'italic', 'underline', 'blockQuote',"|",
-                'link','bulletedList', 'numberedList',
-                'imageUpload', 'insertTable',"alignment",
-                'undo', 'redo'],
+            'heading', '|', 'bold', 'italic', 'underline', 'blockQuote', "|",
+            'link', 'bulletedList', 'numberedList',
+            'imageUpload', 'insertTable', "alignment",
+            'undo', 'redo'],
 
-        "language" :"fa",
-        'height': '400px',   # ارتفاع ادیتور
+        "language": "fa",
+        'height': '400px',  # ارتفاع ادیتور
         'width': 'auto',
         'image': {
             'toolbar': [
@@ -217,12 +211,20 @@ CKEDITOR_5_CONFIGS = {
             ],
         },
         'table': {
-            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells',"tableStyle:block"],
+            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells', "tableStyle:block"],
         },
         'mediaEmbed': {
             'previewsInData': True,
         },
         'removePlugins': ['ExportPdf', 'ExportWord'],
     },
+    'learn': {
+        'toolbar': [
+            'bold', 'italic', 'underline', "|",
+            'link', 'bulletedList', 'numberedList',
+            'undo', 'redo'],
+
+        "language" :"fa",
+    }
 }
-CKEDITOR_5_UPLOAD_PATH = "/blog/images"
+CKEDITOR_5_FILE_STORAGE = "all.storage.BlogStorage"

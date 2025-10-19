@@ -5,7 +5,8 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from user.models import User
 from rest_framework.decorators import action
-from rest_framework import status
+from rest_framework import status,generics
+from rest_framework import authentication
 
 class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
@@ -47,3 +48,14 @@ class TicketView(APIView):
             return Response({"message": "تیکت با موفقیت ثبت شد!"}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class PostListView(generics.ListAPIView):
+
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    authentication_classes = [authentication.BasicAuthentication]
+    permission_classes = [permissions.IsAdminUser]
+
+    def list(self, request, *args, **kwargs):
+        posts = self.get_queryset().filter(bloger=request.user.bloger)
+        serializer = self.get_serializer(posts,many=True)
+        return Response(serializer.data)

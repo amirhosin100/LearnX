@@ -38,15 +38,22 @@
                         </div>
                         <a href="{{ course.get_absolute_url }}">
                             <h2 class="learn_title">{{ course.title }}</h2>
-                            <p class="leran_detail">{{ course.description }}</p>
+                            <p class="leran_detail">{{ course.summery_description }}</p>
                         </a>
                         <span class="learn_more">
                             <span class="learn_price">
                                 <span class="prices">
                                     <span class="all_price">
-                                        <span class="price_main">{{ course.price|point|fa }}</span>
-                                        {% if course.discount_price != 0 %}
+                                        {% if course.precent_off == 0  %}
+                                            <span>{{ course.price|point|fa }}</span>
+                                        {% else %}
+                                            <span class="price_main">{{ course.price|point|fa }}</span>
+                                        {% endif %}
+
+                                        {% if course.discount_price != 0 and course.discount_price != course.price %}
                                         	<span class="price_off">{{ course.discount_price|point|fa }} تومان</span>
+                                        {% else %}
+                                            <span > تومان</span>
                                         {% endif %}
 
                                     </span>
@@ -62,7 +69,7 @@
                                 <span class="number_and_teacher">
                                     {% if course.discount_price == 0 %}
                                         <span class="number">رایگان</span>
-                                    {% else %}
+                                    {% elif course.precent_off != 0 %}
                                         <span class="number">%{{ course.precent_off|fa }}</span>
                                     {% endif %}
 
@@ -73,9 +80,6 @@
                         </span>
                     </div>
                     {% endfor %}
-
-
-
                 </div>
             </div>
             <article>

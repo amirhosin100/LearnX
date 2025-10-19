@@ -1,0 +1,137 @@
+
+main {
+    margin: 40px 0;
+}
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.course-form {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 700px;
+}
+
+.course-form h1 {
+    text-align: center;
+    color: var(--light_blue);
+    margin-bottom: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: var(--gray);
+    margin-bottom: 5px;
+}
+
+.form-wrapper input, .form-wrapper textarea {
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition-property: border-color, box-shadow, outline;
+    transition-duration: 200ms;
+}
+
+.form-wrapper input:focus, .form-wrapper textarea:focus {
+    border-color: var(--light_blue);
+    box-shadow: 0 0 5px var(--light_blue);
+    outline: none;
+}
+
+.form-wrapper textarea {
+    resize: vertical;
+    height: 150px;
+    min-height: 100px;
+    max-height: 300px;
+
+}
+
+.form-wrapper button {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--light_blue);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.form-wrapper button:hover {
+    background-color: #0099cc;
+}
+
+/* چیدمان ردیفی برای فیلدهای کنار هم */
+.form-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 150px;
+
+}
+
+.image-preview {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 5px;
+}
+
+.preview-img {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    object-fit: cover;
+}
+.errorlist {
+    position: absolute;
+    top : -15px;
+    padding: 0;
+    color: red;
+    font-size: 14px;
+
+}
+
+#removeImage {
+    padding: 6px 12px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#removeImage:hover {
+    background-color: #e60000;
+}
+
+/* ریسپانسیو */
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+    }
+}

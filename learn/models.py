@@ -4,6 +4,7 @@ from user.models import Teacher,User
 from django.urls import reverse
 from django_jalali.db import models as jmodels
 from django.db.models import Count,Avg
+from django_ckeditor_5.fields import CKEditor5Field
 
 def create_url_for_film(instance,filename):
     return f'learns/films/{instance.headline.learn.title}/{instance.headline.title}/{filename}'
@@ -13,16 +14,16 @@ class Learn(models.Model):
     teacher = models.ForeignKey(Teacher,models.CASCADE,"learns",verbose_name="مدرس")
     title = models.CharField(max_length=255,verbose_name="عنوان")
     summery_description = models.TextField(max_length=250,verbose_name="خلاصه توضیحات")
-    description = models.TextField(max_length=4000,verbose_name="توضیحات")
+    description = CKEditor5Field(max_length=4000,verbose_name="توضیحات",config_name="learn")
     image = ResizedImageField(upload_to="learns/images/%Y",size=[1920,1080],crop=["middle","center"],quality=100)
-    score = models.FloatField(verbose_name="امتیاز")
+    score = models.FloatField(verbose_name="امتیاز",default=0)
     learn_time = models.PositiveIntegerField(verbose_name="مدت زمان آموزش")
 
-    slug = models.SlugField("اسلاگ")
+    slug = models.SlugField("اسلاگ",unique=True)
 
     price = models.PositiveIntegerField("قیمت")
-    precent_off = models.PositiveIntegerField("درصد تخفیف")
-    discount_price = models.PositiveIntegerField("قیمت نهایی")
+    precent_off = models.PositiveIntegerField("درصد تخفیف",default=0)
+    discount_price = models.PositiveIntegerField("قیمت نهایی",default=0)
 
     #many to many
 
@@ -46,6 +47,10 @@ class Learn(models.Model):
 
     def get_absolute_url(self):
         return reverse('learn:learn_detail', args=[self.slug])
+
+    def save(self ,*args,**kwargs):
+        self.discount_price = self.price - (self.price * self.precent_off / 100)
+        super().save(*args,**kwargs)
 
 class Headline(models.Model):
     learn = models.ForeignKey(Learn,models.CASCADE,"headlines")
