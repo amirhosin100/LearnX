@@ -1,0 +1,35 @@
+{% extends "profile/profile_base.html" %}
+{% load static %}
+{% block title %}
+    {{ block.super }}
+    آموزش های شما
+{% endblock %}
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "css/my-learns.css" %}">
+{% endblock %}
+{% block profile_content %}
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>عنوان آموزش</th>
+                <th>توضیحات مختصر</th>
+                <th>جزئیات</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for learn in user.teacher.learns.all %}
+            <tr>
+                <td data-label="عنوان آموزش"><a href="{{ learn.get_absolute_url }}">{{ learn.title }}</a></td>
+                <td data-label="توضیحات مختصر" >{{ learn.summery_description }}</td>
+                <td data-label="جزئیات">
+                    <a class="detail-link"  href="{{ learn.get_detail_url }}">مشاهده جزئیات</a>
+                </td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

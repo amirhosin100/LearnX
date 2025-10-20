@@ -1,0 +1,72 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load tags %}
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "css/learn_detail_for_tacher.css" %}">
+{% endblock %}
+{% block title %}
+	جزییات آموزش : {{ learn.title }}
+{% endblock %}
+{% block sub_content %}
+    <div class="container">
+        <!-- بخش اطلاعات آموزش -->
+        <div class="course-header">
+            <img src="{{ learn.image.url }}" alt="تصویر آموزش">
+            <h1 class="course-title">{{ learn.title }}</h1>
+            <p class="course-desc">{{ learn.summery_description }}</p>
+            <a href="#" class="edit-link">ویرایش آموزش ✏️</a>
+        </div>
+
+        <!-- بخش سرفصل‌ها -->
+        <div class="chapters">
+            {% for headline in learn.headlines.all %}
+            	<div class="chapter">
+                <div class="chapter-header">
+                    <span>سرفصل {{forloop.counter|fa}}: {{ headline.title }}</span>
+                    <span>+</span>
+                </div>
+                <div class="chapter-content">
+                    {% for film in headline.films.all %}
+                    	<div class="video-item">
+                        <span class="video-title">{{ film.title }}</span>
+                        <a href="#" class="edit-video">ویرایش 🎬</a>
+                    </div>
+                    {% endfor %}
+
+
+
+                    <a href="#" class="add-video">➕ افزودن ویدیو</a>
+                </div>
+            </div>
+            {% endfor %}
+
+
+        </div>
+
+        <a href="#" class="add-chapter">➕ افزودن سرفصل جدید</a>
+    </div>
+{% endblock %}
+{% block script %}
+	<script>
+        // باز و بسته کردن سرفصل‌ها
+        const chapters = document.querySelectorAll('.chapter');
+
+        chapters.forEach(chapter => {
+            const header = chapter.querySelector('.chapter-header');
+            const content = chapter.querySelector('.chapter-content');
+            const toggleIcon = header.querySelector('span:last-child');
+
+            header.addEventListener('click', () => {
+                const isOpen = content.style.display === 'block';
+                document.querySelectorAll('.chapter-content').forEach(c => c.style.display = 'none');
+                document.querySelectorAll('.chapter-header span:last-child').forEach(i => i.textContent = '+');
+
+                if (!isOpen) {
+                    content.style.display = 'block';
+                    toggleIcon.textContent = '−';
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,47 +1,51 @@
 from rest_framework import serializers
 from blog.models import Post
 from user.models import *
+from learn.models import *
 
+# for user app
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
+        fields = ["url","username","first_name","last_name","email","password"]
         model = User
-        fields = ["username","first_name","last_name","url","password"]
         extra_kwargs = {
-            "password" :{"write_only":True},
+            "password":{"write_only":True}
         }
-
-
     def create(self, validated_data):
-        v = validated_data
-        user = User(username=v["username"],first_name=v["first_name"],last_name=v["last_name"])
-        user.set_password(v["password"])
+        password = validated_data["password"]
+        user = User.objects.create(**validated_data)
+        user.set_password(password)
         user.save()
         return user
 
 class TeacherSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = Teacher
         fields = "__all__"
 
-class TicketSerializer(serializers.Serializer):
-    first_name = serializers.CharField(max_length=200)
-    last_name = serializers.CharField(max_length=200)
-    email = serializers.EmailField()
-    content = serializers.CharField(max_length=1000)
+class BlogerSerializer(serializers.HyperlinkedModelSerializer):
 
-
-    def save(self, **kwargs):
-        print(self.validated_data)
-
-
-    def validate_first_name(self,value):
-        if value == "amir":
-            raise serializers.ValidationError("خطا داریم")
-
-        return value
-
-class PostSerializer(serializers.ModelSerializer):
-    likes = UserSerializer(many=True)
     class Meta:
-        model = Post
+        model = Bloger
         fields = "__all__"
+# END user app
+
+# for learn app
+
+class HeadlineSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta :
+        model = Headline
+        fields = "__all__"
+
+
+class LearnSerializer(serializers.HyperlinkedModelSerializer):
+    headlines = HeadlineSerializer(many=True)
+    class Meta :
+        model = Learn
+        fields = "__all__"
+        read_only_fields = ["discount_price","score"]
+
+
+

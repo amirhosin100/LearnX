@@ -48,6 +48,10 @@ class Learn(models.Model):
     def get_absolute_url(self):
         return reverse('learn:learn_detail', args=[self.slug])
 
+    #برای زمانی که مدرس می خواهد جزیات دوره اش را ببیند
+    def get_detail_url(self):
+        return reverse("learn:detail_for_reacher",args=[self.id])
+
     def save(self ,*args,**kwargs):
         self.discount_price = self.price - (self.price * self.precent_off / 100)
         super().save(*args,**kwargs)

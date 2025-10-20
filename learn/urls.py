@@ -11,4 +11,5 @@ urlpatterns = [
     path("send_score/",views.send_score,name='send_score'),
     path("make-learn/",views.make_learn,name="make_learn"),
     path("my-learns/",views.my_learns,name="my_learns"),
+    path("detail-for-teacher/<int:id>",views.detail_for_teacher,name="detail_for_reacher"),
 ]
