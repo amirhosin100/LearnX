@@ -15,7 +15,7 @@
             <li class="menu_button"><a href="{% url "user:index" %}">صفحه اصلی</a></li>
             <li class="menu_button"><a href="{% url 'learn:learn_list' %}">آموزش ها </a></li>
             <li class="menu_button"><a href="#">مقالات</a></li>
-            <li class="menu_button"><a href="#">درباره ما</a></li>
+            <li class="menu_button"><a href="{% url "user:about_me" %}">درباره من</a></li>
         </ul>
         <button type="button" id="menu_for_moblie" class="container_menu">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
@@ -59,8 +59,8 @@
         <div class="footer_content_2">
             <div class="footer_part">
                 <h3>آموزش های ما</h3>
-                <a href="#">پایتون</a>
-                <a href="#">html</a>
+                <a href="/learn/detail/python">پایتون</a>
+                <a href="/learn/detail/html">html</a>
                 <a href="#">flex box</a>
             </div>
             <div class="footer_part">
@@ -68,7 +68,7 @@
                 <a href="{% url 'learn:learn_list' %}">آموزش ها</a>
                 <a href="#">بلاگ ما</a>
                 <a href="#">تیکت ها</a>
-                <a href="#">درباره ما</a>
+                <a href="{% url "user:about_me" %}">درباره من</a>
             </div>
             <div class="footer_part">
                 <h3>ارتباط با ما</h3>

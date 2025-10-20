@@ -11,7 +11,7 @@ from django.views.generic.list import ListView
 from .templatetags import tags
 # Create your views here.
 from decorators.users import checking_register_learn
-from decorators.teachers import Is_tacher,checking_learn
+from decorators.teachers import Is_tacher
 from .forms import LearnForm
 
 def learn_list(request):
@@ -146,13 +146,21 @@ def my_learns(request):
 
 
 @login_required
-# چون که در این قسمت برسی می شود که آیا این اموزش برای این کاربر هست یا نه دیگر لازم به استفاده از
-# Is_teache نیست
-@checking_learn
 def detail_for_teacher(request,id):
-    learn = get_object_or_404(Learn,id=id)
-    context = {
-        "learn" : learn ,
-    }
-    return render(request,"teacher_profile/learn_detail_for_teacher.html",
-                  context)
+    learn = get_object_or_404(
+        Learn.objects.prefetch_related(
+            Prefetch(
+                "headlines",
+                queryset=Headline.objects.prefetch_related("films")
+            )
+        ),
+        id=id
+    )
+    if learn.teacher == request.user.teacher or request.user.is_superuser:
+        context = {
+            "learn" : learn ,
+        }
+        return render(request,"teacher_profile/learn_detail_for_teacher.html",
+                      context)
+    else:
+        return redirect("user:profile")

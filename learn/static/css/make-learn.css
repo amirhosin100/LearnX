@@ -115,6 +115,9 @@ main {
     font-size: 14px;
 
 }
+.ck-powered-by-balloon{
+    display: none !important;
+}
 
 #removeImage {
     padding: 6px 12px;

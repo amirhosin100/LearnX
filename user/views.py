@@ -17,6 +17,9 @@ def index(request):
     }
     return render(request,"pages/main_page.html",context)
 
+def about_me(request):
+    return render(request,"pages/about_me.html")
+
 def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
@@ -62,4 +65,5 @@ def register_courses(request):
         "courses" :courses,
     }
     return render(request,"profile/register_courses.html",context)
+
 
