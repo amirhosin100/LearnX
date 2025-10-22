@@ -50,7 +50,7 @@ class Learn(models.Model):
 
     #برای زمانی که مدرس می خواهد جزیات دوره اش را ببیند
     def get_detail_url(self):
-        return reverse("learn:detail_for_reacher",args=[self.id])
+        return reverse("learn:detail_for_teacher",args=[self.id])
 
     def save(self ,*args,**kwargs):
         self.discount_price = self.price - (self.price * self.precent_off / 100)
@@ -75,7 +75,7 @@ class Headline(models.Model):
 class LearnFilms(models.Model):
     headline = models.ForeignKey(Headline,models.CASCADE,"films",verbose_name="سرفصل")
     title = models.CharField(max_length=255,verbose_name="عنوان")
-    description = models.TextField(max_length=1200,verbose_name="توضیحات")
+    description = CKEditor5Field(config_name="film",max_length=1200,verbose_name="توضیحات")
     film = models.FileField("فیلم",upload_to=create_url_for_film)
 
     create = jmodels.jDateTimeField(auto_now_add=True)

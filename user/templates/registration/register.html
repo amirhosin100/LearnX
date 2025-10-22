@@ -25,16 +25,19 @@
 
                 <div class="row">
                     <div class="container_label">
+                        {{ form.first_name.errors }}
                         <label for="first_name">نام:</label>
                         <input type="text" id="first_name" name="first_name">
                     </div>
                     <div class="container_label">
+                        {{ form.last_name.errors }}
                         <label for="last_name">نام خانوادگی:</label>
                         <input type="text" id="last_name" name="last_name">
                     </div>
                 </div>
                 <div class="row">
                     <div class="container_label">
+                        {{ form.email_name.errors }}
                         <label for="email">ایمیل:</label>
                         <input type="email" name="email" id="email">
                     </div>
@@ -42,10 +45,12 @@
 
                 <div class="row">
                     <div class="container_label">
+                        {{ form.password.errors }}
                         <label for="password">رمز عبور:</label>
                         <input type="password" name="password" id="password">
                     </div>
                     <div class="container_label">
+                        {{ form.password2.errors }}
                         <label for="password_2">تکرار رمز عبور:</label>
                         <input type="password" name="password2" id="password_2">
                     </div>

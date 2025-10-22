@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from django.core.exceptions import FieldDoesNotExist
+from django.core.exceptions import FieldDoesNotExist,ObjectDoesNotExist
 from learn.models import Learn
 def Is_tacher(func):
     """
@@ -13,7 +13,7 @@ def Is_tacher(func):
             if request.user.teacher :
                 return func(*args,**kwargs)
 
-        except FieldDoesNotExist:
+        except FieldDoesNotExist and ObjectDoesNotExist:
             return redirect("user:profile")
 
     return wrapper

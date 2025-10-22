@@ -10,6 +10,11 @@ urlpatterns = [
 
     path("send_score/",views.send_score,name='send_score'),
     path("make-learn/",views.make_learn,name="make_learn"),
+    path("edit-learn/<slug:slug>",views.edit_learn,name="edit_learn"),
     path("my-learns/",views.my_learns,name="my_learns"),
-    path("detail-for-teacher/<int:id>",views.detail_for_teacher,name="detail_for_reacher"),
+    path("detail-for-teacher/<int:id>",views.detail_for_teacher,name="detail_for_teacher"),
+    path("make-film/<int:h_id>",views.make_film,name="make_film"),
+    path("edit-film/<int:id>",views.edit_film,name="edit_film"),
+    path("make-headline/<learn_id>",views.make_headline,name="make_headline"),
+
 ]

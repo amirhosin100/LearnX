@@ -10,6 +10,12 @@
     overflow-x: auto;
     padding: 20px;
 }
+.message{
+    color: #00ff73;
+    display: block;
+    margin: 0 auto;
+    padding: 10px 0;
+}
 
 table {
     width: 100%;

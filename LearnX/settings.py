@@ -224,7 +224,11 @@ CKEDITOR_5_CONFIGS = {
             'link', 'bulletedList', 'numberedList',
             'undo', 'redo'],
 
-        "language" :"fa",
+        "language": "fa",
+    },
+    'film': {
+        'toolbar': ['bold', 'link', '|','bulletedList','undo', 'redo'],
+        "language": "fa",
     }
 }
 CKEDITOR_5_FILE_STORAGE = "all.storage.BlogStorage"

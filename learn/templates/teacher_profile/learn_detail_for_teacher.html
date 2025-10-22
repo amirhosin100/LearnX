@@ -3,70 +3,118 @@
 {% load tags %}
 {% block head %}
     {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% static "css/learn_detail_for_tacher.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/learn_detail_for_teacher.css" %}">
 {% endblock %}
 {% block title %}
-	جزییات آموزش : {{ learn.title }}
+    جزییات آموزش : {{ learn.title }}
 {% endblock %}
 {% block sub_content %}
     <div class="container">
+        <div class="messages">
+            {% for message in messages %}
+                <span class="message">{{ message }}</span>
+            {% endfor %}
+        </div>
         <!-- بخش اطلاعات آموزش -->
         <div class="course-header">
             <img src="{{ learn.image.url }}" alt="تصویر آموزش">
             <h1 class="course-title">{{ learn.title }}</h1>
             <p class="course-desc">{{ learn.summery_description }}</p>
-            <a href="#" class="edit-link">ویرایش آموزش ✏️</a>
+            <a href="{% url "learn:edit_learn" learn.slug %}" class="edit-link">ویرایش آموزش ✏️</a>
         </div>
 
         <!-- بخش سرفصل‌ها -->
         <div class="chapters">
             {% for headline in learn.headlines.all %}
-            	<div class="chapter">
-                <div class="chapter-header">
-                    <span>سرفصل {{forloop.counter|fa}}: {{ headline.title }}</span>
-                    <span>+</span>
-                </div>
-                <div class="chapter-content">
-                    {% for film in headline.films.all %}
-                    	<div class="video-item">
-                        <span class="video-title">{{ film.title }}</span>
-                        <a href="#" class="edit-video">ویرایش 🎬</a>
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <span>سرفصل {{ forloop.counter|fa }}: {{ headline.title }}</span>
+                        <span>+</span>
                     </div>
-                    {% endfor %}
-
-
-
-                    <a href="#" class="add-video">➕ افزودن ویدیو</a>
+                    <div class="chapter-content">
+                        {% for film in headline.films.all %}
+                            <div class="video-item">
+                                <span class="video-title">{{ film.title }}</span>
+                                <a href="{% url "learn:edit_film" film.id %}" class="edit-video">ویرایش 🎬</a>
+                            </div>
+                        {% endfor %}
+                        <a href="{% url "learn:make_film" headline.id %}" class="add-video">➕ افزودن ویدیو</a>
+                    </div>
                 </div>
-            </div>
             {% endfor %}
-
-
         </div>
 
-        <a href="#" class="add-chapter">➕ افزودن سرفصل جدید</a>
+        <button class="add-chapter">➕ افزودن سرفصل جدید</button>
+        <div id="container_add_headline">
+            <div>
+                <label for="headline_title">عنوان</label>
+                <input type="text" id="headline_title">
+            </div>
+            <button type="button" id="add_headline">تایید</button>
+
+        </div>
     </div>
 {% endblock %}
 {% block script %}
-	<script>
-        // باز و بسته کردن سرفصل‌ها
-        const chapters = document.querySelectorAll('.chapter');
+    <script>
+        function open() {
 
-        chapters.forEach(chapter => {
-            const header = chapter.querySelector('.chapter-header');
-            const content = chapter.querySelector('.chapter-content');
-            const toggleIcon = header.querySelector('span:last-child');
+            const chapter = document.querySelector('.chapters');
 
-            header.addEventListener('click', () => {
+            chapter.addEventListener('click', function (e) {
+                const header = e.target.closest('.chapter-header');
+                if (!header) return; // اگه روی جایی غیر از header کلیک شد، کاری نکن
+
+                const content = header.nextElementSibling;
+                const toggleIcon = header.querySelector('span:last-child');
                 const isOpen = content.style.display === 'block';
+
+                // بستن همه
                 document.querySelectorAll('.chapter-content').forEach(c => c.style.display = 'none');
                 document.querySelectorAll('.chapter-header span:last-child').forEach(i => i.textContent = '+');
 
+                // باز کردن مورد کلیک‌شده
                 if (!isOpen) {
                     content.style.display = 'block';
                     toggleIcon.textContent = '−';
                 }
             });
+        }
+
+        open();
+        document.getElementById("add_headline").addEventListener("click", async function () {
+            const title_input = document.getElementById("headline_title");
+            const title = title_input.value;
+            const container = document.getElementsByClassName("chapters")[0];
+
+
+            title_input.value = "";
+            const response = await fetch("{% url "learn:make_headline" learn.id %}", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({"title": title}),
+
+            });
+            const result = await response.json();
+            if (result.status === "created") {
+                const code = `
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <span>سرفصل ${result.number}: ${title}</span>
+                        <span>+</span>
+                    </div>
+                    <div class="chapter-content">
+                        <a href="/learn/make-film/${result.id}" class="add-video">➕ افزودن ویدیو</a>
+                    </div>
+                </div>
+            `;
+                container.insertAdjacentHTML("beforeend", code);
+            }
+
+
         });
     </script>
 {% endblock %}

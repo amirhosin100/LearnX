@@ -8,3 +8,10 @@ class LearnForm(forms.ModelForm):
         model = Learn
         fields = ["title","slug","image","summery_description","description","learn_time",
                   "price","precent_off"]
+
+class FilmForm(forms.ModelForm):
+    description = forms.CharField(widget=CKEditor5Widget(config_name="film"))
+    class Meta :
+        model = LearnFilms
+        fields = ["title","description","film"]
+

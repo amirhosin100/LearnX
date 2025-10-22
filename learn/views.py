@@ -1,4 +1,3 @@
-from django.core.paginator import Paginator
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse,JsonResponse
 from django.db.models import Prefetch
@@ -12,7 +11,15 @@ from .templatetags import tags
 # Create your views here.
 from decorators.users import checking_register_learn
 from decorators.teachers import Is_tacher
-from .forms import LearnForm
+from .forms import *
+from django.contrib import messages
+import json
+
+def check_teacher(request,learn):
+    if learn.teacher.user == request.user or request.user.is_superuser:
+        return True
+    else:
+        return redirect("user:profile")
 
 def learn_list(request):
     page = request.GET.get('page',1)
@@ -164,3 +171,83 @@ def detail_for_teacher(request,id):
                       context)
     else:
         return redirect("user:profile")
+
+@login_required
+def edit_learn(request,slug):
+    learn = get_object_or_404(Learn,slug=slug)
+    if request.method == "POST" :
+        form = LearnForm(request.POST,instance=learn,files=request.FILES)
+        if form.is_valid():
+            learn = form.save()
+            messages.success(request,f"دوره ی {learn.title} با موفیقت تغییر پیدا کرد")
+            return redirect("learn:my_learns")
+    else:
+        form = LearnForm(instance=learn)
+
+    context = {
+        "form" :form,
+        "edit" : True ,
+    }
+    return render(request,"forms/make_learn.html",context)
+
+
+# noinspection PyTypeChecker
+def make_film(request,h_id):
+    headline = get_object_or_404(Headline.objects.select_related("learn__teacher__user"),id=h_id)
+    response = check_teacher(request,headline.learn)
+
+    if response == True :
+        if request.method == "POST":
+            form = FilmForm(request.POST,request.FILES)
+            if form.is_valid() :
+                film = form.save(commit=False)
+                film.headline = headline
+                film.save()
+                messages.success(request,"ویدئو با موفقیت ایجاد شد")
+                return redirect("learn:detail_for_teacher",headline.learn.id)
+        else:
+            form = FilmForm()
+        context = {
+            "form":form,
+        }
+        return render(request,"forms/make_film.html",context)
+    else:
+        return response
+
+@login_required
+@require_POST
+def make_headline(request,learn_id):
+    learn = get_object_or_404(Learn,id=learn_id)
+    data = json.loads(request.body)
+    title = data.get("title")
+    if title :
+        try :
+            headline = Headline.objects.create(learn=learn,title=title)
+            num = tags.to_persian_numbers(learn.headlines.count())
+            return JsonResponse({"status":"created","number":num,"id":headline.id})
+        except :
+            JsonResponse({"error":"Somethings went wrong"})
+    else :
+        return JsonResponse({"error":"title is null"})
+
+@login_required
+def edit_film(request,id):
+    film = get_object_or_404(LearnFilms.objects.select_related("headline__learn__teacher__user"),id=id)
+    response = check_teacher(request,film.headline.learn)
+    if response == True:
+        if request.method == "POST":
+            form = FilmForm(request.POST,instance=film,files=request.FILES)
+            if form.is_valid():
+                form.save()
+                messages.success(request,f"ویدئو <{form.instance.title}> با موفقیت ویرایش شد")
+                return redirect("learn:detail_for_teacher",film.headline.learn.id)
+        else:
+            form = FilmForm(instance=film)
+
+        context = {
+            "form" :form,
+            "edit" : True,
+        }
+        return render(request,"forms/make_film.html",context)
+    else:
+        return response

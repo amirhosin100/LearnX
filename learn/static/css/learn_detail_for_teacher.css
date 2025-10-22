@@ -123,3 +123,36 @@
     font-weight: bold;
     font-size: 1rem;
 }
+.messages{
+    margin: 10px 0;
+}
+.message{
+    color: #00ff73;
+    display: block;
+    text-align: center;
+
+}
+#container_add_headline{
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+    padding: 10px;
+    box-shadow: var(--shadow);
+    border-radius: 12px;
+    align-items: center;
+}
+#container_add_headline input {
+    border: 1px solid var(--light_blue);
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 18px;
+
+}
+#container_add_headline button{
+    padding: 10px;
+    background-color: var(--light_blue);
+    border-radius: 12px;
+    color: #fff;
+    cursor: pointer;
+     font-size: 18px;
+}
