@@ -1,66 +1,107 @@
 {% extends "base/base.html" %}
 {% load static %}
+{% load jformat %}
+{% load tags %}
 {% block head %}
     {{ block.super }}
     <link rel="stylesheet" href="{% static 'css/post_detail.css' %}" type="text/css">
 {% endblock %}
+{% block title %}{{ block.super }} {{ post.title }}{% endblock %}
 {% block sub_content %}
-    <main>
-        {{ post.body|safe }}
-        <hr/>
-        <button id="like">{% if user in post.likes.all %}unlike{% else %}like{% endif %}</button>
-        <hr/>
+    <div class="container">
+        <article class="article-content">
 
-        <div>
-            <h3>نظر خود را وارد کنید</h3>
-            <p id="status"></p>
-            <label for="content">نظر شما</label>
-            <input type="text" name="content" id="content">
-            <button type="button" id="send_comment">ارسال</button>
-        </div>
-    </main>
+            <div class="article-header">
+                <h1 class="article-title">{{ post.title }}</h1>
 
+                <figure class="main-image">
+                    <img src="{{ post.main_image.url }}  " alt="{{ post.title }}">
+                </figure>
+
+                <div class="meta-info">
+                    <div class="author-profile">
+                        <img src="{% if post.bloger.user.image %}{{ post.bloger.user.image.url }}{% endif %}"
+                             alt="{{ post.bloger.user.get_full_name }}" class="author-photo">
+                        <span class="author-details">
+                            <span class="author-name">
+                                <i class="fas fa-user-edit"></i> نویسنده: {{ post.bloger.user.get_full_name }}
+                            </span>
+                            <span class="date">
+                                <i class="fas fa-calendar-alt"></i> تاریخ انتشار: {{ post.update|jformat:"%m %B %Y"|fa }}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-body">
+                {{ post.body|safe }}
+            </div>
+
+            <div class="article-actions">
+                <button class="like-button">
+                    <i class="fas fa-thumbs-up"></i>
+                    <span>لایک مقاله: {{ post.likes.count|fa }}</span>
+                </button>
+            </div>
+
+            <section class="comments-section">
+                <h2><i class="fas fa-comments"></i> نظرات کاربران ({{ comments.count|fa }})</h2>
+
+                <div class="comment-form">
+                    <h3>ارسال نظر جدید</h3>
+                    <span id="status"></span>
+                    <div class="continer_send_comment">
+                        <textarea placeholder="متن نظر شما..." id="text-content"></textarea>
+                        <button type="button" id="send-comment">ثبت نظر</button>
+                    </div>
+                </div>
+
+                <div class="comment-list">
+                    {% for comment in comments %}
+                        <div class="comment">
+                            <div class="comment-header">
+                                <img src="{% if comment.user.image %}{{ comment.user.image.url }}{% endif %}"
+                                     alt="عکس پروفایل {{ comment.user.get_full_name }}" class="comment-avatar">
+                                <div class="comment-info">
+                                    <p class="comment-author">{{ comment.user.get_full_name }}</p>
+                                    <p class="comment-date">۱ ساعت پیش</p>
+                                </div>
+                            </div>
+                            <p class="comment-text">{{ comment.content }}</p>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </section>
+
+        </article>
+    </div>
 {% endblock %}
 {% block script %}
-    <script src="{% static "js/jquery.min.js" %}"></script>
     <script>
-        $(document).ready(function () {
-            $("#like").click(function () {
-                const button = $(this);
-                $.ajax({
-                    type: "POST",
-                    url: "{% url "blog:like_post" %}",
-                    data: {"post_id": {{ post.id }}, "csrfmiddlewaretoken": "{{ csrf_token }}"},
-                    success: function (data) {
-                        if (data.like) {
-                            button.text("unlike");
-                        } else {
-                            button.text("like");
-                        }
-                    }
-                });
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $("#send_comment").click(function () {
-                const text = document.getElementById("status");
-                const content = document.getElementById("content");
-                console.log(content);
-                if (content) {
-                    $.ajax({
-                        type: "POST",
-                        url: "{% url 'blog:send_comment' %}",
-                        data: { "post_id" : {{ post.id }},"content" : content.value , "csrfmiddlewaretoken" : "{{ csrf_token }}" },
-                        success : function (data){
-                            text.innerText = data.status ;
-                            content.value = "";
-                        }
-                    });
-                }
+        document.getElementById("send-comment").addEventListener("click", async function () {
+            const text_content = document.getElementById("text-content");
+            const value = text_content.value;
+            const post_id = {{ post.id }};
+            const card = document.getElementById("status");
+            if (value) {
+                const response = await fetch("{% url "blog:send_comment" %}", {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: JSON.stringify({"post_id": post_id, "content": value})
 
-            });
+                });
+                const result = await response.json();
+                if (result.status) {
+                    card.innerText = result.status;
+                    text_content.value = "";
+                }
+            }
+
         });
     </script>
 {% endblock %}

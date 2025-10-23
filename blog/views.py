@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render,get_object_or_404,redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
@@ -9,9 +11,11 @@ from decorators.blogers import Is_bloger
 # Create your views here.
 
 def detail(request,slug):
-    post = get_object_or_404(Post,slug=slug)
+    post = get_object_or_404(Post.objects.select_related("bloger__user"),slug=slug)
+    comments = CommentForPost.publish.filter(post=post).select_related("user").all()
     context = {
-        "post":post
+        "post":post,
+        "comments" : comments
     }
     return render(request,"pages/post_detail.html",context)
 
@@ -54,10 +58,11 @@ def like_post(request):
 @require_POST
 def send_comment(request):
     if request.user.is_authenticated:
-        post_id = request.POST.get("post_id")
+        data = json.loads(request.body)
+        post_id = data.get("post_id")
         user = request.user
         post = get_object_or_404(Post,id=post_id)
-        content = request.POST.get("content")
+        content = data.get("content")
         if content :
             try :
                 CommentForPost.objects.create(user=user,post=post,content=content)

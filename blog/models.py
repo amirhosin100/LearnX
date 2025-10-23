@@ -4,8 +4,6 @@ from django_jalali.db import models as jmodels
 from django_resized import ResizedImageField
 from django.urls import reverse
 
-def blog_upload_to(instance, filename):
-    return os.path.join('blog/images', filename)
 
 # Create your models here.
 class Post(models.Model):

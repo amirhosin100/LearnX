@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    "rest_framework.authtoken",
     "django_ckeditor_5",
 
 ]
@@ -184,6 +185,9 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ],
+    "DEFAULT_AUTHENTICATION_CLASSES" : [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 4,
 }
@@ -193,8 +197,9 @@ REST_FRAMEWORK = {
 CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': [
-            'heading', '|', 'bold', 'italic', 'underline', 'blockQuote', "|",
-            'link', 'bulletedList', 'numberedList',
+            'heading', '|', 'bold', 'italic', 'underline',
+            "|", 'sourceEditing',"|",
+            'link', "|",'bulletedList', 'numberedList',
             'imageUpload', 'insertTable', "alignment",
             'undo', 'redo'],
 

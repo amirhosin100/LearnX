@@ -1,14 +1,42 @@
-{% extends "base/base.html" %}
+{% extends "profile/profile_base.html" %}
 {% load static %}
 {% block title %}افزودن ویدئو{% endblock %}
 {% block head %}
 	{{ block.super }}
     {{ form.media }}
+    <link rel="stylesheet" href="{% static 'css/make_film.css' %}">
 {% endblock %}
-{% block sub_content %}
-	<form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">ارسال</button>
-    </form>
+
+{% block profile_content %}
+	<div class="video-upload-container">
+        {% if edit %}
+            <h1>ویرایش ویدئو 🎬</h1>
+        {% else %}
+            <h1>ارسال ویدئوی جدید 🎬</h1>
+        {% endif %}
+
+        <form  method="POST" enctype="multipart/form-data" class="upload-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="video-title">عنوان ویدئو:</label>
+                <input type="text" id="video-title" name="title" placeholder="عنوان:" required value="{{ form.title.value|default:"" }}">
+            </div>
+
+            <div class="form-group">
+                <label for="video-description">توضیحات:</label>
+                {{ form.description }}
+            </div>
+
+            <div class="form-group file-upload-area">
+                <label for="video-file">آپلود فایل ویدئو:</label>
+                <div class="file-input-wrapper">
+                    <input type="file" id="video-file" name="film" accept="video/*" required>
+                    <span class="file-label">انتخاب فایل ویدئو 📂</span>
+                </div>
+                <p class="file-info">فرمت‌های مجاز: MP4, MOV, AVI | حداکثر حجم: 500MB</p>
+            </div>
+
+            <button type="submit" class="submit-btn">{% if edit %}ویرایش{% else %}ارسال{% endif %} ویدئو</button>
+        </form>
+    </div>
 {% endblock %}

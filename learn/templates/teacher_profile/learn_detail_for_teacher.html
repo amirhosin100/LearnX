@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "profile/profile_base.html" %}
 {% load static %}
 {% load tags %}
 {% block head %}
@@ -6,10 +6,11 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/learn_detail_for_teacher.css" %}">
 {% endblock %}
 {% block title %}
+    {{ block.super }}
     جزییات آموزش : {{ learn.title }}
 {% endblock %}
-{% block sub_content %}
-    <div class="container">
+{% block profile_content %}
+    <div class="main">
         <div class="messages">
             {% for message in messages %}
                 <span class="message">{{ message }}</span>

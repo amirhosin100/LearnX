@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
+from rest_framework.authtoken.views import obtain_auth_token
 import debug_toolbar
 
 urlpatterns = [
@@ -31,6 +32,7 @@ urlpatterns = [
     path("cart/",include("cart.urls",namespace="cart")),
     path("blog/",include("blog.urls",namespace="blog")),
     path("ckeditor5/", include("django_ckeditor_5.urls")),
+    path('api/token/', obtain_auth_token, name='api_token_auth'),
 
 ]
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

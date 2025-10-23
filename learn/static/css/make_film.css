@@ -1,0 +1,149 @@
+
+/*body {*/
+/*    font-family: Tahoma, Arial, sans-serif;*/
+/*    background-color: var(--background-color);*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    min-height: 100vh;*/
+/*    color: var(--primary-text);*/
+/*    direction: rtl; !* برای فارسی‌سازی راست به چپ *!*/
+/*    text-align: right;*/
+/*}*/
+
+.video-upload-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 800px; /* حداکثر عرض فرم */
+    border: 1px solid var(--border);
+    margin: 20px auto;
+}
+
+h1 {
+    text-align: center;
+    color: var(--light_blue);
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 15px;
+}
+
+/* استایل‌های فرم */
+.form-group {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--primary-text);
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background-color: #f9f9f9;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    border-color: var(--light_blue);
+    box-shadow: 0 0 0 3px rgba(0, 187, 255, 0.2);
+    outline: none;
+    background-color: #fff;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* استایل دهی جذاب برای آپلود فایل */
+.file-upload-area {
+    border: 2px dashed var(--border);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: border-color 0.3s;
+}
+
+.file-upload-area:hover {
+    border-color: var(--light_blue);
+}
+
+.file-input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.file-input-wrapper input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* مخفی کردن دکمه پیش‌فرض */
+    cursor: pointer;
+}
+
+.file-label {
+    display: block;
+    padding: 15px 25px;
+    background-color: var(--light_blue);
+    color: #fff;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.file-label:hover {
+    background-color: #0099cc; /* تیره‌تر شدن آبی در هاور */
+    transform: translateY(-2px);
+}
+
+/* نمایش نام فایل انتخاب شده (نیاز به جاوااسکریپت دارد اما استایل بصری را آماده می‌کنیم) */
+.file-input-wrapper input[type="file"]:valid + .file-label {
+    background-color: #28a745; /* سبز شدن بعد از انتخاب فایل (فرضی) */
+}
+
+.file-info {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--gray);
+}
+
+
+/* دکمه ارسال */
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: var(--light_blue);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: var(--shadow);
+}
+
+.submit-btn:hover {
+    background-color: #0099cc;
+    transform: translateY(-2px);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
