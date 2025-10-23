@@ -24,7 +24,7 @@
                                     <span class="original">{{ item.price|point|fa }}</span>
                                     <span class="discount">{{ item.off|fa }}٪ تخفیف — {{ item.discount_price|point|fa }} تومان</span>
                                 </div>
-                                <p>{{ item.learn.description }}</p>
+                                <p>{{ item.learn.summery_description }}</p>
                             </a>
                             <button id="remove">حذف از لیست</button>
 
@@ -36,8 +36,9 @@
                     <label for="coupon">کد تخفیف:</label><br/>
                     <div class="discount-code_buttons">
                         <input type="text" id="coupon" placeholder="مثلاً ABC123"/>
-                        <button>اعمال</button>
+                        <button type="button" id="send_coupon">اعمال</button>
                     </div>
+                    <p id="message"></p>
 
                 </div>
             </div>
@@ -59,12 +60,16 @@
                     <span>مالیات ({{ cart.get_percent_tax|fa }}٪)</span>
                     <span>{{ cart.get_tax|point|fa }} تومان</span>
                 </div>
+                <div class="line">
+                    <span id="percent_off">تخفیف کل ({{ cart.percent_off|fa }}٪)</span>
+                    <span id="price_off">{{ cart.get_price_off|point|fa }} تومان</span>
+                </div>
                 <div class="line total">
                     <span>مبلغ قابل پرداخت</span>
                     {% if cart.get_final_price  == 0 %}
-                        <span>رایگان!</span>
+                        <span id="final_price">رایگان!</span>
                     {% else %}
-                        <span>{{ cart.get_final_price|point|fa }} تومان</span>
+                        <span id="final_price">{{ cart.get_final_price|point|fa }} تومان</span>
                     {% endif %}
 
                 </div>
@@ -97,9 +102,43 @@
                     url: "{% url "cart:add_or_remove" %}",
                     data: {"learn_id": learn_id, "operation": "remove", "csrfmiddlewaretoken": "{{ csrf_token }}"},
                     success: function (data) {
+
                     }
                 });
             });
+        });
+    </script>
+    <script>
+        document.getElementById("send_coupon").addEventListener("click", async function () {
+            const code = document.getElementById("coupon").value;
+            const response = await fetch("{% url "cart:set_code" %}", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({"code": code})
+            });
+            const result = await response.json();
+            const percent_off = document.getElementById("percent_off");
+            const price_off = document.getElementById("price_off");
+            const final_price = document.getElementById("final_price");
+            const message = document.getElementById("message");
+            if (response.ok) {
+
+                percent_off.innerText = `تخفیف کل (${result.percent_off}٪)`;
+                price_off.innerText = `${result.price_off} تومان`;
+                final_price.innerText = result.final_price;
+                message.innerText = "کد تخیف لحاظ شد";
+
+            } else if (response.status === 404) {
+                percent_off.innerText = "تخفیف کل (۰٪)";
+                price_off.innerText = "۰ تومان";
+                final_price.innerText = result.final_price;
+                message.innerText = "کد تخیف وجود ندارد";
+            }
+
+
         });
     </script>
 {% endblock %}

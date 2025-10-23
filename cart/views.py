@@ -1,11 +1,13 @@
+import json
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import JsonResponse
 from .cart import Cart
 from learn.models import Learn,RegisterLearn
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
-from .models import Order,LearnOrder
+from .models import Order,LearnOrder,OffCode
 import random
+from learn.templatetags import tags,price
 # Create your views here.
 def index(request):
     cart = Cart(request)
@@ -53,3 +55,45 @@ def buy(request):
 
     cart.clear()
     return redirect("user:profile")
+
+@require_POST
+def set_code(request):
+
+    data = json.loads(request.body)
+    code = data.get("code")
+    cart = Cart(request)
+
+    def set_context(status):
+        percent_off = tags.to_persian_numbers(cart.percent_off)
+        price_off = tags.to_persian_numbers(price.point(cart.get_price_off()))
+        final_price = cart.get_final_price()
+        if final_price == 0:
+            final_price = "رایگان"
+        else:
+            final_price = f"{tags.to_persian_numbers(price.point(cart.get_final_price()))} تومان"
+
+        if status == 200 :
+            context = {
+                "percent_off": percent_off,
+                "price_off": price_off,
+                "final_price": final_price,
+            }
+        else:
+            context = {
+                "error": "code dose not exist",
+                "final_price": final_price,
+            }
+        return context
+
+    if code :
+        if OffCode.objects.filter(code=code).exists() :
+            off_code = OffCode.objects.get(code=code)
+            cart.set_code(off_code.value)
+
+            return JsonResponse(set_context(200),status=200)
+        else:
+            cart.set_code(0)
+            return JsonResponse(set_context(404),status=404)
+    else:
+        return  JsonResponse({"error" : "code is empty"},status=400)
+

@@ -5,6 +5,10 @@ class Cart:
         self.request = request
         self.session = request.session
         cart = self.session.get("cart")
+
+        self.percent_off = self.session.get("percent_off")
+        if not self.percent_off :
+            self.percent_off = self.session["percent_off"] = 0
         if not cart :
             cart = self.session["cart"] = {}
         self.cart = cart
@@ -30,8 +34,16 @@ class Cart:
     def get_tax(self):
         return self.get_total_price() // 10
 
+    def get_price_off(self):
+        price = self.get_total_price() + self.get_tax()
+        if self.percent_off != 0:
+            return price * self.percent_off //100
+        else:
+            return 0
+
     def get_final_price(self):
-        return self.get_total_price() + self.get_tax()
+        price = self.get_total_price() + self.get_tax()
+        return price - self.get_price_off()
 
     def get_percent_tax(self):
         if self.get_total_price() == 0 :
@@ -41,6 +53,11 @@ class Cart:
 
     def save(self):
         self.session.modified = True
+
+    def set_code(self,percent:int):
+        self.session["percent_off"] = percent
+        self.percent_off = percent
+        self.save()
 
     def ids(self):
         return [int(item) for item in list(self.cart.keys())]

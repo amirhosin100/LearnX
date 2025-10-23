@@ -9,3 +9,7 @@ class LearnInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ["user","description","create","paid"]
     inlines = [LearnInline]
+
+@admin.register(OffCode)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ["code","value","create","date_end"]

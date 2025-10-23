@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_jalali',
     'user.apps.UserConfig',
     'learn.apps.LearnConfig',
     'comment.apps.CommentConfig',
@@ -39,7 +40,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'django_jalali',
     "debug_toolbar",
     'django.contrib.admin',
     'django.contrib.auth',

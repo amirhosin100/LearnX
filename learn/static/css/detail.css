@@ -90,6 +90,10 @@ video {
 .description{
     width: 70%;
 }
+.description ul{
+    list-style-type: disc;
+    padding-right: 30px;
+}
 .author{
     width: 30%;
 }

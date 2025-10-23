@@ -30,3 +30,30 @@ class LearnOrder(models.Model):
     class Meta:
         verbose_name = "آموزش"
         verbose_name_plural = "آموزش ها"
+
+class OffCode(models.Model):
+    code = models.CharField(max_length=15,verbose_name="کد تخفیف")
+    value = models.PositiveIntegerField("مقدار تخفیف")
+
+    create = jmodels.jDateTimeField("تاریخ ایجاد",default=jmodels.timezone.now())
+    date_end = jmodels.jDateTimeField("تاریخ انقضا",default=jmodels.timezone.now())
+
+    objects = jmodels.jManager()
+
+    class Meta:
+        ordering = [
+            "-create",
+        ]
+        indexes = [
+            models.Index(fields=[
+                "-create"
+            ]),
+            models.Index(fields=[
+                "-date_end"
+            ])
+        ]
+        verbose_name = "کد تخفیف"
+        verbose_name_plural = "کد های تخفیف"
+
+    def __str__(self):
+        return self.code
