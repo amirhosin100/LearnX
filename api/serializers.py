@@ -19,12 +19,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         user.save()
         return user
 
-class TeacherSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = Teacher
-        fields = "__all__"
-
 class BlogerSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
@@ -46,6 +40,12 @@ class LearnSerializer(serializers.HyperlinkedModelSerializer):
         model = Learn
         fields = "__all__"
         read_only_fields = ["discount_price","score"]
+
+class TeacherSerializer(serializers.HyperlinkedModelSerializer):
+    learns = LearnSerializer(many=True)
+    class Meta:
+        model = Teacher
+        fields = "__all__"
 
 
 

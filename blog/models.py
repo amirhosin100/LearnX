@@ -10,7 +10,7 @@ class Post(models.Model):
     bloger = models.ForeignKey("user.Bloger",models.PROTECT,"posts",verbose_name="بلاگر")
 
     title = models.CharField("عنوان",max_length=250)
-    summery_description = models.CharField("خلاصه پست")
+    summery_description = models.CharField("خلاصه پست",max_length=500)
     body = CKEditor5Field(config_name='default',verbose_name="بدنه اصلی")
     status = models.BooleanField(verbose_name="وضعیت",default=True)
 

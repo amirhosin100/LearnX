@@ -6,8 +6,8 @@ from .serializers import *
 class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [permissions.IsAuthenticated]
 
 class TeacherViewSet(ModelViewSet):
     serializer_class = TeacherSerializer

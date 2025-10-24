@@ -94,7 +94,7 @@ class AnswerForFilm(models.Model):
         ("TH","معلم"),
         ("PO","پشتیبان"),
     )
-    answer_by = models.CharField("پاسخ داده شده توسط",choices=choices,default="TH")
+    answer_by = models.CharField("پاسخ داده شده توسط",choices=choices,default="TH",max_length=2)
     class Meta:
         ordering = ['-create']
         indexes = [

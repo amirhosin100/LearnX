@@ -18,11 +18,12 @@
         <div class="container">
             <h1>خوش آمدید</h1>
             <form method="post" class="login_form">
+                {{ form.errors }}
                 {% csrf_token %}
                 <label for="username">نام کاربری</label>
-                <input type="text" id="username" name="username">
+                <input type="text" id="username" name="username" autofocus>
                 <label for="password">رمز عبور</label>
-                <input type="password" id="password" name="password">
+                <input type="password" id="password" name="password" >
                 <button type="submit">ورود</button>
             </form>
             <div class="other">
