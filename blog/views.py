@@ -1,5 +1,4 @@
 import json
-
 from django.shortcuts import render,get_object_or_404,redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
@@ -8,7 +7,14 @@ from .models import *
 from .forms import *
 from comment.models import CommentForPost
 from decorators.blogers import Is_bloger
+from django.contrib import messages
 # Create your views here.
+
+def check_bloger(request,post):
+    if post.bloger.user == request.user :
+        return True
+    else:
+        return redirect("user:profile")
 
 def detail(request,slug):
     post = get_object_or_404(Post.objects.select_related("bloger__user"),slug=slug)
@@ -36,6 +42,28 @@ def make_post(request):
         "form" :form,
     }
     return render(request,"forms/make_post.html",context)
+
+@login_required
+def edit_post(request,id):
+    post = get_object_or_404(Post,id=id)
+    response = check_bloger(request, post)
+    if response == True :
+        if request.method == "POST":
+            form = PostForm(request.POST,instance=post,files=request.FILES)
+            if form.is_valid():
+                form.save()
+                messages.success(request,f"ویدئو --{form.instance.title}-- با موفقیت تغییر پیدا کرد")
+                return redirect("blog:my_posts")
+        else:
+            form = PostForm(instance=post)
+
+        context = {
+            "form": form,
+            "edit" : True,
+        }
+        return render(request,"forms/make_post.html",context)
+    else:
+        return response
 
 @require_POST
 @login_required
