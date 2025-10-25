@@ -10,11 +10,4 @@ class Migration(migrations.Migration):
         ('blog', '0001_initial'),
     ]
 
-    operations = [
-        migrations.AddField(
-            model_name='post',
-            name='body',
-            field=django_ckeditor_5.fields.CKEditor5Field(default=1),
-            preserve_default=False,
-        ),
-    ]
+
