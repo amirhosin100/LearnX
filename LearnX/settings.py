@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'comment.apps.CommentConfig',
     'cart.apps.CartConfig',
     'blog.apps.BlogConfig',
+    'ticket.apps.TicketConfig',
     'api.apps.ApiConfig',
     'allauth',
     'allauth.account',

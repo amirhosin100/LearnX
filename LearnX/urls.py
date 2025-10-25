@@ -31,6 +31,7 @@ urlpatterns = [
     path("api/",include("api.urls")),
     path("cart/",include("cart.urls",namespace="cart")),
     path("blog/",include("blog.urls",namespace="blog")),
+    path("ticket/",include("ticket.urls",namespace="ticket")),
     path("ckeditor5/", include("django_ckeditor_5.urls")),
     path('api/token/', obtain_auth_token, name='api_token_auth'),
 

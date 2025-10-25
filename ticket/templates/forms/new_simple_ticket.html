@@ -1,0 +1,10 @@
+{% extends "base/base.html" %}
+{% block title %}ارسال تیکت{% endblock %}
+
+{% block sub_content %}
+	<form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">ارسال تیکت</button>
+    </form>
+{% endblock %}
