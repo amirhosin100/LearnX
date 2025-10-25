@@ -35,8 +35,8 @@ class OffCode(models.Model):
     code = models.CharField(max_length=15,verbose_name="کد تخفیف")
     value = models.PositiveIntegerField("مقدار تخفیف")
 
-    create = jmodels.jDateTimeField("تاریخ ایجاد",default=jmodels.timezone.now())
-    date_end = jmodels.jDateTimeField("تاریخ انقضا",default=jmodels.timezone.now())
+    create = jmodels.jDateTimeField("تاریخ ایجاد",default=jmodels.timezone.now)
+    date_end = jmodels.jDateTimeField("تاریخ انقضا",default=jmodels.timezone.now)
 
     objects = jmodels.jManager()
 

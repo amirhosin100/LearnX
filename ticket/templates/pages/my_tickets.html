@@ -1,0 +1,91 @@
+{% extends "profile/profile_base.html" %}
+{% load static %}
+{% load tags %}
+{% load jformat %}
+{% block title %}
+
+    {{ block.super }}
+    تیکت های شما
+{% endblock %}
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static "css/my_tickets.css" %}">
+{% endblock %}
+{% block profile_content %}
+    {% for message in messages %}
+        <p class="message">{{ message }}</p>
+    {% endfor %}
+    <div class="container">
+        <!-- Ticket List Container -->
+        <div class="ticket-list">
+            {% for ticket in user.tickets.all %}
+                <article
+                        class="ticket-card {% if ticket.status == "processing" %}in-process{% elif ticket.status == "closed" %}closed{% endif %}">
+                    <div class="ticket-card-content">
+
+                        <!-- Title and ID -->
+                        <div class="title-id">
+                            <h2>{{ ticket.title }}</h2>
+                            <p>شناسه تیکت: <span class="id">{{ ticket.id }}</span></p>
+                        </div>
+
+                        <!-- Status and Priority -->
+                        <div class="status-priority-group">
+                            {% if ticket.status == "new" %}
+                                <span class="status-badge status-new ">جدید</span>
+                            {% elif ticket.status == "processing" %}
+                                <span class="status-badge status-in-progress ">درحال پردازش</span>
+                            {% else %}
+                                <span class="status-badge status-closed ">بسته شده</span>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    <hr class="separator">
+
+                    <!-- Details and Action -->
+                    <div class="details-action-group">
+
+                        <div class="ticket-info">
+                            <p>
+                                <span class="label">تاریخ ثبت:</span>
+                                <span class="value">{{ ticket.create|jformat:"%Y/%m/%d : %I:%M %p"|fa }}</span>
+                            </p>
+                            <p>
+                                <span class="label">دپارتمان:</span>
+                                <span class="value">{{ ticket.category }}</span>
+                            </p>
+                        </div>
+                        {% if ticket.status == "closed" %}
+                            <button class="action-button disabled" disabled>
+                                مشاهده جزئیات
+                            </button>
+                        {% else %}
+                            <a class="action-button primary" href="{{ ticket.get_absolute_url }}">
+                                مشاهده جزئیات
+                            </a>
+                        {% endif %}
+
+                    </div>
+                </article>
+            {% empty %}
+                <!-- Placeholder for no tickets -->
+                <div id="no-tickets" class="no-tickets">
+                    <p>تیکتی برای نمایش وجود ندارد.</p>
+                    <a href="{% url "ticket:new_simple_ticket" %}">
+                        ثبت تیکت جدید
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+    {% if user.tickets.all %}
+        <div class="content_new">
+            <a href="{% url "ticket:new_simple_ticket" %}" class="new_ticket">
+                ثبت تیکت جدید
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}

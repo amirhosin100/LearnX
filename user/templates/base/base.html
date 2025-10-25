@@ -67,7 +67,8 @@
                 <h3>بخش های سایت</h3>
                 <a href="{% url 'learn:learn_list' %}">آموزش ها</a>
                 <a href="#">بلاگ ما</a>
-                <a href="#">تیکت ها</a>
+                <a href="{% url "ticket:my_ticket" %}">تیکت ها</a>
+                <a href="{% url "ticket:collaboration" %}">درخواست همکاری</a>
                 <a href="{% url "user:about_me" %}">درباره من</a>
             </div>
             <div class="footer_part">

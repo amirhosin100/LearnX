@@ -1,0 +1,258 @@
+body {
+    --bg-color: #f7f9fc;
+    --text-dark: #1f2937;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+.in-process{
+    border-right-color: #facc15;
+}
+
+/* Responsive adjustments for header (تنظیمات واکنش‌گرا برای هدر) */
+@media (min-width: 640px) {
+
+    .container {
+        padding: 1.5rem 2rem; /* sm:p-6 */
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        padding: 2rem 3rem; /* lg:p-8 */
+    }
+}
+
+/* 4. Ticket Card Styles (کارت تیکت) */
+.ticket-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* space-y-6 */
+    width: 100%;
+}
+
+.ticket-card {
+    background-color: white;
+    border-radius: 0.75rem; /* rounded-xl */
+    padding: 1.25rem; /* p-5 */
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border); /* border-custom */
+    border-right: 4px solid var(--light_blue); /* استفاده از متغیر light_blue برای نوار کناری */
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+
+/* Styling for the closed ticket */
+.ticket-card.closed {
+    opacity: 0.7;
+    border-right: 4px solid #a0a0a0; /* رنگ خاکستری برای تیکت بسته */
+}
+
+.ticket-card:hover:not(.closed) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.ticket-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* Separator line (خط جداکننده) */
+.separator {
+    margin: 1rem 0;
+    border: none;
+    border-top: 1px dashed #e5e7eb; /* border-gray-200 */
+}
+
+/* 5. Details Section (جزئیات) */
+.title-id h2 {
+    font-size: 1.25rem; /* text-xl */
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+}
+
+.title-id p {
+    font-size: 0.875rem; /* text-sm */
+    color: #9ca3af; /* text-gray-400 */
+}
+
+.title-id span.id {
+    color: var(--gray); /* text-gray-custom */
+    font-family: monospace;
+}
+
+/* 6. Status and Action (وضعیت و دکمه) */
+.status-priority-group {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap; /* برای نمایش در موبایل */
+}
+
+.status-badge {
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 9999px; /* rounded-full */
+    font-size: 0.875rem; /* text-sm */
+    text-align: center;
+}
+
+.status-new {
+    background-color: var(--light_blue);
+    color: white;
+}
+
+.status-in-progress {
+    background-color: #facc15; /* yellow-400 */
+    color: var(--text-dark);
+}
+
+.status-closed {
+    background-color: #10b981; /* green-500 */
+    color: white;
+}
+
+.priority-badge {
+    font-size: 0.875rem;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-weight: 500;
+}
+
+.priority-high {
+    background-color: #fee2e2; /* red-100 */
+    color: #b91c1c; /* red-700 */
+}
+
+.priority-normal {
+    background-color: #dbeafe; /* blue-100 */
+    color: #1d4ed8; /* blue-700 */
+}
+
+.details-action-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end; /* تراز به راست در موبایل */
+    width: 100%;
+}
+
+.ticket-info {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.ticket-info p {
+    margin-bottom: 0.25rem;
+}
+
+.ticket-info .label {
+    font-weight: 500;
+    color: #4b5563; /* gray-700 */
+    font-size: 16px;
+    background-color: initial;
+}
+
+.ticket-info .value {
+    color: var(--gray); /* text-gray-custom */
+}
+
+.action-button {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    border-radius: 0.5rem; /* rounded-lg */
+    transition: background-color 0.15s;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.action-button.primary {
+    background-color: var(--text-dark); /* gray-800 */
+}
+
+.action-button.primary:hover {
+    background-color: #374151; /* gray-700 */
+}
+
+.action-button.disabled {
+    background-color: #9ca3af; /* gray-400 */
+    cursor: not-allowed;
+}
+
+
+/* Responsive adjustments for ticket cards (تنظیمات واکنش‌گرا) */
+@media (min-width: 640px) {
+    .ticket-card-content {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .status-priority-group {
+        margin-top: 0;
+    }
+
+    .details-action-group {
+        flex-direction: row;
+        align-items: center;
+        margin-top: 1rem; /* برای فاصله از خط جداکننده */
+    }
+
+    .ticket-info {
+        margin-bottom: 0;
+    }
+}
+
+/* 7. No Tickets Placeholder (بدون تیکت) */
+.no-tickets {
+    text-align: center;
+    padding: 2.5rem; /* p-10 */
+    background-color: white;
+    border-radius: 0.75rem;
+    border: 2px dashed #d1d5db; /* border-gray-300 */
+
+}
+
+.no-tickets p {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #374151; /* gray-700 */
+    margin-bottom: 10px;
+}
+
+.no-tickets a , .new_ticket {
+    margin-top: 1rem;
+    background-color: #4f46e5;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: background-color 0.15s;
+    border: none;
+    cursor: pointer;
+
+}
+
+.no-tickets a:hover ,.new_ticket:hover{
+    background-color: #4338ca;
+}
+.content_new{
+    display: flex;
+    justify-content: center;
+}
+.new_ticket{
+    display: inline;
+    margin: 0;
+}
+.message{
+    color: #00ff73;
+    display: block;
+    text-align: center;
+}

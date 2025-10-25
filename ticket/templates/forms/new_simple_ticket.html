@@ -4,7 +4,8 @@
 {% block sub_content %}
 	<form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ s_form.as_p }}
+        {{ a_form.as_p }}
         <button type="submit">ارسال تیکت</button>
     </form>
 {% endblock %}

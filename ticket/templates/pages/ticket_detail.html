@@ -1,0 +1,333 @@
+{% extends "profile/profile_base.html" %}
+{% block title %}{{ block.super }} تیکت : {{ ticket.title }}{% endblock %}
+{% load static %}
+{% load jformat %}
+{% load tags %}
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static "css/ticket_detail.css" %}">
+{% endblock %}
+{% block profile_content %}
+    <style>
+
+        /* 2. Global and Base Styles (تنظیمات سراسری) */
+        body {
+            --bg-color: #f7f9fc;
+            --text-dark: #1f2937;
+            --secondary-bg: #e5f7ff; /* Light blue background for new status */
+        }
+
+        .container_ticket {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* 3. Header Styles (هدر صفحه جزئیات) */
+        .header {
+            margin-bottom: 2rem;
+            text-align: right;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 1rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #4f46e5;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #3730a3;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .header-id {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* 4. Detail Panel Styles (پنل جزئیات خلاصه) */
+        .detail-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .detail-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-item .m-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #4b5563;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-item .value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Status Badges - Reused from Dashboard */
+        .status-badge {
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .status-new {
+            background-color: var(--light_blue);
+            color: white;
+        }
+
+        .status-in-progress {
+            background-color: #facc15; /* yellow-400 */
+            color: var(--text-dark);
+        }
+
+        .priority-high {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            font-weight: 500;
+            margin-right: 0.5rem;
+        }
+
+        /* 5. Conversation Area (بخش مکالمات) */
+        .conversation-area {
+            margin-top: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            border-right: 4px solid #4f46e5;
+            padding-right: 0.75rem;
+        }
+
+        .message-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .message-card {
+            padding: 1rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .message-user {
+            background-color: white;
+            border: 1px solid var(--light_blue);
+            border-right: 4px solid var(--light_blue);
+        }
+
+        .message-staff {
+            background-color: var(--secondary-bg);
+            border: 1px solid #a0a0a030;
+            border-left: 4px solid #4f46e5;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #ccc;
+            margin-bottom: 0.75rem;
+        }
+
+        .message-header .sender {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .message-header .sender.staff {
+            color: #4f46e5;
+        }
+
+        .message-header .date {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .message-body {
+            color: #374151;
+            font-size: 0.95rem;
+        }
+
+        /* 6. Reply Form (فرم پاسخ‌دهی) */
+        .reply-form {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .reply-form textarea {
+            width: 100%;
+            height: 120px;
+            min-height: 100px;
+            max-height: 150px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            resize: vertical;
+            font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            box-sizing: border-box; /* اطمینان از اینکه padding بر روی عرض تأثیر نگذارد */
+        }
+
+        .form-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .submit-button {
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: background-color 0.15s;
+            color: white;
+            border: none;
+            cursor: pointer;
+            background-color: #4f46e5; /* Indigo */
+        }
+
+        .submit-button:hover {
+            background-color: #3730a3;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .header-title {
+                font-size: 1.4rem;
+            }
+
+            .detail-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <div class="container_ticket">
+
+        <!-- Header -->
+        <div class="header">
+            <a href="{% url "ticket:my_ticket" %}" class="back-link">
+                <!-- آیکون کوچک پیکان به راست برای بازگشت -->
+                &#x2190; بازگشت به لیست تیکت‌ها
+            </a>
+            <h1 class="header-title">
+                {{ ticket.title }}
+            </h1>
+            <p class="header-id">شناسه تیکت: <span
+                    style="color: var(--text-dark); font-weight: 700;">{{ ticket.id }}</span></p>
+        </div>
+
+        <!-- Detail Panel -->
+        <div class="detail-panel">
+            <div class="detail-item">
+                <span class="m-label">وضعیت</span>
+                <span class="value">
+                    {% if ticket.status == "new" %}
+                        <span class="status-badge status-new">جدید</span>
+                    {% elif ticket.status == "processing" %}
+                        <span class="status-badge status-in-progress">درحال پردازش</span>
+                    {% endif %}
+
+                </span>
+            </div>
+            <div class="detail-item">
+                <span class="m-label">دسته بندی</span>
+                <span class="value">{{ ticket.category }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="m-label">ثبت‌کننده</span>
+                <span class="value">شما </span>
+            </div>
+            <div class="detail-item">
+                <span class="m-label">تاریخ ثبت</span>
+                <span class="value">{{ ticket.create|jformat:"%Y/%m/%d"|fa }}</span>
+            </div>
+        </div>
+
+        <!-- Conversation Area -->
+        <div class="conversation-area">
+            <h2 class="section-title">مکالمات و پیام‌ها</h2>
+
+            <div class="message-list">
+                {% for answer in ticket.answers.all %}
+                    <div class="message-card {% if answer.ticket.user == answer.user %}message-user{% else %}message-staff{% endif %}">
+                    <div class="message-header">
+                        {% if answer.ticket.user == answer.user %}
+                            <span class="sender">شما</span>
+                        {% else %}
+                            <span class="sender staff">کارشناس پشتیبانی: {{ answer.user.get_full_name }}</span>
+                        {% endif %}
+
+                        <span class="date">{{ answer.create|jformat:"%Y/%m/%d : %I:%M %p"|fa }}</span>
+                    </div>
+                    <div class="message-body">
+                        {{ answer.message|linebreaks }}
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+        <!-- Reply Form -->
+        <form class="reply-form" method="post" action="{% url 'ticket:send_answer' %}">
+            {% csrf_token %}
+            <h2 class="section-title"
+                style="border-right-color: var(--light_blue); padding-right: 0.75rem; margin-bottom: 1.5rem;">ارسال پاسخ
+                جدید</h2>
+
+            <textarea placeholder="پیام جدید خود را بنویسید..." id="reply-text" name="message"></textarea>
+            <input type="hidden" value="{{ ticket.id }}" name="ticket_id">
+            <div class="form-action">
+                <div style="font-size: 0.85rem; color: #6b7280;">پاسخ شما به دپارتمان فنی ارسال خواهد شد.</div>
+                <button class="submit-button" type="submit">
+                    ارسال پاسخ
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+{% endblock %}
