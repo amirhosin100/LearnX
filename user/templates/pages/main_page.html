@@ -107,17 +107,20 @@
             </article>
             <h4 class="best_teachers">بهترین مدرسین ما از نگاه شما</h4>
             <div class="teachers">
-
+                {% for teacher in best_teachers %}
                 <div class="teacher">
-                    <img src="../images/user1.png" alt="" class="teacher_image">
-                    <h5 class="name_teaher">امیرحسین میرجمالی</h5>
-                    <span class="teacher_bio">برنامه نویس پایتون و توسعه دهنده back-end</span>
-                    <div class="teacher_score">
-                        <p class="teacher_label">امتیاز</p>
-                        <span class="teacher_number">8/10</span>
+                    <div class="teacher_container_img">
+                        <img src="{% if teacher.user.image %}{{ teacher.user.image.url }}{% else %}{% static "images/user.svg" %}{% endif %}" alt="" class="teacher_image">
                     </div>
 
+                    <h5 class="name_teaher">{{ teacher.user.get_full_name }}</h5>
+                    <span class="teacher_bio">{{ teacher.user.bio|wordwrap:50 }}</span>
+                    <div class="teacher_score">
+                        <p class="teacher_label">امتیاز</p>
+                        <span class="teacher_number">{{ teacher.score }}/10</span>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
 

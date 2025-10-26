@@ -102,7 +102,7 @@
                     url: "{% url "cart:add_or_remove" %}",
                     data: {"learn_id": learn_id, "operation": "remove", "csrfmiddlewaretoken": "{{ csrf_token }}"},
                     success: function (data) {
-
+                        parent.remove();
                     }
                 });
             });

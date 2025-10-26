@@ -1,59 +1,70 @@
-main{
+main {
     display: flex;
     height: 100vh;
     align-items: center;
+    overflow: hidden;
 }
-.container_right,.container_left{
+
+.container_right, .container_left {
     width: 30%;
     height: 100%;
 }
-.container_right img,.container_left img{
+
+.container_right img, .container_left img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.container{
+
+.container {
     margin: 0 auto;
     width: 350px;
     box-shadow: var(--shadow);
     padding-top: 10px;
     border-radius: 24px;
 }
-.register_form{
+
+.register_form {
     padding: 10px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
-.row{
+
+.row {
     display: flex;
     width: 100%;
     gap: 10px;
 
 }
-.register_form label,.register_form input{
+
+.register_form label, .register_form input {
     width: 100%;
 
 }
-.register_form input{
+
+.register_form input {
     border: 1px solid gray !important;
     border-radius: 6px;
     padding: 5px 10px;
     transition: all 300ms ease;
 }
-.register_form input:focus{
+
+.register_form input:focus {
     border: 1px solid var(--light_blue) !important;
 }
 
-.container_label{
+.container_label {
     width: 100%;
     border-radius: 12px;
+    align-self: end;
 }
-.container h1{
+
+.container h1 {
     text-align: center;
 }
 
-.register_form button{
+.register_form button {
     display: block;
     width: 100%;
     padding: 10px;
@@ -64,23 +75,26 @@ main{
     color: #fff;
     transition: all 300ms ease;
 }
-.register_form button:hover{
+
+.register_form button:hover {
     color: var(--light_blue);
     background-color: #fff;
     border: 1px solid var(--light_blue) !important;
 }
-.more{
+
+.more {
     text-align: center;
     margin-bottom: 10px;
 }
-.more a{
+
+.more a {
     color: var(--light_blue);
 
 }
 
 
 /* for google login */
-.google_container{
+.google_container {
     display: flex;
     padding: 10px;
     width: calc(100% - 20px);
@@ -92,16 +106,25 @@ main{
     cursor: pointer;
     transition: all 200ms ease-in-out;
 }
-.google_container img{
+
+.google_container img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
 }
-#login_with_google{
+
+#login_with_google {
     background-color: transparent;
     font-weight: 500;
     font-size: 16px;
 }
-.google_container:hover{
+
+.google_container:hover {
     color: var(--light_blue);
+}
+
+.errorlist {
+    font-size: 14px;
+    color: red;
+    padding: 0;
 }

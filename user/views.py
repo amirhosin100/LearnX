@@ -11,9 +11,11 @@ def index(request):
     #فقط چهار مورد
     courses = Learn.objects.all().select_related("teacher__user")[:4]
     posts =  Post.objects.all()[:4]
+    best_teachers = Teacher.objects.order_by("-score")[:2]
     context = {
         "courses": courses,
         "posts" :posts,
+        "best_teachers" : best_teachers
     }
     return render(request,"pages/main_page.html",context)
 

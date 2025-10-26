@@ -10,7 +10,7 @@
 {% block content %}
     <main>
         <div class="container_right">
-            <img src="" alt="">
+            <img src="{% static "images/register_right.jpg" %}" alt="">
         </div>
         <div class="container">
             <h1>به LearnX خوش آمدید!</h1>
@@ -18,6 +18,7 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="container_label c_user">
+                        {{ form.username.errors }}
                         <label for="username">نام کاربری:</label>
                         <input type="text" id="username" name="username">
                     </div>
@@ -32,14 +33,14 @@
                     <div class="container_label">
                         {{ form.last_name.errors }}
                         <label for="last_name">نام خانوادگی:</label>
-                        <input type="text" id="last_name" name="last_name">
+                        <input type="text" id="last_name" name="last_name" placeholder="اختیاری">
                     </div>
                 </div>
                 <div class="row">
                     <div class="container_label">
                         {{ form.email_name.errors }}
                         <label for="email">ایمیل:</label>
-                        <input type="email" name="email" id="email">
+                        <input type="email" name="email" id="email" placeholder="اختیاری">
                     </div>
                 </div>
 
@@ -69,7 +70,7 @@
             </form>
         </div>
         <div class="container_left">
-            <img src="../images/back.png" alt="">
+            <img src="{% static "images/register_left.jpg" %}" alt="">
         </div>
 
     </main>

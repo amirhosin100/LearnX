@@ -3,7 +3,6 @@ from django_resized import ResizedImageField
 from user.models import Teacher,User
 from django.urls import reverse
 from django_jalali.db import models as jmodels
-from django.db.models import Count,Avg
 from django_ckeditor_5.fields import CKEditor5Field
 
 def create_url_for_film(instance,filename):
@@ -16,7 +15,7 @@ class Learn(models.Model):
     summery_description = models.TextField(max_length=250,verbose_name="خلاصه توضیحات")
     description = CKEditor5Field(max_length=4000,verbose_name="توضیحات",config_name="learn")
     image = ResizedImageField(upload_to="learns/images/%Y",size=[1920,1080],crop=["middle","center"],quality=100)
-    score = models.FloatField(verbose_name="امتیاز",default=0)
+    score = models.FloatField(verbose_name="امتیاز",default=5)
     learn_time = models.PositiveIntegerField(verbose_name="مدت زمان آموزش")
 
     slug = models.SlugField("اسلاگ",unique=True)
@@ -80,7 +79,7 @@ class LearnFilms(models.Model):
 
     create = jmodels.jDateTimeField(auto_now_add=True)
     scores = models.ManyToManyField(User,through="FilmScores")
-    number_score = models.FloatField("امتیاز",default=0)
+    number_score = models.FloatField("امتیاز",default=5)
 
     class Meta:
         ordering = ['create']
@@ -115,13 +114,9 @@ class FilmScores(models.Model):
         verbose_name = "امتیاز"
         verbose_name_plural = "امتیازات"
 
-    def save(self,*args,**kwargs):
-        super().save(*args, **kwargs)
-        film = self.film_to
-        scores = FilmScores.objects.filter(film_to=film)
-        number = scores.aggregate(Avg("score"))
-        film.number_score = number["score__avg"]
-        film.save()
+
+
+
 
 class attribute(models.Model):
     learn = models.ForeignKey(Learn,models.CASCADE,"attributes",verbose_name="آموزش")

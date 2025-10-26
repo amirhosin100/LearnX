@@ -21,16 +21,6 @@ def check_teacher(request,learn):
     else:
         return redirect("user:profile")
 
-def learn_list(request):
-    page = request.GET.get('page',1)
-    learns = Learn.objects.select_related("teacher__user")
-    paginator = Paginator(learns, 4)
-    learns = paginator.get_page(page)
-
-    context = {
-        'learns': learns,
-    }
-    return render(request,"learn/list.html",context)
 
 class LearnList(ListView):
     paginate_by = 4
@@ -39,17 +29,16 @@ class LearnList(ListView):
 
     def get_queryset(self):
         query = Learn.objects.prefetch_related("teacher__user")
+        # for date
         date = self.request.GET.get("date","new")
         if date == "old" :
             query = query.order_by("create")
-            print(True)
+        #----
+        #for only_free
+        only_free = self.request.GET.get("only_free")
+        if only_free == "on" :
+            query = query.filter(discount_price=0)
         return query
-    def get_context_data(self,**kwargs):
-        date = self.request.GET.get("date","new")
-        context = super().get_context_data(**kwargs)
-
-        context["date"] = date
-        return context
 
 def learn_detail(request,slug_learn):
     learn = get_object_or_404(

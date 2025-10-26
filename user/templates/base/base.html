@@ -14,7 +14,7 @@
         <ul class="container_menu">
             <li class="menu_button"><a href="{% url "user:index" %}">صفحه اصلی</a></li>
             <li class="menu_button"><a href="{% url 'learn:learn_list' %}">آموزش ها </a></li>
-            <li class="menu_button"><a href="#">مقالات</a></li>
+            <li class="menu_button"><a href="{% url 'blog:post_list' %}">مقالات</a></li>
             <li class="menu_button"><a href="{% url "user:about_me" %}">درباره من</a></li>
         </ul>
         <button type="button" id="menu_for_moblie" class="container_menu">
@@ -40,10 +40,10 @@
     <!-- for mobile -->
     <div class="cover hide"></div>
     <ul class="container_menu_for_mobile hide">
-        <li class="menu_button_mobile"><a href="#">صفحه اصلی</a></li>
-        <li class="menu_button_mobile"><a href="#">آموزش ها </a></li>
-        <li class="menu_button_mobile"><a href="#">مقالات</a></li>
-        <li class="menu_button_mobile"><a href="#">درباره ما</a></li>
+        <li class="menu_button_mobile"><a href="{% url 'user:index' %}">صفحه اصلی</a></li>
+        <li class="menu_button_mobile"><a href="{% url 'learn:learn_list' %}">آموزش ها </a></li>
+        <li class="menu_button_mobile"><a href="{% url 'blog:post_list' %}">مقالات</a></li>
+        <li class="menu_button_mobile"><a href="{% url "user:about_me" %}">درباره من</a></li>
     </ul>
     {% block sub_content %}{% endblock %}
     {#   START footer #}
@@ -66,7 +66,7 @@
             <div class="footer_part">
                 <h3>بخش های سایت</h3>
                 <a href="{% url 'learn:learn_list' %}">آموزش ها</a>
-                <a href="#">بلاگ ما</a>
+                <a href="{% url 'blog:post_list' %}">بلاگ ما</a>
                 <a href="{% url "ticket:my_ticket" %}">تیکت ها</a>
                 <a href="{% url "ticket:collaboration" %}">درخواست همکاری</a>
                 <a href="{% url "user:about_me" %}">درباره من</a>
@@ -79,6 +79,11 @@
             </div>
             <div class="footer_part">
                 <h3>شبکه اجتماعی</h3>
+                <div class="icons">
+                    <a href="https://github.com/amirhosin100/"><img src="{% static "images/github-mark-white.svg" %}"></a>
+                    <a href="#"><img src="{% static "images/telegram-svg.svg" %}"></a>
+
+                </div>
             </div>
         </div>
     </footer>

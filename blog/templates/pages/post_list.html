@@ -1,0 +1,85 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load tags %}
+{% load price %}
+{% load jformat %}
+{% block title %}
+    لیست مقالات
+{% endblock %}
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "css/list.css" %}">
+{% endblock %}
+{% block sub_content %}
+
+    <main>
+        <div class="section content_right">
+            <h3>فیلتر ها</h3>
+            <form id="filter_form" class="date">
+
+                <input type="radio" value="new" name="date" id="new">
+                <label for="new">جدید ترین ها</label>
+
+                <input type="radio" value="old" name="date" id="old">
+                <label for="old">قدیمی ترین ها</label>
+
+            </form>
+        </div>
+        <div class="section content_left">
+            <h3 class="text_header">لیست مقالات ها</h3>
+            <div class="learns__content">
+                {% for post in posts %}
+                    <div class="article">
+                        <div class="container_image_article">
+                            <img src="{{ post.main_image.url }}" alt="{{ post.title }}" class="image_article">
+                        </div>
+                        <a href="{{ post.get_absolute_url }}">
+                            <h2 class="article_title">{{ post.title }}</h2>
+                            <p class="article_detail">{{ post.summery_description }}</p>
+                        </a>
+                        <div class="article_more">
+                            <h4>{{ post.bloger.user.get_full_name }}</h4>
+                            <span>{{ post.create|jformat:"%Y/%m/%d"|fa }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+    {% include "all/paginator.html" with page=page_obj %}
+
+{% endblock %}
+{% block script %}
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.querySelector("#filter_form");
+            const labels = form.querySelectorAll("label");
+
+            labels.forEach(label => {
+                label.addEventListener("click", () => {
+                    const inputId = label.getAttribute("for");
+                    const input = document.getElementById(inputId);
+
+                    input.focus();
+
+                    setTimeout(() => form.submit(), 100);
+                });
+            });
+        });
+        const params = new URLSearchParams(window.location.search);
+        const intput_old = document.querySelector("#old");
+        const intput_new = document.querySelector("#new");
+        if (params.has("date")) {
+            if (params.get("date") === "old") {
+                intput_old.checked = true;
+            }
+            else {
+                intput_new.checked = true;
+            }
+        }
+        else {
+            intput_new.checked = true;
+        }
+
+    </script>
+{% endblock %}

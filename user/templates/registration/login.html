@@ -27,7 +27,7 @@
                 <button type="submit">ورود</button>
             </form>
             <div class="other">
-                <p>ثبت نام نکرده اید؟ <a href="#" class="register">ثبت نام</a></p>
+                <p>ثبت نام نکرده اید؟ <a href="{% url "user:register" %}" class="register">ثبت نام</a></p>
                 <a href="#">رمز عبور خود را فراموش کرده اید؟</a>
                 <form method="post" action="{% provider_login_url 'google' %}">
                     {% csrf_token %}

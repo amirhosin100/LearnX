@@ -13,21 +13,25 @@
     <h3 class="text_header">لیست دوره ها</h3>
     <main>
         <div class="section content_right">
-            <h3 >فیلتر ها</h3>
-            <div class="date">
-                <input type="radio" name="date" value="new" id="new" {% if date != "old" %}checked{% endif %}>
-                <label for="new"><a href="{% url 'learn:learn_list' %}?page={{ page_obj.number }}&date=new">جدید ترین ها</a></label>
-                <input type="radio" name="date" value="old" id="old" {% if date == "old" %}checked{% endif %}>
-                <label for="old"><a href="{% url 'learn:learn_list' %}?page={{ page_obj.number }}&date=old">قدیمی ترین ها</a></label>
+            <h3>فیلتر ها</h3>
+            <form id="filter_form" class="date">
 
-            </div>
+                <input type="radio" value="new" name="date" id="new">
+                <label for="new">جدید ترین ها</label>
+
+                <input type="radio" value="old" name="date" id="old">
+                <label for="old">قدیمی ترین ها</label>
+
+                <input type="checkbox" id="only_free" name="only_free">
+                <label for="only_free">فقط رایگان</label>
+            </form>
         </div>
         <div class="section content_left">
             <div class="learns__content">
-                    {% for course in learns %}
-                        <div class="learn">
+                {% for course in learns %}
+                    <div class="learn">
                         <div class="container_image_learn">
-                            <img src="{{course.image.url}}" alt="" class="image_learn">
+                            <img src="{{ course.image.url }}" alt="" class="image_learn">
                         </div>
                         <a href="{{ course.get_absolute_url }}">
                             <h2 class="learn_title">{{ course.title }}</h2>
@@ -37,16 +41,16 @@
                             <span class="learn_price">
                                 <span class="prices">
                                     <span class="all_price">
-                                        {% if course.precent_off == 0  %}
+                                        {% if course.precent_off == 0 %}
                                             <span>{{ course.price|point|fa }}</span>
                                         {% else %}
                                             <span class="price_main">{{ course.price|point|fa }}</span>
                                         {% endif %}
 
                                         {% if course.discount_price != 0 and course.discount_price != course.price %}
-                                        	<span class="price_off">{{ course.discount_price|point|fa }} تومان</span>
+                                            <span class="price_off">{{ course.discount_price|point|fa }} تومان</span>
                                         {% else %}
-                                            <span > تومان</span>
+                                            <span> تومان</span>
                                         {% endif %}
 
                                     </span>
@@ -72,10 +76,50 @@
 
                         </span>
                     </div>
-                    {% endfor %}
-                </div>
+                {% endfor %}
+            </div>
         </div>
     </main>
     {% include "all/paginator.html" with page=page_obj %}
 
+{% endblock %}
+{% block script %}
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.querySelector("#filter_form");
+            const labels = form.querySelectorAll("label");
+
+            labels.forEach(label => {
+                label.addEventListener("click", () => {
+                    const inputId = label.getAttribute("for");
+                    const input = document.getElementById(inputId);
+
+                    input.focus();
+
+                    setTimeout(() => form.submit(), 100);
+                });
+            });
+        });
+        const params = new URLSearchParams(window.location.search);
+        const intput_old = document.querySelector("#old");
+        const intput_new = document.querySelector("#new");
+        const intput_only_free = document.querySelector("#only_free");
+        if (params.has("date")) {
+            if (params.get("date") === "old") {
+                intput_old.checked = true;
+            }
+            else {
+                intput_new.checked = true;
+            }
+        }
+        else {
+            intput_new.checked = true;
+        }
+        if (params.has("only_free")){
+            if (params.get("only_free") === "on"){
+                intput_only_free.setAttribute("checked",true);
+            }
+        }
+
+    </script>
 {% endblock %}
