@@ -16,8 +16,18 @@ def check_bloger(request,post):
     else:
         return redirect("user:profile")
 
+def post_list(request):
+    posts = Post.publish.select_related("bloger__user")
+    date = request.GET.get("date","new")
+    if date == "old" :
+        posts = posts.order_by("create")
+    context = {
+        "posts" :posts
+    }
+    return render(request,"pages/post_list.html",context)
+
 def detail(request,slug):
-    post = get_object_or_404(Post.objects.select_related("bloger__user"),slug=slug)
+    post = get_object_or_404(Post.publish.select_related("bloger__user"),slug=slug)
     comments = CommentForPost.publish.filter(post=post).select_related("user").all()
     context = {
         "post":post,

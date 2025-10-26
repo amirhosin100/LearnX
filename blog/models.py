@@ -4,7 +4,9 @@ from django_jalali.db import models as jmodels
 from django_resized import ResizedImageField
 from django.urls import reverse
 
-
+class PublishManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(status=True)
 # Create your models here.
 class Post(models.Model):
     bloger = models.ForeignKey("user.Bloger",models.PROTECT,"posts",verbose_name="بلاگر")
@@ -24,6 +26,8 @@ class Post(models.Model):
     create = jmodels.jDateTimeField(auto_now_add=True,verbose_name="تاریخ ایجاد")
     update = jmodels.jDateTimeField(auto_now=True,verbose_name="تاریخ آخرین آپدیت")
 
+    objects = models.Manager()
+    publish = PublishManager()
 
 
     def get_absolute_url(self):

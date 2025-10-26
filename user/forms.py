@@ -5,9 +5,11 @@ from .models import *
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     password2 = forms.CharField(widget=forms.PasswordInput)
+    first_name = forms.CharField(required=True)
     class Meta:
         model = User
         fields = ["first_name","last_name",'username','email']
+
 
     def clean_password2(self):
         password = self.cleaned_data["password"]

@@ -132,7 +132,7 @@ body {
 
 .status-rejected {
     background-color: #a41515; /* Red */
-    color: var(--text-dark);
+    color: white;
 }
 
 
