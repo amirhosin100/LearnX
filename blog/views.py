@@ -8,6 +8,7 @@ from .forms import *
 from comment.models import CommentForPost
 from decorators.blogers import Is_bloger
 from django.contrib import messages
+from learn.templatetags import tags
 # Create your views here.
 
 def check_bloger(request,post):
@@ -78,7 +79,8 @@ def edit_post(request,id):
 @require_POST
 @login_required
 def like_post(request):
-    post_id = request.POST.get("post_id")
+    data = json.loads(request.body)
+    post_id = data.get("post_id")
     user = request.user
     post = get_object_or_404(Post,id=post_id)
     like = False
@@ -88,9 +90,14 @@ def like_post(request):
         else:
             post.likes.add(user)
             like = True
-        return JsonResponse({"like":like})
+        total_like = tags.to_persian_numbers(post.likes.count())
+        context = {
+            "like":like ,
+            "total_like":total_like,
+        }
+        return JsonResponse(context,status=201)
     except :
-        return JsonResponse({"Error":"error"})
+        return JsonResponse({"Error":"error"},status=400)
 
 
 @require_POST

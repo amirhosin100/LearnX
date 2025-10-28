@@ -240,8 +240,15 @@
     background-color: #ffffff;
 }
 
-.like-button {
+.liked{
+    background-color: #a41515;
+}
+.unliked{
     background-color: var(--color-accent);
+}
+
+.like-button {
+
     color: white;
     border: none;
     padding: 12px 30px;
@@ -250,13 +257,10 @@
     font-size: 1.2em;
     font-weight: bold;
     transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-    box-shadow: 0 8px 15px rgba(0, 160, 180, 0.3);
 }
 
 .like-button:hover {
-    background-color: #117a8b;
     transform: translateY(-3px);
-    box-shadow: 0 12px 20px rgba(0, 160, 180, 0.4);
 }
 
 .like-button i {

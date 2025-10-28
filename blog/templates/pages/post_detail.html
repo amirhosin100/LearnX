@@ -39,9 +39,9 @@
             </div>
 
             <div class="article-actions">
-                <button class="like-button">
+                <button class="like-button {% if user in post.likes.all %}liked{% else %}unliked{% endif %}" id="like-button">
                     <i class="fas fa-thumbs-up"></i>
-                    <span>لایک مقاله: {{ post.likes.count|fa }}</span>
+                    <span id="count-like">لایک مقاله: {{ post.likes.count|fa }}</span>
                 </button>
             </div>
 
@@ -102,6 +102,33 @@
                 }
             }
 
+        });
+    </script>
+    <script>
+        const like_button  = document.querySelector("#like-button") ;
+        like_button.addEventListener("click",async function () {
+            const post_id = {{ post.id }} ;
+            const count = document.querySelector("#count-like");
+            const response = await fetch("{% url "blog:like_post" %}",{
+                method : "POST",
+                headers : {
+                    "content-type" : "application/json",
+                    "X-CSRFToken" : "{{ csrf_token }}"
+                },
+                body :JSON.stringify({"post_id" :post_id})
+            });
+            const result = await response.json() ;
+            if (response.ok){
+                count.innerText = `لایک مقاله:${result.total_like}` ;
+                if (result.like){
+                    like_button.classList.remove("unliked");
+                    like_button.classList.add("liked");
+                }
+                else {
+                    like_button.classList.remove("liked");
+                    like_button.classList.add("unliked");
+                }
+            }
         });
     </script>
 {% endblock %}

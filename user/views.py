@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     #فقط چهار مورد
     courses = Learn.objects.all().select_related("teacher__user")[:4]
-    posts =  Post.objects.all()[:4]
+    posts =  Post.publish.all()[:4]
     best_teachers = Teacher.objects.order_by("-score")[:2]
     context = {
         "courses": courses,
