@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
+from import_export.formats.base_formats import CSV, XLSX,JSON
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,6 +53,7 @@ INSTALLED_APPS = [
     'rest_framework',
     "rest_framework.authtoken",
     "django_ckeditor_5",
+    "import_export",
 
 ]
 
@@ -238,3 +241,7 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 CKEDITOR_5_FILE_STORAGE = "all.storage.BlogStorage"
+
+#import-export
+EXPORT_FORMATS = [XLSX,JSON]
+IMPORT_FORMATS = [CSV,JSON,XLSX]

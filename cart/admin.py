@@ -1,4 +1,5 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
 from .models import *
 # Register your models here.
 class LearnInline(admin.TabularInline):
@@ -6,7 +7,7 @@ class LearnInline(admin.TabularInline):
     extra = 0
 
 @admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
+class OrderAdmin(ImportExportModelAdmin):
     list_display = ["user","description","create","paid"]
     inlines = [LearnInline]
 

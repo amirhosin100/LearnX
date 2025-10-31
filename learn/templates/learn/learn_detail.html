@@ -51,7 +51,7 @@
                     {% if  learn in user.learns.all %}
                         <p class="added">شما دانشجوی این دوره هستید</p>
                     {% elif learn.id in cart.ids %}
-                        <p class="added">به سبد خرید اضافه شده است</p>
+                        <p><a class="added" href="{% url "cart:index" %}">به سبد خرید اضافه شده است</a></p>
                     {% else %}
                         <button id="join">شرکت در دوره</button>
                     {% endif %}
@@ -183,16 +183,16 @@
                 const learn_id = {{ learn.id }};
                 const meta = document.getElementById("meta_id");
                 const button = document.getElementById("join");
-                const new_tag = document.createElement("p");
-                new_tag.classList.add("added");
-                new_tag.textContent = "به سبد خرید اضافه شده است";
+                const my_document = `
+                    <p><a class="added" href="{% url "cart:index" %}">به سبد خرید اضافه شده است</a></p>
+                `;
                 $.ajax({
                     type: "POST",
                     url : "{% url "cart:add_or_remove" %}",
                     data: { "learn_id" :learn_id,"csrfmiddlewaretoken" : "{{ csrf_token }}" },
                     success : function (data){
                         button.remove();
-                        meta.appendChild(new_tag);
+                        meta.insertAdjacentHTML("beforeend",my_document);
                     }
                 });
             });
