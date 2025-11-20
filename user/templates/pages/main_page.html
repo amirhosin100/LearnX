@@ -57,7 +57,7 @@
                                         {% endif %}
 
                                     </span>
-                                    <span class="learn_score"><span class="free">5</span>
+                                    <span class="learn_score"><span class="free">{% if course.score|floatformat:1 != "0.0" %}{{ course.score|floatformat:1|fa }}{% else %}۰{% endif %}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                      class="size-6">
                                 <path fill-rule="evenodd"
