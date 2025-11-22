@@ -109,7 +109,7 @@ def send_score(request):
             item.score = score
             item.save()
         film = LearnFilms.objects.get(id=id_film)
-        num = tags.to_persian_numbers(film.number_score)
+        num = tags.to_persian_numbers(tags.check_int(film.number_score))
         return JsonResponse({"score": num})
 
     except :

@@ -18,3 +18,13 @@ EN_TO_FA = {
 @register.filter(name="fa")
 def to_persian_numbers(value):
     return ''.join(EN_TO_FA.get(ch, ch) for ch in str(value))
+
+@register.filter()
+def check_int(value):
+    if isinstance(value,str):
+        value = float(value)
+
+    if value % 1 == 0:
+        return int(value)
+    else:
+        return format(value,".1f")
